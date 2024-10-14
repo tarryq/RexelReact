@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes} from 'react-router-dom';
-import LoginPage from './views/Login';
+import LoginPage from './views/login-screens/LoginDesign2';
 import SignUpPage from './views/SignUp';
 import Dashboard from './views/Dashboard';
 import NotFoundPage from './views/NotFoundPage';
@@ -10,7 +10,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path='/login' element={<LoginPage />} />
+      <Route path='/sign-in' element={<LoginPage />} />
       <Route path='/sign-up' element={<SignUpPage />} />
       <Route
         path='/dashboard'
