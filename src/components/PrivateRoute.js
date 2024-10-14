@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 const PrivateRoute = ({ children }) => {
   const storedUser = JSON.parse(localStorage.getItem('user'));
 
-  if (storedUser && Date.now() <= storedUser.expirationTime) {
+  if (storedUser) {
     return children;
   }
 

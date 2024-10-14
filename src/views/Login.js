@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext'; // Assuming you're using AuthContext for authentication
-
+import {users} from '../data-schemas/userData';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -12,11 +12,15 @@ const LoginPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    const username = e.target.username.value;
+    const password = e.target.password.value;
 
-    // Check if the user exists in localStorage
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser && storedUser.username === username) {
-      // If user exists and credentials match, log them in
+    const userValid = users.find(
+      (user) => user.username === username && user.password === password
+    );
+
+    if (userValid) {
+      localStorage.setItem('user', JSON.stringify(userValid)); // Optionally store the user in localStorage
       login(); // Call login function from AuthContext (this will set user as authenticated)
       navigate('/dashboard'); // Redirect to dashboard
     } else {
@@ -27,13 +31,11 @@ const LoginPage = () => {
 
   return (
     <div className='min-h-screen flex flex-col justify-center items-center bg-gray-100 px-4'>
-
       <div className='bg-white rounded-lg shadow-lg px-8 py-4  w-full max-w-sm sm:max-w-md lg:max-w-lg transition-all duration-300 ease-in-out'>
         <div className='flex justify-center mb-2'>
           <img src='/assets/capitol_light_logo.jpg' alt='logo' className='w-40 h-30' />
         </div>
         <p className='text-gray-500 text-center mb-6'>The Capitol Light SRMS website requires user authentication. Please enter your details</p>
-
         <form onSubmit={handleLogin}>
           <div className='mb-4'>
             <label htmlFor='username' className='block text-gray-600 text-sm font-medium mb-1'>
