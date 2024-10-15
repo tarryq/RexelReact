@@ -135,7 +135,15 @@ export const users = [
     name: 'John',
     accountname: null,
     storename: null,
-    menu: ['Home', 'Maintenance'],
+    menu: ['Products',
+      'My Account',
+      'My Cart',
+      'Messages',
+      'Reports',
+      'Instructions',
+      'Invoicing',
+      'Maintainance',
+      'Tracking'],
     email: 'admin@abc.com'
   }
 ];

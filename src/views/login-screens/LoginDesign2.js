@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext'; // Assuming you're using AuthContext for authentication
+import { useAuth } from '../../contexts/AuthContext';
 
 import { Select, MenuItem, Typography, TextField, FormControl, InputLabel } from '@mui/material';
 
 import { users } from '../../data-schemas/userData';
-
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
@@ -21,25 +20,20 @@ const LoginScreen = () => {
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    const userValid = users.find(
-      (user) => user.username === username && user.password === password
-    );
+    const userValid = users.find((user) => user.username === username && user.password === password);
 
     if (userValid) {
-      localStorage.setItem('user', JSON.stringify(userValid)); // Optionally store the user in localStorage
-      login(); // Call login function from AuthContext (this will set user as authenticated)
-      navigate('/dashboard'); // Redirect to dashboard
+      localStorage.setItem('user', JSON.stringify(userValid));
+      login();
+      navigate('/dashboard');
     } else {
-      // If user doesn't exist or credentials are wrong, show error
       setError('User not found or incorrect credentials');
     }
   };
 
-
-    const handleChangeLanguage = (event) => {
-      setLang(event.target.value); // Update the state when selection changes
-    };
-
+  const handleChangeLanguage = (event) => {
+    setLang(event.target.value);
+  };
 
   return (
     <div
@@ -69,19 +63,19 @@ const LoginScreen = () => {
         <div style={{ width: '100%', height: '10%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <img src='/assets/capitol_light_logo.jpg' alt='logo' style={{ width: '60px', height: 'auto', marginRight: '12px' }} />
-            <Typography variant='h5' style={{ fontWeight: 'bold', color: '#462B76' }}>
+            <Typography variant='h5' style={{ fontWeight: 'bold', color: '#4B449D' }}>
               Capitol Light SRMS
             </Typography>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <FormControl variant="outlined" sx={{ minWidth: 120 }}>
-              <InputLabel id="language-select-label">Language</InputLabel>
+            <FormControl variant='outlined' sx={{ minWidth: 120 }}>
+              <InputLabel id='language-select-label'>Language</InputLabel>
               <Select
-                labelId="language-select-label"
-                id="language-select"
+                labelId='language-select-label'
+                id='language-select'
                 value={lang}
                 onChange={handleChangeLanguage}
-                label="Language"
+                label='Language'
                 sx={{
                   borderWidth: '0px',
                   '& label': {
@@ -93,90 +87,105 @@ const LoginScreen = () => {
                   }
                 }}
               >
-                <MenuItem value="english">English</MenuItem>
-                <MenuItem value="spanish">Spanish</MenuItem>
-                <MenuItem value="french">French</MenuItem>
+                <MenuItem value='english'>English</MenuItem>
+                <MenuItem value='spanish'>Spanish</MenuItem>
+                <MenuItem value='french'>French</MenuItem>
               </Select>
             </FormControl>
           </div>
-
         </div>
         <div className='' style={{ margin: 'auto', height: '80%', width: '80%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '50px' }}>
           <div style={{ width: '50%' }}>
-            <Typography variant='h6' style={{ fontWeight: 'bold', color: '#462B76' }}>
+            <Typography variant='h6' style={{ fontWeight: 'bold', color: '#4B449D' }}>
               Login to your account
             </Typography>
             <form onSubmit={handleLogin} style={{ marginTop: '30px', width: '100%' }}>
               <TextField
-
                 sx={{
                   '& .MuiOutlinedInput-notchedOutline': {
-                    borderWidth: '0px',
+                    borderWidth: '0px'
                   },
                   '&:hover .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#462B76', // Optional: to show the border color on hover as well
+                    borderColor: '#4B449D'
                   },
                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#462B76',
-                    borderWidth: '1px', // Add border width when focused
+                    borderColor: '#4B449D',
+                    borderWidth: '1px'
                   },
                   '& label': {
                     fontWeight: '500',
                     '&.Mui-focused': {
-                      color: '#462B76', // Label color on focus
+                      color: '#4B449D'
                     }
                   },
-                  '& input': {                   
+                  '& input': {
                     fontWeight: '700',
-                    borderWidth: '0px',
-                    color: '#462B76',
-                    backgroundColor:"white",
+                    color: '#4B449D',
+                    backgroundColor: 'white',
                     borderRadius: '4px',
-                    borderColor: '#462B76',
-
-                  }                 
+                    borderColor: '#4B449D'
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: '#4B449D'
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#4B449D'
+                    }
+                  }
                 }}
-                className="w-full rounded-[8px]"
-                id="outlined-search"
-                label="Username"
-                name="username"
+                className='w-full rounded-[8px]'
+                id='outlined-search'
+                label='Username'
+                name='username'
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-
-
-
-              <TextField sx={{
-                borderWidth: '0px',
-                marginTop: '20px',
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderWidth: '0px',
-                },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#462B76',
-                },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#462B76',
-                  borderWidth: '1px',
-                },
-                '& label': {
-                  fontWeight: '500',
-                  '&.Mui-focused': {
-                    color: '#462B76',
-                  }
-                },
-                '& input': {
-                  fontWeight: '700',
-                  color: '#462B76',
-                  backgroundColor: "white",
-                  borderRadius: '4px',
-                  borderColor: '#462B76',
-
-                }
-              }} className='w-full rounded-[8px]' id='outlined-search' label='Password' type='password' name='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-
+              <TextField
+                sx={{
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderWidth: '0px'
+                  },
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#4B449D'
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#4B449D',
+                    borderWidth: '1px'
+                  },
+                  '& label': {
+                    fontWeight: '500',
+                    '&.Mui-focused': {
+                      color: '#4B449D'
+                    }
+                  },
+                  '& input': {
+                    fontWeight: '700',
+                    color: '#4B449D',
+                    backgroundColor: 'white',
+                    borderRadius: '4px',
+                    borderColor: '#4B449D'
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: '#4B449D'
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#4B449D'
+                    }
+                  },
+                  marginTop: '14px'
+                }}
+                className='w-full rounded-[8px]'
+                id='outlined-search'
+                label='Password'
+                type='password'
+                name='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
               {error && (
-                <Typography variant='body2' style={{ color: 'red', marginBottom: '12px', fontSize: '0.8rem' }}>
+                <Typography variant='body2' style={{ color: 'red', marginBottom: '12px', fontSize: '0.8rem', marginTop: '10px' }}>
                   {error}
                 </Typography>
               )}
@@ -202,9 +211,10 @@ const LoginScreen = () => {
         </div>
         <div style={{ width: '50%', height: '10%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <nav style={{ marginTop: '16px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {['Privacy Policy', 'T&C Of Use', 'T&C Of Sale', 'T&C of Purchase', 'Ethics / Code Of Conduct', 'Contact Us'].map((item) => (
-              <a key={item} href='#' style={{ margin: '2px 4px', fontSize: '0.7rem', color: '#666', textDecoration: 'none' }}>
-                {`${item} | `}
+            {['Privacy Policy', 'T&C Of Use', 'T&C Of Sale', 'T&C of Purchase', 'Ethics / Code Of Conduct', 'Contact Us'].map((item, index, array) => (
+              <a key={item} href='#' style={{ margin: '2px 4px', fontSize: '0.7rem', color: '#4B449D', textDecoration: 'none' }}>
+                {`${item}`}
+                {`${index !== array.length - 1 ? ' | ' : ''}`}
               </a>
             ))}
           </nav>

@@ -4,7 +4,7 @@ import LoginPage1 from './views/login-screens/LoginDesign1';
 import LoginPage2 from './views/login-screens/LoginDesign2';
 import LoginPage3 from './views/login-screens/LoginDesign3';
 import SignUpPage from './views/SignUp';
-import Dashboard from './views/Dashboard';
+import Dashboard from './views/Main';
 import NotFoundPage from './views/NotFoundPage';
 import PrivateRoute from './components/PrivateRoute';
 
