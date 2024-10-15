@@ -1,19 +1,45 @@
 import React, { useState } from 'react';
-import { Select, MenuItem, Typography, TextField, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext'; // Assuming you're using AuthContext for authentication
+
+import { Select, MenuItem, Typography, TextField, FormControl, InputLabel } from '@mui/material';
+
+import { users } from '../../data-schemas/userData';
+
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [lang, setLang] = useState('english');
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (!username || !password) {
-      setError('Please enter both username and password.');
-      return;
+    const username = e.target.username.value;
+    const password = e.target.password.value;
+
+    const userValid = users.find(
+      (user) => user.username === username && user.password === password
+    );
+
+    if (userValid) {
+      localStorage.setItem('user', JSON.stringify(userValid)); // Optionally store the user in localStorage
+      login(); // Call login function from AuthContext (this will set user as authenticated)
+      navigate('/dashboard'); // Redirect to dashboard
+    } else {
+      // If user doesn't exist or credentials are wrong, show error
+      setError('User not found or incorrect credentials');
     }
-    // Implement login logic here
   };
+
+
+    const handleChangeLanguage = (event) => {
+      setLang(event.target.value); // Update the state when selection changes
+    };
+
 
   return (
     <div
@@ -47,20 +73,72 @@ const LoginScreen = () => {
               Capitol Light SRMS
             </Typography>
           </div>
-          <Select labelId='demo-simple-select-label' id='demo-simple-select' value={'English'} label='Lang'>
-            <MenuItem value={'English'}>English</MenuItem>
-            <MenuItem value={'French'}>French</MenuItem>
-            <MenuItem value={'Spanish'}>Spanish</MenuItem>
-          </Select>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <FormControl variant="outlined" sx={{ minWidth: 120 }}>
+              <InputLabel id="language-select-label">Language</InputLabel>
+              <Select
+                labelId="language-select-label"
+                id="language-select"
+                value={lang}
+                onChange={handleChangeLanguage}
+                label="Language"
+                sx={{
+                  borderWidth: '0px',
+                  '& label': {
+                    fontWeight: '500'
+                  },
+                  '& input': {
+                    fontWeight: '700',
+                    color: '#462B76'
+                  }
+                }}
+              >
+                <MenuItem value="english">English</MenuItem>
+                <MenuItem value="spanish">Spanish</MenuItem>
+                <MenuItem value="french">French</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+
         </div>
         <div className='' style={{ margin: 'auto', height: '80%', width: '80%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '50px' }}>
           <div style={{ width: '50%' }}>
             <Typography variant='h6' style={{ fontWeight: 'bold', color: '#462B76' }}>
               Login to your account
             </Typography>
-            <form style={{ marginTop: '30px', width: '100%' }}>
-              <TextField sx={{ borderWidth: '0px' }} className='w-full rounded-[8px]' id='outlined-search' label='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
-              <TextField sx={{ borderWidth: '0px', marginTop: '20px' }} className='w-full rounded-[8px]' id='outlined-search' label='Password' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+            <form onSubmit={handleLogin} style={{ marginTop: '30px', width: '100%' }}>
+              <TextField
+                sx={{
+                  borderWidth: '0px',
+                  '& label': {                    
+                    fontWeight: '500'
+                  },
+                  '& input': {                   
+                    fontWeight: '700',
+                    color: '#462B76'
+                  }                 
+                }}
+                className="w-full rounded-[8px]"
+                id="outlined-search"
+                label="Username"
+                name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+
+
+
+              <TextField sx={{
+                borderWidth: '0px',
+                marginTop: '20px',
+                '& label': {
+                  fontWeight: '500'
+                },
+                '& input': {
+                  fontWeight: '700',
+                  color: '#462B76'
+                }
+              }} className='w-full rounded-[8px]' id='outlined-search' label='Password' type='password' name='password' value={password} onChange={(e) => setPassword(e.target.value)} />
 
               {error && (
                 <Typography variant='body2' style={{ color: 'red', marginBottom: '12px', fontSize: '0.8rem' }}>

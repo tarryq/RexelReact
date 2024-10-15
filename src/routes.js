@@ -1,6 +1,7 @@
 import React from 'react';
-import { Route, Routes} from 'react-router-dom';
-import LoginPage from './views/login-screens/LoginDesign2';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import LoginPage1 from './views/login-screens/LoginDesign1';
+import LoginPage2 from './views/login-screens/LoginDesign2';
 import SignUpPage from './views/SignUp';
 import Dashboard from './views/Dashboard';
 import NotFoundPage from './views/NotFoundPage';
@@ -10,7 +11,9 @@ function App() {
 
   return (
     <Routes>
-      <Route path='/sign-in' element={<LoginPage />} />
+      <Route path='/' element={<Navigate to="/sign-in-1" />} />
+      <Route path='/sign-in-1' element={<LoginPage1 />} />
+      <Route path='/sign-in-2' element={<LoginPage2 />} />
       <Route path='/sign-up' element={<SignUpPage />} />
       <Route
         path='/dashboard'
