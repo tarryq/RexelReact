@@ -108,14 +108,32 @@ const LoginScreen = () => {
             </Typography>
             <form onSubmit={handleLogin} style={{ marginTop: '30px', width: '100%' }}>
               <TextField
+
                 sx={{
-                  borderWidth: '0px',
-                  '& label': {                    
-                    fontWeight: '500'
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderWidth: '0px',
+                  },
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#462B76', // Optional: to show the border color on hover as well
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#462B76',
+                    borderWidth: '1px', // Add border width when focused
+                  },
+                  '& label': {
+                    fontWeight: '500',
+                    '&.Mui-focused': {
+                      color: '#462B76', // Label color on focus
+                    }
                   },
                   '& input': {                   
                     fontWeight: '700',
-                    color: '#462B76'
+                    borderWidth: '0px',
+                    color: '#462B76',
+                    backgroundColor:"white",
+                    borderRadius: '4px',
+                    borderColor: '#462B76',
+
                   }                 
                 }}
                 className="w-full rounded-[8px]"
@@ -131,12 +149,29 @@ const LoginScreen = () => {
               <TextField sx={{
                 borderWidth: '0px',
                 marginTop: '20px',
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderWidth: '0px',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#462B76',
+                },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#462B76',
+                  borderWidth: '1px',
+                },
                 '& label': {
-                  fontWeight: '500'
+                  fontWeight: '500',
+                  '&.Mui-focused': {
+                    color: '#462B76',
+                  }
                 },
                 '& input': {
                   fontWeight: '700',
-                  color: '#462B76'
+                  color: '#462B76',
+                  backgroundColor: "white",
+                  borderRadius: '4px',
+                  borderColor: '#462B76',
+
                 }
               }} className='w-full rounded-[8px]' id='outlined-search' label='Password' type='password' name='password' value={password} onChange={(e) => setPassword(e.target.value)} />
 
