@@ -142,7 +142,7 @@ export const users = [
       'Reports',
       'Instructions',
       'Invoicing',
-      'Maintainance',
+      'Maintenance',
       'Tracking'],
     email: 'admin@abc.com'
   }

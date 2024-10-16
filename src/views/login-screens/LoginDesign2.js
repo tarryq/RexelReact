@@ -53,7 +53,7 @@ const LoginScreen = () => {
           backgroundColor: '#F5F6FA',
           borderRadius: '20px',
           divShadow: '0 10px 30px rgba(0,0,0,0.1)',
-          padding: '50px 60px 10px 60px',
+          padding: '30px 60px 10px 60px',
           display: 'flex',
           flexDirection: 'column',
           width: '80vw',
@@ -64,7 +64,7 @@ const LoginScreen = () => {
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <img src='/assets/capitol_light_logo.jpg' alt='logo' style={{ width: '60px', height: 'auto', marginRight: '12px' }} />
             <Typography variant='h5' className="hidden md:block" style={{ fontWeight: 'bold', color: '#4B449D' }}>
-              Capitol Light SRMS
+              Store Replenishment and Management System
             </Typography>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -203,7 +203,7 @@ const LoginScreen = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <div style={{ minHeight: '24px', marginTop: '12px' }}>
+              <div style={{ minHeight: '24px', marginTop: '6px' }}>
                 {error && (
                   <Typography variant='body2' style={{ color: '#ef4444', fontSize: '0.8rem' }}>                  {error}
                   </Typography>
@@ -246,7 +246,7 @@ const LoginScreen = () => {
           </div>
         </div>
 
-        <nav className="mt-4 flex flex-wrap justify-center w-full mx-auto lg:w-3/4">
+        <nav className="mt-3 flex flex-wrap justify-center w-full mx-auto lg:w-3/4">
           {['Privacy Policy', 'T&C Of Use', 'T&C Of Sale', 'T&C of Purchase', 'Ethics / Code Of Conduct', 'Contact Us'].map((item, index, array) => (
             <a
               key={item}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { accounts } from '../data-schemas/accountsData';
+import { stores } from '../data-schemas/storeData';
 import Navbar from './Navbar';
 
 export default function ManageAccount(props) {
@@ -15,21 +16,27 @@ export default function ManageAccount(props) {
     if (currentUser) {
       if (currentUser.usertype === 'admin') {
         setAvailableAccounts(accounts);
-        setSelectedAccount(accounts[0].account);
-        setAvailableStores(accounts[0].store);
-        setSelectedStore(accounts[0].store[0]);
+        const defaultAccount = accounts[0];
+        setSelectedAccount(defaultAccount.account);
+        const filteredStores = stores.filter(store => store.accountId === defaultAccount.accountId);
+        setAvailableStores(filteredStores);
+        setSelectedStore(filteredStores[0]?.storeName || '');
       } else if (currentUser.usertype === 'account') {
         const userAccount = accounts.find((acc) => acc.account === currentUser.accountname);
         setAvailableAccounts([userAccount]);
         setSelectedAccount(userAccount.account);
-        setAvailableStores(userAccount.store);
-        setSelectedStore(userAccount.store[0]);
+        // Filter stores based on account
+        const filteredStores = stores.filter(store => store.accountId === userAccount.accountId);
+        setAvailableStores(filteredStores);
+        setSelectedStore(filteredStores[0]?.storeName || '');
       } else if (currentUser.usertype === 'store') {
         const userAccount = accounts.find((acc) => acc.account === currentUser.accountname);
         setAvailableAccounts([userAccount]);
         setSelectedAccount(userAccount.account);
-        setAvailableStores([currentUser.storename]);
-        setSelectedStore(currentUser.storename);
+        // Find the specific store for the user
+        const userStore = stores.find(store => store.storeName === currentUser.storename && store.accountId === userAccount.accountId);
+        setAvailableStores([userStore]);
+        setSelectedStore(userStore?.storeName || '');
       }
     }
   }, [currentUser]);
@@ -39,8 +46,10 @@ export default function ManageAccount(props) {
     setSelectedAccount(newSelectedAccount);
     const account = accounts.find((acc) => acc.account === newSelectedAccount);
     if (account) {
-      setAvailableStores(account.store);
-      setSelectedStore(account.store[0]);
+      // Update available stores based on the selected account
+      const filteredStores = stores.filter(store => store.accountId === account.accountId);
+      setAvailableStores(filteredStores);
+      setSelectedStore(filteredStores[0]?.storeName || ''); // Set to first store or empty
     } else {
       setAvailableStores([]);
       setSelectedStore('');
@@ -50,7 +59,6 @@ export default function ManageAccount(props) {
   const handleStoreChange = (event) => {
     setSelectedStore(event.target.value);
   };
-
   const selectedAccountData = accounts.find((acc) => acc.account === selectedAccount);
 
   return (
@@ -125,8 +133,8 @@ export default function ManageAccount(props) {
               disabled={currentUser?.usertype === 'store'}
             >
               {availableStores.map((store) => (
-                <option key={store} value={store}>
-                  {store}
+                <option key={store.storeId} value={store.storeName}>
+                  {store.storeName}
                 </option>
               ))}
             </select>

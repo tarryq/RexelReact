@@ -1,6 +1,7 @@
 export const accounts = [
   {
     "account": "Apple",
+    "accountId": "APL001",
     "store": [
       "Apple Store 1",
       "Apple Store 2",
@@ -15,6 +16,7 @@ export const accounts = [
   },
   {
     "account": "Samsung",
+    "accountId": "SAM001",
     "store": [
       "Samsung Store 1",
       "Samsung Store 2",
@@ -29,6 +31,7 @@ export const accounts = [
   },
   {
     "account": "Adidas",
+    "accountId": "ADD001",
     "store": [
       "ADIDAS AMERICA INC - PORTLAN",
       "ADIDAS EUROPE INC - BERLIN",
@@ -43,6 +46,7 @@ export const accounts = [
   },
   {
     "account": "Nike",
+    "accountId": "NIK001",
     "store": [
       "Nike Store NYC",
       "Nike Store LA",
@@ -57,6 +61,7 @@ export const accounts = [
   },
   {
     "account": "Google",
+    "accountId": "GOO001",
     "store": [
       "Google Store Silicon Valley",
       "Google Store London",
@@ -74,6 +79,7 @@ export const accounts = [
   },
   {
     "account": "Microsoft",
+    "accountId": "MIC001",
     "store": [
       "Microsoft Store Redmond",
       "Microsoft Store Seattle",
@@ -91,6 +97,7 @@ export const accounts = [
   },
   {
     "account": "Tesla",
+    "accountId": "TES001",
     "store": [
       "Tesla Store California",
       "Tesla Store New York",
@@ -105,6 +112,7 @@ export const accounts = [
   },
   {
     "account": "Facebook",
+    "accountId": "FBK001",
     "store": [
       "Facebook Store Menlo Park",
       "Facebook Store Dublin",
@@ -120,6 +128,7 @@ export const accounts = [
   },
   {
     "account": "Amazon",
+    "accountId": "AMZ001",
     "store": [
       "Amazon Store Seattle",
       "Amazon Store New York",
@@ -140,6 +149,7 @@ export const accounts = [
   },
   {
     "account": "Sony",
+    "accountId": "SON001",
     "store": [
       "Sony Store Tokyo",
       "Sony Store Los Angeles",
@@ -154,6 +164,7 @@ export const accounts = [
   },
   {
     "account": "LG",
+    "accountId": "LG001",
     "store": [
       "LG Store Seoul",
       "LG Store NYC",
@@ -168,6 +179,7 @@ export const accounts = [
   },
   {
     "account": "Puma",
+    "accountId": "PUM001",
     "store": [
       "Puma Store Berlin",
       "Puma Store Cape Town",
@@ -187,6 +199,7 @@ export const accounts = [
   },
   {
     "account": "Under Armour",
+    "accountId": "UAM001",
     "store": [
       "Under Armour Store NYC",
       "Under Armour Store Miami",
@@ -206,6 +219,7 @@ export const accounts = [
   },
   {
     "account": "Huawei",
+    "accountId": "HUA001",
     "store": [
       "Huawei Store Shenzhen",
       "Huawei Store Beijing",
@@ -219,3 +233,78 @@ export const accounts = [
 `
   }
 ];
+
+
+
+// export const accounts = [
+//   {
+//     accountId: "APL001",
+//     account: "Apple",
+//     logo: "https://example.com/logos/apple-logo.png"
+//   },
+//   {
+//     accountId: "SAM001",
+//     account: "Samsung",
+//     logo: "https://example.com/logos/samsung-logo.png"
+//   },
+//   {
+//     accountId: "ADD001",
+//     account: "Adidas",
+//     logo: "https://example.com/logos/adidas-logo.png"
+//   },
+//   {
+//     accountId: "NIK001",
+//     account: "Nike",
+//     logo: "https://example.com/logos/nike-logo.png"
+//   },
+//   {
+//     accountId: "GOO001",
+//     account: "Google",
+//     logo: "https://example.com/logos/google-logo.png"
+//   },
+//   {
+//     accountId: "MIC001",
+//     account: "Microsoft",
+//     logo: "https://example.com/logos/microsoft-logo.png"
+//   },
+//   {
+//     accountId: "TES001",
+//     account: "Tesla",
+//     logo: "https://example.com/logos/tesla-logo.png"
+//   },
+//   {
+//     accountId: "FBK001",
+//     account: "Facebook",
+//     logo: "https://example.com/logos/facebook-logo.png"
+//   },
+//   {
+//     v
+//     account: "Amazon",
+//     logo: "https://example.com/logos/amazon-logo.png"
+//   },
+//   {
+//     accountId: "SON001",
+//     account: "Sony",
+//     logo: "https://example.com/logos/sony-logo.png"
+//   },
+//   {
+//     accountId: "LG001",
+//     account: "LG",
+//     logo: "https://example.com/logos/lg-logo.png"
+//   },
+//   {
+//     accountId: "PUM001",
+//     account: "Puma",
+//     logo: "https://example.com/logos/puma-logo.png"
+//   },
+//   {
+//     accountId: "UAM001",
+//     account: "Under Armour",
+//     logo: "https://example.com/logos/under-armour-logo.png"
+//   },
+//   {
+//     accountId: "HUA001",
+//     account: "Huawei",
+//     logo: "https://example.com/logos/huawei-logo.png"
+//   }
+// ];
