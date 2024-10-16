@@ -27,7 +27,7 @@ const LoginScreen = () => {
       login();
       navigate('/dashboard');
     } else {
-      setError('User not found or incorrect credentials');
+      setError('Username not found or incorrect credentials');
     }
   };
 
@@ -53,23 +53,33 @@ const LoginScreen = () => {
           backgroundColor: '#F5F6FA',
           borderRadius: '20px',
           divShadow: '0 10px 30px rgba(0,0,0,0.1)',
-          padding: '50px 80px',
+          padding: '50px 60px 10px 60px',
           display: 'flex',
           flexDirection: 'column',
           width: '80vw',
-          height: '84vh'
+          height: '86vh'
         }}
       >
         <div style={{ width: '100%', height: '10%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <img src='/assets/capitol_light_logo.jpg' alt='logo' style={{ width: '60px', height: 'auto', marginRight: '12px' }} />
-            <Typography variant='h5' style={{ fontWeight: 'bold', color: '#4B449D' }}>
+            <Typography variant='h5' className="hidden md:block" style={{ fontWeight: 'bold', color: '#4B449D' }}>
               Capitol Light SRMS
             </Typography>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <FormControl variant='outlined' sx={{ minWidth: 120 }}>
-              <InputLabel id='language-select-label'>Language</InputLabel>
+            <FormControl variant='outlined' sx={{ minWidth: 80 }}>
+              <InputLabel
+                id='language-select-label'
+                sx={{
+                  fontSize: '0.8rem',
+                  '&.Mui-focused': {
+                    color: '#4b449d'
+                  }
+                }}
+              >
+                Language
+              </InputLabel>
               <Select
                 labelId='language-select-label'
                 id='language-select'
@@ -77,25 +87,34 @@ const LoginScreen = () => {
                 onChange={handleChangeLanguage}
                 label='Language'
                 sx={{
-                  borderWidth: '0px',
-                  '& label': {
-                    fontWeight: '500'
+                  padding: '5px',
+                  fontSize: '14px',
+                  borderRadius: '4px',
+                  '& .MuiOutlinedInput-input': {
+                    padding: '8px 10px',
+                    fontWeight: '600',
                   },
-                  '& input': {
-                    fontWeight: '700',
-                    color: '#462B76'
+                  '& .MuiSelect-select': {
+                    minWidth: '80px',
+                    color: '#4B449D'
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#4b449d'
+                  },
+                  '&.Mui-focused .MuiInputLabel-root': {
+                    color: '#4b449d'
                   }
                 }}
               >
-                <MenuItem value='english'>English</MenuItem>
-                <MenuItem value='spanish'>Spanish</MenuItem>
-                <MenuItem value='french'>French</MenuItem>
+                <MenuItem value='english' sx={{ fontSize: '12px', padding: '6px 10px' }}>English</MenuItem>
+                <MenuItem value='spanish' sx={{ fontSize: '12px', padding: '6px 10px' }}>Spanish</MenuItem>
+                <MenuItem value='french' sx={{ fontSize: '12px', padding: '6px 10px' }}>French</MenuItem>
               </Select>
             </FormControl>
           </div>
         </div>
-        <div className='' style={{ margin: 'auto', height: '80%', width: '80%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '50px' }}>
-          <div style={{ width: '50%' }}>
+        <div className='m-auto mb-2 h-[60%] w-[80%] flex justify-between items-center gap-[50px]'>
+          <div className="w-full lg:w-1/2">
             <Typography variant='h6' style={{ fontWeight: 'bold', color: '#4B449D' }}>
               Login to your account
             </Typography>
@@ -184,12 +203,13 @@ const LoginScreen = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              {error && (
-                <Typography variant='body2' style={{ color: 'red', marginBottom: '12px', fontSize: '0.8rem', marginTop: '10px' }}>
-                  {error}
-                </Typography>
-              )}
-              <div className='mt-10' style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ minHeight: '24px', marginTop: '12px' }}>
+                {error && (
+                  <Typography variant='body2' style={{ color: '#ef4444', fontSize: '0.8rem' }}>                  {error}
+                  </Typography>
+                )}
+              </div>
+              <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
                 <button
                   className='btn btn-sm bg-[#4B449D] text-white hover:bg-[#7873B5] outline-none border-none'
                   type='submit'
@@ -205,20 +225,39 @@ const LoginScreen = () => {
               </div>
             </form>
           </div>
-          <div style={{ width: '50%', height: '100%' }}>
+          <div className="w-full h-full lg:w-1/2 hidden lg:block">
             <img src='/assets/login-image.svg' alt='login-user' style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
         </div>
-        <div style={{ width: '50%', height: '10%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <nav style={{ marginTop: '16px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {['Privacy Policy', 'T&C Of Use', 'T&C Of Sale', 'T&C of Purchase', 'Ethics / Code Of Conduct', 'Contact Us'].map((item, index, array) => (
-              <a key={item} href='#' style={{ margin: '2px 4px', fontSize: '0.7rem', color: '#4B449D', textDecoration: 'none' }}>
-                {`${item}`}
-                {`${index !== array.length - 1 ? ' | ' : ''}`}
+
+        <div className="w-full lg:w-1/2">
+          <div className="text-center">
+            <p className="text-xs text-red-500 mb-1">
+              For Service Channel, FM Pilot, Corrigo, Ariba users, please go back to your maintenance portal to access our webshop through punchout. You cannot log into the webshop from this screen.
+            </p>
+          </div>
+          <div className="text-center mt-2">
+            <p className="text-xs text-gray-600">
+              If you are having any login issues, please contact{' '}
+              <a href="tel:1-800-329-8643" className="font-medium text-[#4B449D] hover:text-[#38327D]">
+                1-800-329-8643
               </a>
-            ))}
-          </nav>
+            </p>
+          </div>
         </div>
+
+        <nav className="mt-4 flex flex-wrap justify-center w-full mx-auto lg:w-3/4">
+          {['Privacy Policy', 'T&C Of Use', 'T&C Of Sale', 'T&C of Purchase', 'Ethics / Code Of Conduct', 'Contact Us'].map((item, index, array) => (
+            <a
+              key={item}
+              href='#'
+              className="text-xs text-[#4B449D] hover:text-[#38327D] mx-1"
+            >
+              {item}
+              {index !== array.length - 1 && ' |'}
+            </a>
+          ))}
+        </nav>
       </div>
     </div>
   );

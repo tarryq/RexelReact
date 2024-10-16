@@ -55,7 +55,10 @@ export default function ManageAccount(props) {
 
   return (
     <div className='h-auto flex flex-col bg-gray-100 px-6'>
-      <div className='flex items-center justify-between mt-5' style={{ minHeight: '100px' }}>
+
+      {/* account dropdown in row */}
+
+      {/* <div className='flex items-center justify-between mt-5' style={{ minHeight: '100px' }}>
         <div className='flex-1 flex justify-center items-center'>{selectedAccountData && selectedAccountData.logo && <div dangerouslySetInnerHTML={{ __html: selectedAccountData.logo }} />}</div>
         <div className='flex gap-10 items-center ml-auto'>
           <div className='form-control'>
@@ -87,6 +90,56 @@ export default function ManageAccount(props) {
                 Cart Subtotal: <span className='font-semibold'>$0.00</span>
               </p>
             </div>
+          </div>
+        </div>
+      </div> */}
+      
+
+      {/*  account dropdown in column */}
+
+      <div className='flex items-center justify-between mt-5 mb-2' style={{ minHeight: '100px' }}> /
+        <div className='w-1/2 md:w-2/3  flex justify-center items-center'>{selectedAccountData && selectedAccountData.logo && <div dangerouslySetInnerHTML={{ __html: selectedAccountData.logo }} />}</div>       
+        <div className="flex w-1/2 md:w-1/3  flex-col gap-4 justify-start">
+          <div className='flex items-center'>
+            <label className="block text-sm font-medium text-gray-700 w-[140px]">Account :</label>
+            <select
+              className="block w-full border-gray-300 select select-bordered select-sm"
+              value={selectedAccount}
+              onChange={handleAccountChange}
+              disabled={currentUser?.usertype !== 'admin'}
+            >
+              {availableAccounts.map((account) => (
+                <option key={account.account} value={account.account}>
+                  {account.account}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className='flex items-center'>
+            <label className="block text-sm font-medium text-gray-700 w-[140px]">Store :</label>
+            <select
+              className="block w-full border-gray-300 select select-bordered select-sm"
+              value={selectedStore}
+              onChange={handleStoreChange}
+              disabled={currentUser?.usertype === 'store'}
+            >
+              {availableStores.map((store) => (
+                <option key={store} value={store}>
+                  {store}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className='flex items-center'>
+            <label className="block text-sm font-medium text-gray-700 w-[140px]">Items In Cart :</label>
+            <p className="font-semibold">0</p>
+          </div>
+
+          <div className='flex items-center'>
+            <label className="block text-sm font-medium text-gray-700 w-[140px]">Cart subtotal :</label>
+            <p className="font-semibold">$0.00</p>
           </div>
         </div>
       </div>

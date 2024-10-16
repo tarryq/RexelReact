@@ -12,7 +12,7 @@ export default function Header(props) {
             CAPITOL <span className='ml-1'>LIGHT</span>
           </h1>
           <Divider orientation='vertical' variant='middle' flexItem sx={{ borderWidth: '1px' }} />
-          <h2 className='text-lg ml-4' style={{ color: '#4B449D' }}>
+          <h2 className='hidden md:block text-lg ml-4' style={{ color: '#4B449D' }}>
             Store Replenishment and Management System
           </h2>
         </div>
