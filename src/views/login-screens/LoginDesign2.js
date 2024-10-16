@@ -38,7 +38,7 @@ const LoginScreen = () => {
   return (
     <div
       style={{
-        height: '100vh',
+        minHeight: '100vh',
         width: '100vw',
         backgroundImage: 'linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%)',
         backgroundSize: 'cover',
@@ -48,22 +48,23 @@ const LoginScreen = () => {
         alignItems: 'center'
       }}
     >
-      <div
+      <div className='xs:px-[20px] xs:py-[20px] md:px-[30px] md:py-[40px] lg:px-[50px]'
         style={{
           backgroundColor: '#F5F6FA',
           borderRadius: '20px',
           divShadow: '0 10px 30px rgba(0,0,0,0.1)',
-          padding: '30px 60px 10px 60px',
           display: 'flex',
           flexDirection: 'column',
+          justifyContent:'space-between',
           width: '80vw',
-          height: '86vh'
+          height: 'auto',
+          minHeight:'84vh'
         }}
       >
         <div style={{ width: '100%', height: '10%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <img src='/assets/capitol_light_logo.jpg' alt='logo' style={{ width: '60px', height: 'auto', marginRight: '12px' }} />
-            <Typography variant='h5' className="hidden md:block" style={{ fontWeight: 'bold', color: '#4B449D' }}>
+            <Typography variant='h5' className='hidden sm:block' style={{ fontWeight: 'bold', color: '#4B449D', fontSize:'clamp(10px,2vw,30px)' }}>
               Store Replenishment and Management System
             </Typography>
           </div>
@@ -92,7 +93,7 @@ const LoginScreen = () => {
                   borderRadius: '4px',
                   '& .MuiOutlinedInput-input': {
                     padding: '8px 10px',
-                    fontWeight: '600',
+                    fontWeight: '600'
                   },
                   '& .MuiSelect-select': {
                     minWidth: '80px',
@@ -106,16 +107,22 @@ const LoginScreen = () => {
                   }
                 }}
               >
-                <MenuItem value='english' sx={{ fontSize: '12px', padding: '6px 10px' }}>English</MenuItem>
-                <MenuItem value='spanish' sx={{ fontSize: '12px', padding: '6px 10px' }}>Spanish</MenuItem>
-                <MenuItem value='french' sx={{ fontSize: '12px', padding: '6px 10px' }}>French</MenuItem>
+                <MenuItem value='english' sx={{ fontSize: '12px', padding: '6px 10px' }}>
+                  English
+                </MenuItem>
+                <MenuItem value='spanish' sx={{ fontSize: '12px', padding: '6px 10px' }}>
+                  Spanish
+                </MenuItem>
+                <MenuItem value='french' sx={{ fontSize: '12px', padding: '6px 10px' }}>
+                  French
+                </MenuItem>
               </Select>
             </FormControl>
           </div>
         </div>
-        <div className='m-auto mb-2 h-[60%] w-[80%] flex justify-between items-center gap-[50px]'>
-          <div className="w-full lg:w-1/2">
-            <Typography variant='h6' style={{ fontWeight: 'bold', color: '#4B449D' }}>
+        <div className='mx-auto h-[60%] w-[80%] flex justify-between items-center gap-[50px]'>
+          <div className='w-full lg:w-1/2'>
+            <Typography variant='h6' style={{ fontWeight: 'bold', color: '#4B449D', fontSize:'clamp(14px,2vw,20px)' }}>
               Login to your account
             </Typography>
             <form onSubmit={handleLogin} style={{ marginTop: '30px', width: '100%' }}>
@@ -205,7 +212,8 @@ const LoginScreen = () => {
               />
               <div style={{ minHeight: '24px', marginTop: '6px' }}>
                 {error && (
-                  <Typography variant='body2' style={{ color: '#ef4444', fontSize: '0.8rem' }}>                  {error}
+                  <Typography className='text-red-600' variant='body2' style={{ fontSize: '0.8rem' }}>
+                    {error}
                   </Typography>
                 )}
               </div>
@@ -225,39 +233,32 @@ const LoginScreen = () => {
               </div>
             </form>
           </div>
-          <div className="w-full h-full lg:w-1/2 hidden lg:block">
+          <div className='w-full h-full lg:w-1/2 hidden lg:block'>
             <img src='/assets/login-image.svg' alt='login-user' style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
         </div>
 
-        <div className="w-full lg:w-1/2">
-          <div className="text-center">
-            <p className="text-xs text-red-500 mb-1">
-              For Service Channel, FM Pilot, Corrigo, Ariba users, please go back to your maintenance portal to access our webshop through punchout. You cannot log into the webshop from this screen.
-            </p>
+        <div className='w-full xs:mt-2 sm:mt-0 flex flex-col justify-center items-center'>
+          <div className='text-center xs:w-[100%] md:w-[60%]'>
+            <p className='text-xs text-red-600'>For Service Channel, FM Pilot, Corrigo, Ariba users, please go back to your maintenance portal to access our webshop through punchout. You cannot log into the webshop from this screen.</p>
           </div>
-          <div className="text-center mt-2">
-            <p className="text-xs text-gray-600">
+          <div className='text-center mt-2'>
+            <p className='text-xs text-[#4B449D]'>
               If you are having any login issues, please contact{' '}
-              <a href="tel:1-800-329-8643" className="font-medium text-[#4B449D] hover:text-[#38327D]">
+              <a href='tel:1-800-329-8643' className='font-medium text-[#4B449D] hover:text-[#38327D]'>
                 1-800-329-8643
               </a>
             </p>
           </div>
+          <nav className='mt-3 mb-2 flex flex-wrap justify-center w-full mx-auto lg:w-3/4'>
+            {['Privacy Policy', 'T&C Of Use', 'T&C Of Sale', 'T&C of Purchase', 'Ethics / Code Of Conduct', 'Contact Us'].map((item, index, array) => (
+              <a key={item} href='#' className='text-xs text-[#4B449D] hover:text-[#38327D] mx-1'>
+                {item}
+                {index !== array.length - 1 && ' |'}
+              </a>
+            ))}
+          </nav>
         </div>
-
-        <nav className="mt-3 flex flex-wrap justify-center w-full mx-auto lg:w-3/4">
-          {['Privacy Policy', 'T&C Of Use', 'T&C Of Sale', 'T&C of Purchase', 'Ethics / Code Of Conduct', 'Contact Us'].map((item, index, array) => (
-            <a
-              key={item}
-              href='#'
-              className="text-xs text-[#4B449D] hover:text-[#38327D] mx-1"
-            >
-              {item}
-              {index !== array.length - 1 && ' |'}
-            </a>
-          ))}
-        </nav>
       </div>
     </div>
   );
