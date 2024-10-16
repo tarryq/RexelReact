@@ -97,7 +97,7 @@ export default function ManageAccount(props) {
 
       {/*  account dropdown in column */}
 
-      <div className='flex items-center justify-between mt-5 mb-2' style={{ minHeight: '100px' }}> /
+      <div className='flex items-center justify-between mt-5 mb-2' style={{ minHeight: '100px' }}>
         <div className='w-1/2 md:w-2/3  flex justify-center items-center'>{selectedAccountData && selectedAccountData.logo && <div dangerouslySetInnerHTML={{ __html: selectedAccountData.logo }} />}</div>       
         <div className="flex w-1/2 md:w-1/3  flex-col gap-4 justify-start">
           <div className='flex items-center'>
