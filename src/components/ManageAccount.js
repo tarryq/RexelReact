@@ -18,7 +18,7 @@ export default function ManageAccount(props) {
         setAvailableAccounts(accounts);
         const defaultAccount = accounts[0];
         setSelectedAccount(defaultAccount.account);
-        const filteredStores = stores.filter(store => store.accountId === defaultAccount.accountId);
+        const filteredStores = stores.filter((store) => store.accountId === defaultAccount.accountId);
         setAvailableStores(filteredStores);
         setSelectedStore(filteredStores[0]?.storeName || '');
       } else if (currentUser.usertype === 'account') {
@@ -26,7 +26,7 @@ export default function ManageAccount(props) {
         setAvailableAccounts([userAccount]);
         setSelectedAccount(userAccount.account);
         // Filter stores based on account
-        const filteredStores = stores.filter(store => store.accountId === userAccount.accountId);
+        const filteredStores = stores.filter((store) => store.accountId === userAccount.accountId);
         setAvailableStores(filteredStores);
         setSelectedStore(filteredStores[0]?.storeName || '');
       } else if (currentUser.usertype === 'store') {
@@ -34,7 +34,7 @@ export default function ManageAccount(props) {
         setAvailableAccounts([userAccount]);
         setSelectedAccount(userAccount.account);
         // Find the specific store for the user
-        const userStore = stores.find(store => store.storeName === currentUser.storename && store.accountId === userAccount.accountId);
+        const userStore = stores.find((store) => store.storeName === currentUser.storename && store.accountId === userAccount.accountId);
         setAvailableStores([userStore]);
         setSelectedStore(userStore?.storeName || '');
       }
@@ -47,7 +47,7 @@ export default function ManageAccount(props) {
     const account = accounts.find((acc) => acc.account === newSelectedAccount);
     if (account) {
       // Update available stores based on the selected account
-      const filteredStores = stores.filter(store => store.accountId === account.accountId);
+      const filteredStores = stores.filter((store) => store.accountId === account.accountId);
       setAvailableStores(filteredStores);
       setSelectedStore(filteredStores[0]?.storeName || ''); // Set to first store or empty
     } else {
@@ -63,59 +63,14 @@ export default function ManageAccount(props) {
 
   return (
     <div className='h-auto flex flex-col bg-gray-100 px-6'>
-
-      {/* account dropdown in row */}
-
-      {/* <div className='flex items-center justify-between mt-5' style={{ minHeight: '100px' }}>
-        <div className='flex-1 flex justify-center items-center'>{selectedAccountData && selectedAccountData.logo && <div dangerouslySetInnerHTML={{ __html: selectedAccountData.logo }} />}</div>
-        <div className='flex gap-10 items-center ml-auto'>
-          <div className='form-control'>
-            <span className='label-text'>Account</span>
-            <select className='select select-bordered select-sm' style={{ width: '200px' }} value={selectedAccount} onChange={handleAccountChange} disabled={currentUser?.usertype !== 'admin'}>
-              {availableAccounts.map((account) => (
-                <option key={account.account} value={account.account}>
-                  {account.account}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className='form-control'>
-            <span className='label-text'>Store</span>
-            <select className='select select-bordered select-sm' style={{ width: '200px' }} value={selectedStore} onChange={handleStoreChange} disabled={currentUser?.usertype === 'store'}>
-              {availableStores.map((store) => (
-                <option key={store} value={store}>
-                  {store}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className='form-control items-center mt-4'>
-            <div className='text-sm'>
-              <p>
-                Items In Cart: <span className='font-semibold'>0</span>
-              </p>
-              <p>
-                Cart Subtotal: <span className='font-semibold'>$0.00</span>
-              </p>
-            </div>
-          </div>
+      <div className='flex items-center justify-between my-4' style={{ minHeight: '100px' }}>
+        <div className='w-[54%] flex flex-col'>
+        <div className='self-end'>{selectedAccountData && selectedAccountData.logo && <div dangerouslySetInnerHTML={{ __html: selectedAccountData.logo }} />}</div>
         </div>
-      </div> */}
-      
-
-      {/*  account dropdown in column */}
-
-      <div className='flex items-center justify-between mt-5 mb-2' style={{ minHeight: '100px' }}>
-        <div className='w-1/2 md:w-2/3  flex justify-center items-center'>{selectedAccountData && selectedAccountData.logo && <div dangerouslySetInnerHTML={{ __html: selectedAccountData.logo }} />}</div>       
-        <div className="flex w-1/2 md:w-1/3  flex-col gap-4 justify-start">
+        <div className='flex flex-col gap-4 justify-start xs:ml-4'>
           <div className='flex items-center'>
-            <label className="block text-sm font-medium text-gray-700 w-[140px]">Account :</label>
-            <select
-              className="block w-full border-gray-300 select select-bordered select-sm"
-              value={selectedAccount}
-              onChange={handleAccountChange}
-              disabled={currentUser?.usertype !== 'admin'}
-            >
+            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Account :</label>
+            <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedAccount} onChange={handleAccountChange} disabled={currentUser?.usertype !== 'admin'}>
               {availableAccounts.map((account) => (
                 <option key={account.account} value={account.account}>
                   {account.account}
@@ -125,13 +80,8 @@ export default function ManageAccount(props) {
           </div>
 
           <div className='flex items-center'>
-            <label className="block text-sm font-medium text-gray-700 w-[140px]">Store :</label>
-            <select
-              className="block w-full border-gray-300 select select-bordered select-sm"
-              value={selectedStore}
-              onChange={handleStoreChange}
-              disabled={currentUser?.usertype === 'store'}
-            >
+            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Store :</label>
+            <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedStore} onChange={handleStoreChange} disabled={currentUser?.usertype === 'store'}>
               {availableStores.map((store) => (
                 <option key={store.storeId} value={store.storeName}>
                   {store.storeName}
@@ -141,13 +91,13 @@ export default function ManageAccount(props) {
           </div>
 
           <div className='flex items-center'>
-            <label className="block text-sm font-medium text-gray-700 w-[140px]">Items In Cart :</label>
-            <p className="font-semibold">0</p>
+            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Items In Cart :</label>
+            <p className='font-semibold'>0</p>
           </div>
 
           <div className='flex items-center'>
-            <label className="block text-sm font-medium text-gray-700 w-[140px]">Cart subtotal :</label>
-            <p className="font-semibold">$0.00</p>
+            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Cart subtotal :</label>
+            <p className='font-semibold'>$0.00</p>
           </div>
         </div>
       </div>
