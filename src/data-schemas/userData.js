@@ -6,8 +6,9 @@ export const users = [
     usertype: 'store',
     name: 'Paul',
     accountname: 'Apple',
+    accountId: 'APL001',
     storename: 'Apple Store 1',
-    menu: ['Home', 'Maintenance'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Invoicing'],
     email: 'storeuser1@apple.com'
   },
   {
@@ -16,8 +17,9 @@ export const users = [
     usertype: 'store',
     name: 'Anna',
     accountname: 'Apple',
+    accountId: 'APL001',
     storename: 'Apple Store 2',
-    menu: ['Home', 'Maintenance'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Invoicing'],
     email: 'storeuser2@apple.com'
   },
   {
@@ -26,8 +28,9 @@ export const users = [
     usertype: 'account',
     name: 'Steve',
     accountname: 'Apple',
+    accountId: 'APL001',
     storename: null,
-    menu: ['Home', 'Maintenance'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing' ],
     email: 'account@apple.com'
   },
 
@@ -38,8 +41,9 @@ export const users = [
     usertype: 'store',
     name: 'Chris',
     accountname: 'Samsung',
+    accountId: 'SAM001',
     storename: 'Samsung Store 1',
-    menu: ['Home', 'Support'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Invoicing'],
     email: 'storeuser1@samsung.com'
   },
   {
@@ -48,8 +52,9 @@ export const users = [
     usertype: 'store',
     name: 'Jenny',
     accountname: 'Samsung',
+    accountId: 'SAM001',
     storename: 'Samsung Store 2',
-    menu: ['Home', 'Support'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Invoicing'],
     email: 'storeuser2@samsung.com'
   },
   {
@@ -58,8 +63,9 @@ export const users = [
     usertype: 'account',
     name: 'David',
     accountname: 'Samsung',
+    accountId: 'SAM001',
     storename: null,
-    menu: ['Home', 'Support'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing' ],
     email: 'account@samsung.com'
   },
 
@@ -70,8 +76,9 @@ export const users = [
     usertype: 'store',
     name: 'Ethan',
     accountname: 'Adidas',
-    storename: 'ADIDAS AMERICA INC - PORTLAN',
-    menu: ['Home', 'Orders'],
+    accountId: 'ADD001',
+    storename: 'ADIDAS AMERICA INC - PORTLAND',
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Invoicing'],
     email: 'storeuser1@adidas.com'
   },
   {
@@ -80,8 +87,9 @@ export const users = [
     usertype: 'store',
     name: 'Mia',
     accountname: 'Adidas',
+    accountId: 'ADD001',
     storename: 'ADIDAS EUROPE INC - BERLIN',
-    menu: ['Home', 'Orders'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Invoicing'],
     email: 'storeuser2@adidas.com'
   },
   {
@@ -90,8 +98,9 @@ export const users = [
     usertype: 'account',
     name: 'Liam',
     accountname: 'Adidas',
+    accountId: 'ADD001',
     storename: null,
-    menu: ['Home', 'Orders'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing' ],
     email: 'account@adidas.com'
   },
 
@@ -102,8 +111,9 @@ export const users = [
     usertype: 'store',
     name: 'Sophie',
     accountname: 'Nike',
+    accountId: 'NIK001',
     storename: 'Nike Store NYC',
-    menu: ['Home', 'Sales'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Invoicing'],
     email: 'storeuser1@nike.com'
   },
   {
@@ -112,8 +122,9 @@ export const users = [
     usertype: 'store',
     name: 'Jake',
     accountname: 'Nike',
+    accountId: 'NIK001',
     storename: 'Nike Store LA',
-    menu: ['Home', 'Sales'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Invoicing'],
     email: 'storeuser2@nike.com'
   },
   {
@@ -122,8 +133,9 @@ export const users = [
     usertype: 'account',
     name: 'Mark',
     accountname: 'Nike',
+    accountId: 'NIK001',
     storename: null,
-    menu: ['Home', 'Sales'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing' ],
     email: 'account@nike.com'
   },
 
@@ -134,16 +146,9 @@ export const users = [
     usertype: 'admin',
     name: 'John',
     accountname: null,
+    accountId: null,
     storename: null,
-    menu: ['Products',
-      'My Account',
-      'My Cart',
-      'Messages',
-      'Reports',
-      'Instructions',
-      'Invoicing',
-      'Maintenance',
-      'Tracking'],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Invoicing', 'Maintenance', 'Tracking'],
     email: 'admin@abc.com'
   }
 ];

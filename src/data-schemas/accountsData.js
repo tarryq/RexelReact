@@ -1,75 +1,90 @@
 export const accounts = [
   {
-    "account": "Apple",
-    "accountId": "APL001",
-    "store": [
-      "Apple Store 1",
-      "Apple Store 2",
-      "Apple Store 3",
-      "Apple Store 4",
-      "Apple Store 5"
-    ],
-    "logo": `<svg fill="#000000" width="80px" height="80px" viewBox="-0.2 0 2.4 2.4" xmlns="http://www.w3.org/2000/svg">
-  <path d="M2.009 1.753a1.333 1.333 0 0 1 -0.181 0.365l0.003 -0.005q-0.186 0.283 -0.371 0.283a0.667 0.667 0 0 1 -0.207 -0.048l0.005 0.001a0.667 0.667 0 0 0 -0.217 -0.046h-0.001a0.533 0.533 0 0 0 -0.208 0.049l0.003 -0.001a0.533 0.533 0 0 1 -0.189 0.049L0.646 2.4q-0.219 0 -0.434 -0.373A1.467 1.467 0 0 1 0 1.303v-0.002a0.853 0.853 0 0 1 0.165 -0.543l-0.002 0.003A0.5 0.5 0 0 1 0.569 0.553h0.004a0.933 0.933 0 0 1 0.262 0.045l-0.007 -0.002a0.933 0.933 0 0 0 0.195 0.043L1.027 0.64a0.733 0.733 0 0 0 0.211 -0.051L1.233 0.591a0.8 0.8 0 0 1 0.248 -0.049h0.009a0.533 0.533 0 0 1 0.302 0.095L1.79 0.636q0.086 0.063 0.149 0.143l0.001 0.001a0.933 0.933 0 0 0 -0.163 0.168l-0.002 0.003a0.513 0.513 0 0 0 -0.094 0.296v0.003c0 0.118 0.037 0.227 0.101 0.317l-0.001 -0.002a0.44 0.44 0 0 0 0.225 0.181l0.003 0.001zM1.467 0.061a0.533 0.533 0 0 1 -0.043 0.2l0.001 -0.003a0.6 0.6 0 0 1 -0.134 0.199 0.4 0.4 0 0 1 -0.153 0.103l-0.003 0.001a0.667 0.667 0 0 1 -0.147 0.024h-0.003V0.582a0.667 0.667 0 0 1 0.114 -0.37l-0.001 0.002a0.573 0.573 0 0 1 0.357 -0.213L1.458 0l0.003 0.015v0.001q0.001 0.009 0.004 0.017V0.032l0.001 0.015z"/>
-</svg>
+    accountId: "APL001",
+    account: "Apple",
+    eclipseId: "APL192856",
+    eclipseUsername: "appleuser",
+    addressLine1: "1 Apple Park Way",
+    city: "Cupertino",
+    stateRegion: "CA",
+    zipCode: "95014",
+    country: "USA",
+    contactName: "Tim Cook",
+    contactEmail: "tim.cook@apple.com",
+    defaultShippingMethod: "UPS GROUND",
+    logo: `<svg fill="#000000" width="80px" height="80px" viewBox="-0.2 0 2.4 2.4" xmlns="http://www.w3.org/2000/svg">
+   <path d="M2.009 1.753a1.333 1.333 0 0 1 -0.181 0.365l0.003 -0.005q-0.186 0.283 -0.371 0.283a0.667 0.667 0 0 1 -0.207 -0.048l0.005 0.001a0.667 0.667 0 0 0 -0.217 -0.046h-0.001a0.533 0.533 0 0 0 -0.208 0.049l0.003 -0.001a0.533 0.533 0 0 1 -0.189 0.049L0.646 2.4q-0.219 0 -0.434 -0.373A1.467 1.467 0 0 1 0 1.303v-0.002a0.853 0.853 0 0 1 0.165 -0.543l-0.002 0.003A0.5 0.5 0 0 1 0.569 0.553h0.004a0.933 0.933 0 0 1 0.262 0.045l-0.007 -0.002a0.933 0.933 0 0 0 0.195 0.043L1.027 0.64a0.733 0.733 0 0 0 0.211 -0.051L1.233 0.591a0.8 0.8 0 0 1 0.248 -0.049h0.009a0.533 0.533 0 0 1 0.302 0.095L1.79 0.636q0.086 0.063 0.149 0.143l0.001 0.001a0.933 0.933 0 0 0 -0.163 0.168l-0.002 0.003a0.513 0.513 0 0 0 -0.094 0.296v0.003c0 0.118 0.037 0.227 0.101 0.317l-0.001 -0.002a0.44 0.44 0 0 0 0.225 0.181l0.003 0.001zM1.467 0.061a0.533 0.533 0 0 1 -0.043 0.2l0.001 -0.003a0.6 0.6 0 0 1 -0.134 0.199 0.4 0.4 0 0 1 -0.153 0.103l-0.003 0.001a0.667 0.667 0 0 1 -0.147 0.024h-0.003V0.582a0.667 0.667 0 0 1 0.114 -0.37l-0.001 0.002a0.573 0.573 0 0 1 0.357 -0.213L1.458 0l0.003 0.015v0.001q0.001 0.009 0.004 0.017V0.032l0.001 0.015z"/>
+ </svg>
 `
   },
   {
-    "account": "Samsung",
-    "accountId": "SAM001",
-    "store": [
-      "Samsung Store 1",
-      "Samsung Store 2",
-      "Samsung Store 3",
-      "Samsung Store 4",
-      "Samsung Store 5"
-    ],
-    "logo": `<svg width="80px" height="80px" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+    accountId: "SAM001",
+    account: "Samsung",
+    eclipseId: "SAM192857",
+    eclipseUsername: "samsunguser",
+    addressLine1: "129 Samsung-ro",
+    city: "Suwon",
+    stateRegion: "Gyeonggi-do",
+    zipCode: "16677",
+    country: "South Korea",
+    contactName: "Kim Hyun Suk",
+    contactEmail: "kim.hyun.suk@samsung.com",
+    defaultShippingMethod: "DHL EXPRESS",
+    logo: `<svg width="80px" height="80px" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
   <path d="m66.055 34.27 0.158 8.973h-0.077l-2.605 -8.973h-4.27v11.303h2.825l-0.158 -9.285h0.077l2.788 9.285h4.088v-11.303zm-53.828 0 -2.135 11.42h3.085l1.575 -10.39h0.065l1.538 10.39h3.06l-2.11 -11.42zm17.265 0 -1.407 8.71h-0.077l-1.42 -8.71H21.925l-0.222 11.42h2.865l0.077 -10.273h0.025l1.915 10.273h2.902l1.915 -10.273h0.077l0.077 10.273h2.865l-0.273 -11.42zm-24.22 8.178c0.117 0.26 0.077 0.65 0.04 0.833 -0.077 0.39 -0.352 0.767 -1.107 0.767 -0.73 0 -1.145 -0.418 -1.145 -1.027v-1.107H0v0.872c0 2.565 2.018 3.32 4.168 3.32 2.058 0 3.775 -0.715 4.05 -2.59 0.158 -0.99 0.04 -1.64 0 -1.875 -0.535 -2.41 -4.895 -3.085 -5.195 -4.428a1.5 1.5 0 0 1 0 -0.613c0.077 -0.378 0.338 -0.767 1.027 -0.767s1.067 0.418 1.067 1.027v0.69h2.865v-0.795c0 -2.487 -2.252 -2.865 -3.855 -2.865 -2.032 0 -3.71 0.677 -4.01 2.512a3.5 3.5 0 0 0 0.04 1.538c0.455 2.357 4.545 3.048 5.118 4.505zm37.175 0c0.117 0.26 0.077 0.613 0.04 0.833 -0.077 0.39 -0.352 0.767 -1.107 0.767 -0.73 0 -1.145 -0.418 -1.145 -1.027v-1.107H37.175v0.872c0 2.525 1.98 3.295 4.128 3.295 2.058 0 3.738 -0.69 4.01 -2.605 0.158 -0.99 0.04 -1.603 0 -1.875 -0.455 -2.37 -4.777 -3.085 -5.078 -4.387a1.5 1.5 0 0 1 0 -0.613c0.065 -0.378 0.338 -0.767 1.027 -0.767 0.65 0 1.067 0.418 1.067 1.027v0.69h2.825v-0.795c0 -2.487 -2.212 -2.865 -3.815 -2.865 -2.032 0 -3.673 0.637 -3.973 2.512 -0.077 0.495 -0.077 0.963 0.025 1.538 0.47 2.357 4.48 3.008 5.053 4.505zm9.623 1.525c0.807 0 1.027 -0.535 1.107 -0.833 0.04 -0.117 0.04 -0.313 0.04 -0.43v-8.438h2.902v8.215c0 0.222 0 0.65 -0.04 0.755 -0.182 2.147 -1.875 2.837 -3.973 2.837s-3.775 -0.69 -3.973 -2.837c0 -0.105 -0.04 -0.535 -0.04 -0.755v-8.215h2.902v8.438c0 0.158 0 0.313 0.04 0.43 0 0.3 0.235 0.833 1.027 0.833zm23.843 -0.117c0.848 0 1.107 -0.535 1.185 -0.833 0.04 -0.117 0.04 -0.313 0.04 -0.418v-1.653h-1.185v-1.68h4.05v3.06c0 0.235 0 0.378 -0.04 0.767 -0.195 2.098 -1.993 2.825 -4.01 2.825 -2.032 0 -3.815 -0.73 -4.01 -2.825 -0.04 -0.39 -0.04 -0.535 -0.04 -0.767v-4.817c0 -0.182 0.04 -0.573 0.04 -0.755 0.26 -2.147 1.98 -2.837 4.01 -2.837 2.018 0 3.775 0.69 4.01 2.837 0.04 0.338 0.04 0.755 0.04 0.755v0.39h-2.865v-0.65s0 -0.273 -0.04 -0.43c-0.04 -0.26 -0.273 -0.833 -1.145 -0.833 -0.848 0 -1.067 0.535 -1.145 0.833 -0.04 0.158 -0.04 0.352 -0.04 0.547v5.235c0 0.143 0 0.3 0.04 0.418 0 0.3 0.3 0.833 1.107 0.833z"/>
 </svg>
 `
   },
   {
-    "account": "Adidas",
-    "accountId": "ADD001",
-    "store": [
-      "ADIDAS AMERICA INC - PORTLAN",
-      "ADIDAS EUROPE INC - BERLIN",
-      "ADIDAS ASIA INC - TOKYO",
-      "ADIDAS AFRICA INC - CAPE TOWN",
-      "ADIDAS SOUTH AMERICA INC - SAO PAULO"
-    ],
-    "logo": `<svg fill="#000000" width="80px" height="80px" viewBox="0 0 1.4 1.4" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    accountId: "ADD001",
+    account: "Adidas",
+    eclipseId: "ADD192858",
+    eclipseUsername: "adidasuser",
+    addressLine1: "Adi-Dassler-Strasse 1",
+    city: "Herzogenaurach",
+    stateRegion: "Bavaria",
+    zipCode: "91074",
+    country: "Germany",
+    contactName: "Kasper Rørsted",
+    contactEmail: "kasper.rorsted@adidas.com",
+    defaultShippingMethod: "FEDEX GROUND",
+    logo: `<svg fill="#000000" width="80px" height="80px" viewBox="0 0 1.4 1.4" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
   <path d="M0.192 1.097a0.1 0.1 0 0 1 -0.063 -0.034 0.1 0.1 0 0 1 -0.026 -0.05 0.077 0.077 0 0 1 0 -0.042c0.01 -0.045 0.045 -0.079 0.09 -0.085 0.019 -0.003 0.041 0 0.058 0.009 0.007 0.004 0.014 0.006 0.014 0.006 0.001 0 0.001 -0.002 0.001 -0.005v-0.005h0.047v0.203h-0.047v-0.005c0 -0.003 0 -0.005 -0.001 -0.005 -0.001 0 -0.007 0.003 -0.014 0.006a0.12 0.12 0 0 1 -0.028 0.009 0.07 0.07 0 0 1 -0.032 0zm0.041 -0.052c0.019 -0.01 0.034 -0.033 0.034 -0.052 0 -0.032 -0.028 -0.06 -0.059 -0.06a0.059 0.059 0 0 0 -0.059 0.058c0 0.024 0.012 0.042 0.033 0.053a0.04 0.04 0 0 0 0.028 0.006 0.1 0.1 0 0 0 0.023 -0.005zm0.192 0.052a0.12 0.12 0 0 1 -0.053 -0.026 0.108 0.108 0 0 1 -0.019 -0.138 0.108 0.108 0 0 1 0.143 -0.035c0.001 0.001 0.003 0.002 0.004 0.002 0.001 0 0.002 -0.018 0.002 -0.041v-0.041h0.049v0.274h-0.049v-0.005c0 -0.006 -0.001 -0.006 -0.007 -0.002 -0.015 0.01 -0.047 0.015 -0.069 0.012zm0.043 -0.053a0.055 0.055 0 0 0 0.032 -0.053 0.057 0.057 0 0 0 -0.054 -0.057 0.06 0.06 0 0 0 -0.063 0.06c0 0.023 0.019 0.048 0.043 0.055a0.06 0.06 0 0 0 0.043 -0.004zm0.269 0.053a0.11 0.11 0 0 1 -0.058 -0.03 0.1 0.1 0 0 1 -0.031 -0.075 0.1 0.1 0 0 1 0.031 -0.075c0.032 -0.032 0.079 -0.04 0.118 -0.022 0.007 0.004 0.014 0.007 0.014 0.007s0.001 -0.018 0.001 -0.041v-0.041l0.024 0.001 0.024 0.001 0.001 0.136 0.001 0.137h-0.049v-0.005c0 -0.003 0 -0.005 -0.001 -0.005 -0.001 0 -0.007 0.003 -0.014 0.006a0.12 0.12 0 0 1 -0.028 0.009c-0.015 0.003 -0.015 0.003 -0.033 0zm0.041 -0.052a0.059 0.059 0 0 0 0.002 -0.107 0.07 0.07 0 0 0 -0.051 0 0.062 0.062 0 0 0 -0.033 0.058 0.052 0.052 0 0 0 0.016 0.035 0.057 0.057 0 0 0 0.066 0.014m0.193 0.052a0.107 0.107 0 0 1 -0.091 -0.106c0 -0.059 0.047 -0.106 0.106 -0.106 0.018 0 0.038 0.004 0.05 0.011 0.009 0.005 0.009 0.005 0.009 -0.001v-0.005h0.049v0.203h-0.049v-0.005c0 -0.006 -0.002 -0.007 -0.007 -0.002 -0.011 0.009 -0.047 0.015 -0.066 0.012zm0.035 -0.05a0.063 0.063 0 0 0 0.033 -0.029c0.011 -0.022 0.006 -0.054 -0.012 -0.069 -0.031 -0.026 -0.075 -0.018 -0.093 0.017a0.062 0.062 0 0 0 -0.001 0.051c0.006 0.012 0.021 0.026 0.033 0.03a0.065 0.065 0 0 0 0.04 0zm0.171 0.045c-0.036 -0.008 -0.059 -0.03 -0.061 -0.06l0 -0.006 0.027 -0.001c0.026 -0.001 0.027 0 0.027 0.004 0 0.008 0.007 0.017 0.016 0.021a0.06 0.06 0 0 0 0.026 0.004c0.02 0 0.03 -0.004 0.035 -0.014 0.002 -0.006 0.002 -0.007 -0.002 -0.012 -0.005 -0.007 -0.014 -0.01 -0.049 -0.019 -0.047 -0.011 -0.065 -0.022 -0.071 -0.044 -0.006 -0.022 0.002 -0.051 0.018 -0.065 0.021 -0.018 0.062 -0.024 0.1 -0.015 0.03 0.007 0.05 0.027 0.052 0.053l0.001 0.01 -0.026 0.001 -0.026 0.001 -0.001 -0.006a0.03 0.03 0 0 0 -0.006 -0.012c-0.008 -0.01 -0.036 -0.013 -0.052 -0.006 -0.007 0.003 -0.011 0.013 -0.009 0.019 0.002 0.007 0.012 0.011 0.051 0.021a0.4 0.4 0 0 1 0.044 0.014c0.023 0.012 0.031 0.026 0.03 0.052q-0.002 0.042 -0.046 0.057c-0.017 0.006 -0.058 0.008 -0.078 0.003zM0.573 0.988l0.001 -0.104 0.026 -0.001 0.026 -0.001v0.21h-0.054l0.001 -0.104zm-0.001 -0.144v-0.024h0.054v0.047h-0.054zm0.68 0.013c-0.01 -0.003 -0.015 -0.007 -0.019 -0.015a0.029 0.029 0 0 1 0 -0.03 0.031 0.031 0 0 1 0.042 -0.012c0.022 0.011 0.02 0.045 -0.002 0.055 -0.01 0.004 -0.013 0.005 -0.021 0.002zm0.022 -0.008c0.022 -0.013 0.012 -0.048 -0.014 -0.048 -0.017 0 -0.03 0.017 -0.025 0.033a0.027 0.027 0 0 0 0.039 0.015m-0.028 -0.022v-0.017l0.011 0.001c0.006 0.001 0.012 0.002 0.013 0.003 0.004 0.002 0.002 0.011 -0.003 0.015 -0.003 0.002 -0.004 0.003 -0.003 0.003s0.004 0.003 0.006 0.006c0.003 0.006 0.003 0.006 0.001 0.006 -0.002 0 -0.005 -0.003 -0.007 -0.006 -0.003 -0.005 -0.007 -0.009 -0.011 -0.009 -0.001 0 -0.001 0.003 -0.001 0.007q0 0.008 -0.003 0.007c-0.003 0 -0.003 -0.003 -0.003 -0.017zm0.021 -0.004c0.002 -0.003 -0.005 -0.008 -0.01 -0.008q-0.004 0 -0.004 0.005c0 0.004 0.001 0.005 0.006 0.005 0.004 0 0.007 -0.001 0.008 -0.003zM0.238 0.797c-0.007 -0.012 -0.012 -0.022 -0.011 -0.023 0.003 -0.003 0.17 -0.103 0.172 -0.103 0.001 0 0.02 0.031 0.043 0.069l0.045 0.074 0.003 0.005H0.37l-0.12 0zm0.267 -0.091a6.6 6.6 0 0 1 -0.068 -0.115c-0.001 -0.003 0.172 -0.107 0.174 -0.105 0.001 0.001 0.195 0.325 0.198 0.331 0.001 0.001 -0.053 0.002 -0.118 0.002H0.573zm0.265 -0.095L0.646 0.404l0.086 -0.052c0.047 -0.028 0.087 -0.052 0.088 -0.052 0.002 0 0.311 0.514 0.311 0.517 0 0.001 -0.053 0.001 -0.118 0.001H0.895z"/>
 </svg>
 `
   },
   {
-    "account": "Nike",
-    "accountId": "NIK001",
-    "store": [
-      "Nike Store NYC",
-      "Nike Store LA",
-      "Nike Store Chicago",
-      "Nike Store Miami",
-      "Nike Store San Francisco"
-    ],
-    "logo": `<svg fill="#000000" width="80px" height="80px" viewBox="0 0 1.4 1.4" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    accountId: "NIK001",
+    account: "Nike",
+    eclipseId: "NIK192859",
+    eclipseUsername: "nikeuser",
+    addressLine1: "One Bowerman Drive",
+    city: "Beaverton",
+    stateRegion: "OR",
+    zipCode: "97005",
+    country: "USA",
+    contactName: "John Donahoe",
+    contactEmail: "john.donahoe@nike.com",
+    defaultShippingMethod: "UPS GROUND",
+    logo: `<svg fill="#000000" width="80px" height="80px" viewBox="0 0 1.4 1.4" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
   <path d="M0.174 0.999c-0.035 -0.017 -0.065 -0.048 -0.071 -0.073 -0.008 -0.03 0.002 -0.089 0.023 -0.134 0.019 -0.042 0.073 -0.127 0.107 -0.169l0.016 -0.019 -0.013 0.037c-0.018 0.051 -0.017 0.106 0.002 0.135 0.028 0.042 0.085 0.065 0.136 0.054 0.038 -0.008 0.401 -0.106 0.414 -0.112 0.009 -0.004 -0.002 -0.006 -0.037 -0.006h-0.05L0.7 0.677a0.5 0.5 0 0 0 -0.005 -0.061l-0.004 -0.028 -0.022 0.061 -0.022 0.061h-0.037c-0.021 0 -0.038 -0.003 -0.038 -0.006s0.021 -0.06 0.046 -0.128l0.059 -0.156 0.013 -0.034h0.038c0.021 0 0.038 0.001 0.038 0.002s-0.007 0.021 -0.016 0.043 -0.015 0.042 -0.014 0.043c0.001 0.001 0.018 -0.018 0.037 -0.043l0.035 -0.045h0.119c0.106 0 0.118 0.001 0.115 0.01a0.3 0.3 0 0 0 -0.008 0.026c-0.004 0.014 -0.007 0.015 -0.044 0.015h-0.04l-0.013 0.034 -0.013 0.034 0.035 0.002c0.019 0.001 0.035 0.005 0.035 0.008s-0.004 0.016 -0.009 0.028c-0.009 0.021 -0.011 0.022 -0.046 0.024l-0.037 0.002 -0.015 0.038a0.8 0.8 0 0 0 -0.015 0.04c0 0.001 0.02 0.002 0.045 0.002 0.037 0 0.044 0.002 0.041 0.01 -0.002 0.005 -0.001 0.01 0.003 0.01s0.081 -0.02 0.173 -0.045c0.157 -0.043 0.2 -0.051 0.15 -0.03 -0.012 0.005 -0.213 0.092 -0.448 0.193S0.385 0.982 0.358 0.991a0.36 0.36 0 0 1 -0.1 0.021c-0.045 0.003 -0.056 0.001 -0.084 -0.013zm0.661 -0.465c0.025 -0.067 0.046 -0.124 0.046 -0.126s-0.025 0.022 -0.055 0.054l-0.054 0.058v0.055c0 0.068 0.006 0.111 0.013 0.093zM0.275 0.677c0.007 -0.019 0.034 -0.091 0.06 -0.16l0.047 -0.126 0.042 -0.002 0.042 -0.002 -0.002 0.028c-0.006 0.067 -0.008 0.108 -0.006 0.108 0.001 0 0.013 -0.03 0.027 -0.068l0.025 -0.068h0.037c0.021 0 0.037 0.002 0.037 0.006 0 0.003 -0.021 0.06 -0.046 0.127L0.48 0.676l-0.013 0.034h-0.084l0.004 -0.066c0.002 -0.036 0.002 -0.063 0.001 -0.06s-0.013 0.033 -0.025 0.065l-0.022 0.058 -0.04 0.002 -0.04 0.002 0.013 -0.034zm0.206 0.028c0 -0.003 0.021 -0.06 0.046 -0.127l0.059 -0.156 0.013 -0.034h0.039c0.021 0 0.038 0.003 0.037 0.006l-0.06 0.161 -0.058 0.156 -0.037 0c-0.02 0 -0.037 -0.002 -0.037 -0.005"/>
 </svg>
 `
   },
   {
-    "account": "Google",
-    "accountId": "GOO001",
-    "store": [
-      "Google Store Silicon Valley",
-      "Google Store London",
-      "Google Store Tokyo",
-      "Google Store Sydney",
-      "Google Store Dubai"
-    ],
-    "logo": `<svg width="80px" height="80px" viewBox="0 0 1.6 1.6" xmlns="http://www.w3.org/2000/svg" fill="none">
+    accountId: "GOO001",
+    account: "Google",
+    eclipseId: "GOO192860",
+    eclipseUsername: "googleuser",
+    addressLine1: "1600 Amphitheatre Parkway",
+    city: "Mountain View",
+    stateRegion: "CA",
+    zipCode: "94043",
+    country: "USA",
+    contactName: "Sundar Pichai",
+    contactEmail: "sundar.pichai@google.com",
+    defaultShippingMethod: "UPS GROUND",
+    logo: `<svg width="80px" height="80px" viewBox="0 0 1.6 1.6" xmlns="http://www.w3.org/2000/svg" fill="none">
   <path fill="#4285F4" d="M1.49 0.816c0 -0.048 -0.004 -0.095 -0.012 -0.142h-0.664v0.27h0.38a0.324 0.324 0 0 1 -0.141 0.213v0.175h0.227c0.133 -0.122 0.21 -0.302 0.21 -0.515"/>
   <path fill="#34A853" d="M0.814 1.5c0.19 0 0.35 -0.062 0.467 -0.169l-0.227 -0.175c-0.063 0.043 -0.145 0.067 -0.24 0.067 -0.184 0 -0.339 -0.123 -0.395 -0.289H0.185v0.18A0.704 0.704 0 0 0 0.814 1.5"/>
   <path fill="#FBBC04" d="M0.419 0.934a0.417 0.417 0 0 1 0 -0.268V0.486H0.185a0.697 0.697 0 0 0 0 0.629z"/>
@@ -78,16 +93,19 @@ export const accounts = [
 `
   },
   {
-    "account": "Microsoft",
-    "accountId": "MIC001",
-    "store": [
-      "Microsoft Store Redmond",
-      "Microsoft Store Seattle",
-      "Microsoft Store Paris",
-      "Microsoft Store Berlin",
-      "Microsoft Store Toronto"
-    ],
-    "logo": `<svg width="80px" height="80px" viewBox="0 0 1.6 1.6" xmlns="http://www.w3.org/2000/svg" fill="none">
+    accountId: "MIC001",
+    account: "Microsoft",
+    eclipseId: "MIC192861",
+    eclipseUsername: "microsoftuser",
+    addressLine1: "One Microsoft Way",
+    city: "Redmond",
+    stateRegion: "WA",
+    zipCode: "98052",
+    country: "USA",
+    contactName: "Satya Nadella",
+    contactEmail: "satya.nadella@microsoft.com",
+    defaultShippingMethod: "FEDEX GROUND",
+    logo: `<svg width="80px" height="80px" viewBox="0 0 1.6 1.6" xmlns="http://www.w3.org/2000/svg" fill="none">
   <path fill="#F35325" d="M0.1 0.1h0.65v0.65H0.1z"/>
   <path fill="#81BC06" d="M0.85 0.1H1.5v0.65H0.85z"/>
   <path fill="#05A6F0" d="M0.1 0.85h0.65V1.5H0.1z"/>
@@ -96,47 +114,56 @@ export const accounts = [
 `
   },
   {
-    "account": "Tesla",
-    "accountId": "TES001",
-    "store": [
-      "Tesla Store California",
-      "Tesla Store New York",
-      "Tesla Store Shanghai",
-      "Tesla Store Berlin",
-      "Tesla Store London"
-    ],
-    "logo": `<svg fill="#000000" width="80px" height="80px" viewBox="0 0 2.4 2.4" xmlns="http://www.w3.org/2000/svg">
+    accountId: "TES001",
+    account: "Tesla",
+    eclipseId: "TES192862",
+    eclipseUsername: "teslauser",
+    addressLine1: "3500 Deer Creek Road",
+    city: "Palo Alto",
+    stateRegion: "CA",
+    zipCode: "94304",
+    country: "USA",
+    contactName: "Elon Musk",
+    contactEmail: "elon.musk@tesla.com",
+    defaultShippingMethod: "UPS AIR",
+    logo: `<svg fill="#000000" width="80px" height="80px" viewBox="0 0 2.4 2.4" xmlns="http://www.w3.org/2000/svg">
   <path d="m1.2 0.536 0.248 -0.303c0.31 0.017 0.599 0.091 0.862 0.212l-0.015 -0.006a0.755 0.755 0 0 1 -0.318 0.242l-0.005 0.002c-0.015 -0.144 -0.115 -0.179 -0.435 -0.179L1.2 2.4 0.862 0.503c-0.318 0 -0.419 0.035 -0.433 0.179a0.753 0.753 0 0 1 -0.322 -0.241L0.106 0.44c0.248 -0.115 0.537 -0.189 0.841 -0.206l0.006 0 0.248 0.302zm0 -0.39c0.011 0 0.023 0 0.036 0 0.397 0 0.774 0.084 1.114 0.235l-0.017 -0.007a0.9 0.9 0 0 0 0.065 -0.133L2.4 0.235C2.045 0.089 1.633 0.003 1.201 0H1.2A3.26 3.26 0 0 0 -0.022 0.243L0 0.235c0.022 0.056 0.045 0.101 0.07 0.146L0.067 0.375C0.391 0.23 0.769 0.146 1.167 0.146l0.035 0z"/>
 </svg>
 `
   },
   {
-    "account": "Facebook",
-    "accountId": "FBK001",
-    "store": [
-      "Facebook Store Menlo Park",
-      "Facebook Store Dublin",
-      "Facebook Store Singapore",
-      "Facebook Store London",
-      "Facebook Store Sydney"
-    ],
-    "logo": `<svg width="80px" height="80px" viewBox="0 0 1.6 1.6" xmlns="http://www.w3.org/2000/svg" fill="none">
+    accountId: "FBK001",
+    account: "Facebook",
+    eclipseId: "FBK192863",
+    eclipseUsername: "facebookuser",
+    addressLine1: "1 Hacker Way",
+    city: "Menlo Park",
+    stateRegion: "CA",
+    zipCode: "94025",
+    country: "USA",
+    contactName: "Mark Zuckerberg",
+    contactEmail: "mark.zuckerberg@fb.com",
+    defaultShippingMethod: "FEDEX GROUND",
+    logo: `<svg width="80px" height="80px" viewBox="0 0 1.6 1.6" xmlns="http://www.w3.org/2000/svg" fill="none">
   <path fill="#1877F2" d="M1.5 0.8a0.7 0.7 0 0 0 -0.7 -0.7 0.7 0.7 0 0 0 -0.109 1.391v-0.489H0.513V0.8h0.178V0.646c0 -0.175 0.104 -0.272 0.264 -0.272 0.077 0 0.157 0.014 0.157 0.014v0.172h-0.088c-0.087 0 -0.114 0.054 -0.114 0.109V0.8h0.194l-0.031 0.202H0.909v0.489A0.7 0.7 0 0 0 1.5 0.8"/>
   <path fill="#ffffff" d="M1.073 1.002 1.104 0.8H0.909V0.669c0 -0.055 0.027 -0.109 0.114 -0.109h0.088V0.387s-0.08 -0.014 -0.157 -0.014c-0.16 0 -0.264 0.097 -0.264 0.272V0.8H0.513v0.202h0.178v0.489a0.7 0.7 0 0 0 0.219 0v-0.489z"/>
 </svg>
 `
   },
   {
-    "account": "Amazon",
-    "accountId": "AMZ001",
-    "store": [
-      "Amazon Store Seattle",
-      "Amazon Store New York",
-      "Amazon Store Tokyo",
-      "Amazon Store London",
-      "Amazon Store Frankfurt"
-    ],
-    "logo": `<svg width="80px" height="80px" viewBox="0 0 2 2" xmlns="http://www.w3.org/2000/svg">
+    accountId: "AMZ001",
+    account: "Amazon",
+    eclipseId: "AMZ192864",
+    eclipseUsername: "amazonuser",
+    addressLine1: "410 Terry Avenue North",
+    city: "Seattle",
+    stateRegion: "WA",
+    zipCode: "98109",
+    country: "USA",
+    contactName: "Andy Jassy",
+    contactEmail: "andy.jassy@amazon.com",
+    defaultShippingMethod: "UPS GROUND",
+    logo: `<svg width="80px" height="80px" viewBox="0 0 2 2" xmlns="http://www.w3.org/2000/svg">
   <path x="0" fill="none" width="20" height="20" d="M0 0H2V2H0V0z"/>
   <g>
     <style>
@@ -148,46 +175,55 @@ export const accounts = [
 `
   },
   {
-    "account": "Sony",
-    "accountId": "SON001",
-    "store": [
-      "Sony Store Tokyo",
-      "Sony Store Los Angeles",
-      "Sony Store Paris",
-      "Sony Store Sydney",
-      "Sony Store Singapore"
-    ],
-    "logo": `<svg fill="#000000" width="80px" height="80px" viewBox="0 0 1.4 1.4" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    accountId: "SON001",
+    account: "Sony",
+    eclipseId: "SON192865",
+    eclipseUsername: "sonyuser",
+    addressLine1: "1-7-1 Konan",
+    city: "Minato",
+    stateRegion: "Tokyo",
+    zipCode: "108-0075",
+    country: "Japan",
+    contactName: "Kenichiro Yoshida",
+    contactEmail: "kenichiro.yoshida@sony.com",
+    defaultShippingMethod: "DHL EXPRESS",
+    logo: `<svg fill="#000000" width="80px" height="80px" viewBox="0 0 1.4 1.4" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
   <path d="M0.508 0.804c-0.052 -0.006 -0.095 -0.03 -0.112 -0.064 -0.007 -0.014 -0.007 -0.017 -0.007 -0.04s0 -0.026 0.007 -0.04c0.014 -0.027 0.043 -0.048 0.084 -0.059 0.026 -0.007 0.072 -0.007 0.099 0 0.038 0.01 0.067 0.031 0.08 0.059 0.007 0.014 0.007 0.017 0.007 0.04 0 0.022 -0.001 0.027 -0.006 0.038 -0.016 0.035 -0.052 0.057 -0.102 0.065a0.17 0.17 0 0 1 -0.05 0.002zm0.048 -0.032a0.075 0.075 0 0 0 0.05 -0.052c0.001 -0.006 0.002 -0.018 0.002 -0.027 -0.002 -0.038 -0.026 -0.063 -0.067 -0.07 -0.036 -0.006 -0.075 0.012 -0.088 0.043a0.097 0.097 0 0 0 -0.003 0.058c0.013 0.041 0.06 0.063 0.106 0.048M0.19 0.799a0.4 0.4 0 0 1 -0.036 -0.01 0.06 0.06 0 0 0 -0.017 -0.004c-0.001 0.001 -0.002 0.004 -0.002 0.007 0 0.005 -0.001 0.006 -0.015 0.006h-0.015v-0.073h0.014c0.013 0 0.014 0 0.014 0.005 0 0.012 0.022 0.033 0.041 0.038 0.036 0.01 0.07 0.012 0.096 0.004 0.021 -0.006 0.029 -0.02 0.02 -0.032 -0.005 -0.007 -0.014 -0.009 -0.068 -0.015 -0.072 -0.009 -0.089 -0.013 -0.105 -0.028a0.048 0.048 0 0 1 -0.002 -0.069c0.011 -0.011 0.02 -0.016 0.046 -0.024 0.037 -0.011 0.09 -0.008 0.128 0.008 0.014 0.006 0.017 0.006 0.017 -0.002 0 -0.006 0 -0.006 0.013 -0.005l0.013 0.001 0.001 0.03c0.001 0.034 0.001 0.034 -0.014 0.034 -0.008 0 -0.009 -0.001 -0.012 -0.008 -0.004 -0.012 -0.021 -0.025 -0.04 -0.031 -0.014 -0.005 -0.021 -0.005 -0.051 -0.005 -0.041 0 -0.054 0.004 -0.061 0.017 -0.003 0.007 -0.004 0.008 -0.001 0.012 0.005 0.007 0.014 0.009 0.062 0.015 0.024 0.003 0.05 0.006 0.059 0.008 0.047 0.009 0.069 0.029 0.069 0.061 0 0.038 -0.038 0.061 -0.105 0.064 -0.021 0.001 -0.03 0 -0.047 -0.004zm0.509 -0.017V0.769h0.016c0.012 0 0.016 -0.001 0.017 -0.004 0.001 -0.002 0.001 -0.032 0.001 -0.066 0 -0.073 0.001 -0.069 -0.022 -0.069H0.697v-0.025h0.091l0.032 0.029 0.064 0.057c0.017 0.016 0.032 0.029 0.033 0.029 0.003 0.001 -0.001 -0.086 -0.003 -0.088a0.05 0.05 0 0 0 -0.018 -0.003l-0.016 -0.001V0.606h0.109l0.001 0.012 0.001 0.012h-0.017c-0.015 0 -0.017 0 -0.018 0.005 -0.001 0.003 -0.001 0.04 0 0.082l0.002 0.077 -0.019 -0.001h-0.019l-0.035 -0.031c-0.02 -0.017 -0.053 -0.047 -0.074 -0.066l-0.039 -0.035 -0.001 0.049c0 0.027 0 0.051 0.001 0.054 0.001 0.005 0.003 0.005 0.019 0.006l0.018 0.001v0.023l-0.054 0.001 -0.054 0.001v-0.013zm0.395 0.009a0.04 0.04 0 0 1 -0.001 -0.012l0.001 -0.009 0.015 -0.001c0.019 -0.001 0.021 -0.003 0.021 -0.028v-0.02l-0.039 -0.044a0.7 0.7 0 0 0 -0.043 -0.046 0.06 0.06 0 0 0 -0.019 -0.002h-0.015v-0.025l0.064 0.001 0.064 0.001 0.001 0.012 0.001 0.012h-0.01c-0.006 0 -0.01 0.001 -0.01 0.002s0.01 0.015 0.023 0.03c0.022 0.026 0.023 0.027 0.027 0.023 0.019 -0.02 0.043 -0.051 0.042 -0.053 -0.001 -0.001 -0.006 -0.002 -0.01 -0.002h-0.009v-0.025H1.3v0.025l-0.018 0.001 -0.018 0.001 -0.039 0.044 -0.039 0.044 0.001 0.024 0.001 0.024 0.018 0.001 0.018 0.001 -0.001 0.012 -0.001 0.012 -0.063 0.001c-0.053 0.001 -0.064 0 -0.065 -0.003z"/>
 </svg>
 `
   },
   {
-    "account": "LG",
-    "accountId": "LG001",
-    "store": [
-      "LG Store Seoul",
-      "LG Store NYC",
-      "LG Store Chicago",
-      "LG Store Los Angeles",
-      "LG Store Singapore"
-    ],
-    "logo": `<svg width="80px" height="80px" viewBox="0 0 80 80" role="img" xmlns="http://www.w3.org/2000/svg">
+    accountId: "LG001",
+    account: "LG",
+    eclipseId: "LG192866",
+    eclipseUsername: "lguser",
+    addressLine1: "128 Yeoui-daero",
+    city: "Seoul",
+    stateRegion: "Yeongdeungpo-gu",
+    zipCode: "07336",
+    country: "South Korea",
+    contactName: "Kwon Bong Seok",
+    contactEmail: "kwon.bong.seok@lg.com",
+    defaultShippingMethod: "DHL EXPRESS",
+    logo: `<svg width="80px" height="80px" viewBox="0 0 80 80" role="img" xmlns="http://www.w3.org/2000/svg">
   <path d="M17.62 22.38a17.62 17.62 0 1 0 0 35.24 17.623 17.623 0 0 0 0 -35.24m0 2.867c0.167 0 0.52 0 0.7 0.007v1.377l-0.7 -0.01A13.3 13.3 0 0 0 8.167 30.537a13.267 13.267 0 0 0 -3.917 9.453c0 3.573 1.39 6.933 3.917 9.453a13.3 13.3 0 0 0 9.453 3.917 13.4 13.4 0 0 0 13.343 -12.47v-0.2H21.837v-1.367h9.937l0.59 -0.003v0.67a14.667 14.667 0 0 1 -4.313 10.427 14.667 14.667 0 0 1 -10.433 4.32c-3.933 0 -7.633 -1.533 -10.433 -4.32a14.667 14.667 0 0 1 -4.31 -10.427 14.767 14.767 0 0 1 14.747 -14.75zm53.543 2.927c-7.367 0 -11.24 4.023 -11.24 11.693 0 7.633 3.5 11.767 11.2 11.767 3.533 0 6.997 -0.9 8.877 -2.217v-11.053h-9.133v4.247h4.283v3.983c-0.79 0.3 -2.333 0.603 -3.8 0.603 -4.733 0 -6.313 -2.407 -6.313 -7.293 0 -4.66 1.5 -7.407 6.24 -7.407 2.633 0 4.133 0.827 5.377 2.407l3.273 -3.007c-1.993 -2.857 -5.49 -3.723 -8.767 -3.723zm-28.043 0.34v22.78h16.167v-4.433h-10.9V28.51zM11.993 32.257a2.117 2.117 0 1 1 0 4.233 2.117 2.117 0 0 1 0 -4.233m4.927 0.007h1.4v14.067h3.507v1.38H16.92z"/>
 </svg>
 `
   },
   {
-    "account": "Puma",
-    "accountId": "PUM001",
-    "store": [
-      "Puma Store Berlin",
-      "Puma Store Cape Town",
-      "Puma Store Sao Paulo",
-      "Puma Store Tokyo",
-      "Puma Store Dubai"
-    ],
-    "logo": `<svg fill="#000000" viewBox="3.187 -17.186 80 80" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+    accountId: "PUM001",
+    account: "Puma",
+    eclipseId: "PUM192867",
+    eclipseUsername: "pumauser",
+    addressLine1: "PUMA Way 1",
+    city: "Herzogenaurach",
+    stateRegion: "Bavaria",
+    zipCode: "91074",
+    country: "Germany",
+    contactName: "Bjørn Gulden",
+    contactEmail: "bjorn.gulden@puma.com",
+    defaultShippingMethod: "FEDEX GROUND",
+    logo: `<svg fill="#000000" viewBox="3.187 -17.186 80 80" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
   <g id="SVGRepo_bgCarrier" stroke-width="0"/>
   <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
   <g id="SVGRepo_iconCarrier">
@@ -198,16 +234,19 @@ export const accounts = [
 `
   },
   {
-    "account": "Under Armour",
-    "accountId": "UAM001",
-    "store": [
-      "Under Armour Store NYC",
-      "Under Armour Store Miami",
-      "Under Armour Store London",
-      "Under Armour Store Sydney",
-      "Under Armour Store Tokyo"
-    ],
-    "logo": `<svg fill="#000000" viewBox="0 -9.993 80 80" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+    accountId: "UAM001",
+    account: "Under Armour",
+    eclipseId: "UAM192868",
+    eclipseUsername: "underarmouruser",
+    addressLine1: "1020 Hull Street",
+    city: "Baltimore",
+    stateRegion: "MD",
+    zipCode: "21230",
+    country: "USA",
+    contactName: "Patrik Frisk",
+    contactEmail: "patrik.frisk@underarmour.com",
+    defaultShippingMethod: "UPS GROUND",
+    logo: `<svg fill="#000000" viewBox="0 -9.993 80 80" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
   <g id="SVGRepo_bgCarrier" stroke-width="0"/>
   <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
   <g id="SVGRepo_iconCarrier">
@@ -218,93 +257,21 @@ export const accounts = [
 `
   },
   {
-    "account": "Huawei",
-    "accountId": "HUA001",
-    "store": [
-      "Huawei Store Shenzhen",
-      "Huawei Store Beijing",
-      "Huawei Store Dubai",
-      "Huawei Store Berlin",
-      "Huawei Store Tokyo"
-    ],
-    "logo": `<svg width="80px" height="80px" viewBox="0 0 80 80" role="img" xmlns="http://www.w3.org/2000/svg">
+    accountId: "HUA001",
+    account: "Huawei",
+    eclipseId: "HUA192869",
+    eclipseUsername: "huaweiuser",
+    addressLine1: "Huawei Industrial Base",
+    city: "Shenzhen",
+    stateRegion: "Guangdong",
+    zipCode: "518129",
+    country: "China",
+    contactName: "Ren Zhengfei",
+    contactEmail: "ren.zhengfei@huawei.com",
+    defaultShippingMethod: "DHL EXPRESS",
+    logo: `<svg width="80px" height="80px" viewBox="0 0 80 80" role="img" xmlns="http://www.w3.org/2000/svg">
   <path d="M12.233 20.467S6.067 26.367 5.733 32.6v1.167c0.267 5.033 4.067 8 4.067 8 6.1 5.967 20.867 13.467 24.333 15.167 0 0 0.2 0.1 0.333 -0.033l0.067 -0.133v-0.133C25.067 36 12.233 20.467 12.233 20.467M32.167 62c-0.067 -0.267 -0.333 -0.267 -0.333 -0.267l-24.6 0.867c2.667 4.767 7.167 8.433 11.867 7.333 3.2 -0.833 10.533 -5.933 12.933 -7.667 0.2 -0.167 0.133 -0.3 0.133 -0.3zm0.267 -2.6C21.633 52.1 0.7 40.933 0.7 40.933c-0.5 1.533 -0.667 3 -0.7 4.333v0.233c0 3.567 1.333 6.067 1.333 6.067 2.667 5.633 7.8 7.333 7.8 7.333 2.333 1 4.667 1.033 4.667 1.033 0.4 0.067 14.667 0 18.467 0 0.167 0 0.267 -0.167 0.267 -0.167v-0.2c0 -0.1 -0.1 -0.167 -0.1 -0.167M30.2 10.633a11.4 11.4 0 0 0 -8.567 10.5v1.367c0.1 2 0.533 3.5 0.533 3.5 2.2 9.667 12.867 25.5 15.167 28.833 0.167 0.167 0.333 0.1 0.333 0.1a0.333 0.333 0 0 0 0.2 -0.333c3.533 -35.333 -3.7 -44.733 -3.7 -44.733 -1.067 0.067 -3.967 0.767 -3.967 0.767m27.663 7.567s-1.633 -6 -8.133 -7.6c0 0 -1.9 -0.467 -3.9 -0.733 0 0 -7.267 9.367 -3.733 44.767 0.033 0.233 0.2 0.267 0.2 0.267 0.233 0.1 0.333 -0.1 0.333 -0.1 2.4 -3.433 13 -19.2 15.167 -28.8 0 0 1.2 -4.667 0.067 -7.8m-9.733 43.567s-0.233 0 -0.3 0.167c0 0 -0.033 0.233 0.1 0.333 2.333 1.7 9.5 6.667 12.933 7.667 0 0 0.533 0.167 1.433 0.2h0.467c2.3 -0.067 6.333 -1.233 10 -7.533l-24.667 -0.833zm26.1 -28.033c0.467 -6.867 -6.467 -13.233 -6.467 -13.267 0 0 -12.833 15.533 -22.233 36 0 0 -0.1 0.267 0.067 0.433l0.133 0.033h0.2c3.533 -1.767 18.2 -9.233 24.267 -15.133 0 0 3.833 -3.1 4.033 -8.067m5.067 7.133s-20.933 11.233 -31.733 18.5c0 0 -0.167 0.133 -0.1 0.367 0 0 0.1 0.2 0.233 0.2 3.867 0 18.533 0 18.9 -0.067 0 0 1.9 -0.067 4.233 -0.967 0 0 5.2 -1.667 7.9 -7.567 0 0 2.433 -4.833 0.567 -10.467"/>
 </svg>
 `
   }
 ];
-
-
-
-// export const accounts = [
-//   {
-//     accountId: "APL001",
-//     account: "Apple",
-//     logo: "https://example.com/logos/apple-logo.png"
-//   },
-//   {
-//     accountId: "SAM001",
-//     account: "Samsung",
-//     logo: "https://example.com/logos/samsung-logo.png"
-//   },
-//   {
-//     accountId: "ADD001",
-//     account: "Adidas",
-//     logo: "https://example.com/logos/adidas-logo.png"
-//   },
-//   {
-//     accountId: "NIK001",
-//     account: "Nike",
-//     logo: "https://example.com/logos/nike-logo.png"
-//   },
-//   {
-//     accountId: "GOO001",
-//     account: "Google",
-//     logo: "https://example.com/logos/google-logo.png"
-//   },
-//   {
-//     accountId: "MIC001",
-//     account: "Microsoft",
-//     logo: "https://example.com/logos/microsoft-logo.png"
-//   },
-//   {
-//     accountId: "TES001",
-//     account: "Tesla",
-//     logo: "https://example.com/logos/tesla-logo.png"
-//   },
-//   {
-//     accountId: "FBK001",
-//     account: "Facebook",
-//     logo: "https://example.com/logos/facebook-logo.png"
-//   },
-//   {
-//     v
-//     account: "Amazon",
-//     logo: "https://example.com/logos/amazon-logo.png"
-//   },
-//   {
-//     accountId: "SON001",
-//     account: "Sony",
-//     logo: "https://example.com/logos/sony-logo.png"
-//   },
-//   {
-//     accountId: "LG001",
-//     account: "LG",
-//     logo: "https://example.com/logos/lg-logo.png"
-//   },
-//   {
-//     accountId: "PUM001",
-//     account: "Puma",
-//     logo: "https://example.com/logos/puma-logo.png"
-//   },
-//   {
-//     accountId: "UAM001",
-//     account: "Under Armour",
-//     logo: "https://example.com/logos/under-armour-logo.png"
-//   },
-//   {
-//     accountId: "HUA001",
-//     account: "Huawei",
-//     logo: "https://example.com/logos/huawei-logo.png"
-//   }
-// ];

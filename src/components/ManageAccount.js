@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { accounts } from '../data-schemas/accountsData';
 import { stores } from '../data-schemas/storeData';
 import Navbar from './Navbar';
+import AccountMaintenance from './AccountMaintenance'
 
 export default function ManageAccount(props) {
   const [selectedStore, setSelectedStore] = useState('');
@@ -56,13 +57,25 @@ export default function ManageAccount(props) {
     }
   };
 
+  const handleSaveAccount = (updatedAccountDetails) => {
+    // Update the account in your data source
+    const updatedAccounts = accounts.map(acc =>
+      acc.account === selectedAccount ? { ...acc, ...updatedAccountDetails } : acc
+    );
+    // You would typically send this update to your backend here
+    console.log('Updated accounts:', updatedAccounts);
+    // Update the local state if necessary
+    setAvailableAccounts(updatedAccounts);
+  };
+
+
   const handleStoreChange = (event) => {
     setSelectedStore(event.target.value);
   };
   const selectedAccountData = accounts.find((acc) => acc.account === selectedAccount);
 
   return (
-    <div className='h-auto flex flex-col bg-gray-100 px-6'>
+    <div className='min-h-[90vh] pb-4 h-auto flex flex-col bg-gray-100 px-6'>
       <div className='flex items-center justify-between my-4' style={{ minHeight: '100px' }}>
         <div className='w-[54%] flex flex-col'>
         <div className='self-end'>{selectedAccountData && selectedAccountData.logo && <div dangerouslySetInnerHTML={{ __html: selectedAccountData.logo }} />}</div>
@@ -102,14 +115,24 @@ export default function ManageAccount(props) {
         </div>
       </div>
 
-      <Navbar setActiveTab={setActiveTab} menuTabs={currentUser?.menu} />
-
-      <div className='bg-white shadow-md rounded-b-lg p-6 mt-2'>
-        <h2 className='text-2xl font-bold mb-4'>Dashboard Content</h2>
-        <p>Active Tab: {activeTab}</p>
-        <p>Welcome, {currentUser?.name}!</p>
-        <p>User Type: {currentUser?.usertype}</p>
-        <p>Email: {currentUser?.email}</p>
+      <Navbar setActiveTab={setActiveTab} user={currentUser} menuTabs={currentUser?.menu} activeTab={activeTab} />
+      <div className='p-6 mt-2'>
+        {activeTab === 'Accounts' ? (
+          <AccountMaintenance
+            selectedAccount={selectedAccount}
+            accounts={availableAccounts}
+            onSave={handleSaveAccount}
+            activeTab={activeTab}
+          />
+        ) : (
+          <div className='bg-white p-6 rounded-md'>
+            <h2 className='text-2xl font-bold mb-4'>Dashboard Content</h2>
+            <p>Active Tab: {activeTab}</p>
+            <p>Welcome, {currentUser?.name}!</p>
+            <p>User Type: {currentUser?.usertype}</p>
+            <p>Email: {currentUser?.email}</p>
+          </div>
+        )}
       </div>
     </div>
   );

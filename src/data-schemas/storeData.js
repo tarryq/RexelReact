@@ -57,7 +57,7 @@ export const stores = [
  {
   storeId: "NIKSTR001",
   accountId: "NIK001",
-  storeName: "Nike Store 1",
+  storeName: "Nike Store NYC",
   city: "Chicago",
   eclipseID: "NIKSTR001",
   storeContact: "555-666-7777"
@@ -65,7 +65,7 @@ export const stores = [
  {
   storeId: "NIKSTR002",
   accountId: "NIK001",
-  storeName: "Nike Store 2",
+  storeName: "Nike Store LA",
   city: "London",
   eclipseID: "NIKSTR002",
   storeContact: "666-777-8888"

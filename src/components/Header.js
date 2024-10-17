@@ -4,7 +4,7 @@ import { Divider } from '@mui/material';
 export default function Header(props) {
   const currentUser = props.currentUser;
   return (
-    <div className='h-[10vh] w-full flex items-center justify-between px-5 bg-white shadow-md' style={{ position: 'sticky', top: 0 }}>
+    <div className='h-[10vh] w-full flex items-center justify-between px-5 bg-white shadow-md' style={{ position: 'sticky', top: 0, zIndex: '100' }}>
       <div className='flex items-center'>
         <div className='flex items-center'>
           <img src='/assets/capitol_light_logo.jpg' alt='Capitol Light logo' className='h-12 mr-3' />
