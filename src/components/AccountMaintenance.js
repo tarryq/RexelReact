@@ -20,7 +20,7 @@ import {
   InputLabel,
   RadioGroup,
   Radio
-  
+
 } from '@mui/material';
 
 const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
@@ -29,7 +29,7 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
   const [currentSection, setCurrentSection] = useState(0);
   const [hasChanges, setHasChanges] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  
+
 
   const sections = [
     {
@@ -42,7 +42,7 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
     },
     {
       name: 'Order Settings',
-      fields: ['wholeOrderMultiplier', 'defaultShippingMethod', 'serviceProvider', 'eclipseOrderServiceFee', 'orderConfirmationEmails', 'startingOrderStatus', 'customerPONumber', 'includeOrderPDFWithConfirmation', 'accountOrdersThroughSRMS', 'accountIsActive', 'hideAccount', 'poMustBeEntered', 'addLampGuideOrderInfo', 'oneInvoicePerOrder', 'shoppingCartCompanyPrompt', 'maxEachesBeforeForcingBidStatus', 'maxCasesBeforeForcingBidStatus', 'accountUsesSingleBilling', 'useNewProductGridSystem', 'accountNotes', 'accountSpecialShippingInstructions' ]
+      fields: ['wholeOrderMultiplier', 'defaultShippingMethod', 'serviceProvider', 'eclipseOrderServiceFee', 'orderConfirmationEmails', 'startingOrderStatus', 'customerPONumber', 'includeOrderPDFWithConfirmation', 'accountOrdersThroughSRMS', 'accountIsActive', 'hideAccount', 'poMustBeEntered', 'addLampGuideOrderInfo', 'oneInvoicePerOrder', 'shoppingCartCompanyPrompt', 'maxEachesBeforeForcingBidStatus', 'maxCasesBeforeForcingBidStatus', 'accountUsesSingleBilling', 'useNewProductGridSystem', 'accountNotes', 'accountSpecialShippingInstructions']
     },
     {
       name: 'Branch Details',
@@ -192,7 +192,7 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
               <span className="label-text font-semibold">{config.label}</span>
             </label>
             <input
-              type={ config.type === 'number' ? 'number' : 'text'}
+              type={config.type === 'number' ? 'number' : 'text'}
               name={fieldName}
               value={value}
               onChange={handleInputChange}
@@ -310,10 +310,9 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
       </div>
 
 
-    <div className="flex bg-gray-100 min-h-screen">
-      {/* Left sidebar */}
-      <div className="w-1/4 bg-white shadow-md rounded-lg p-6 min-h-[70%]">
-        <ul>
+      <div className="flex bg-gray-100 bg-white shadow-md p-6 rounded-lg">
+        {/* Left sidebar */}
+        <ul className="w-1/4 mr-6">
           {sections.map((section, index) => (
             <li
               key={section.name}
@@ -324,32 +323,30 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
             </li>
           ))}
         </ul>
-      </div>
+        {/* Right content area */}
+        <div className="w-3/4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {sections[currentSection].fields.map(fieldName =>
+              accountDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null
+            )}
+          </div>
 
-      {/* Right content area */}
-        <div className="w-3/4 pl-6 min-h-[70%]">
-        <div className="bg-white shadow-md rounded-lg p-6 grid grid-cols-2 md:grid-cols-3 gap-4">
-          {sections[currentSection].fields.map(fieldName =>
-            accountDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null
-          )}
-        </div>
-
-        {/* Action buttons */}
-        <div className="mt-6 flex justify-end space-x-4">
-          <button
-            className='btn btn-sm hover:bg-[#4B449D] hover:border-[#4B449D] hover:outline-none text-[#4B449D] h-[40px]'
-            onClick={handleCancel}
-            disabled={!hasChanges}
-          >
-            Cancel
-          </button>
-          <button
-            className='btn btn-sm bg-[#4B449D] text-white hover:bg-[#7873B5] outline-none border-none h-[40px]'
-            onClick={handleSave}
-            disabled={!hasChanges}
-          >
-            Save
-          </button>
+          {/* Action buttons */}
+          <div className="mt-6 flex justify-end space-x-4">
+            <button
+              className='btn btn-sm hover:bg-[#4B449D] hover:border-[#4B449D] hover:outline-none text-[#4B449D] h-[40px]'
+              onClick={handleCancel}
+              disabled={!hasChanges}
+            >
+              Cancel
+            </button>
+            <button
+              className='btn btn-sm bg-[#4B449D] text-white hover:bg-[#7873B5] outline-none border-none h-[40px]'
+              onClick={handleSave}
+              disabled={!hasChanges}
+            >
+              Save
+            </button>
             <Snackbar
               open={snackbarOpen}
               autoHideDuration={6000}
@@ -359,9 +356,9 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
                 Saved successfully!
               </Alert>
             </Snackbar>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };

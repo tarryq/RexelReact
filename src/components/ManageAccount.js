@@ -80,7 +80,7 @@ export default function ManageAccount(props) {
         <div className='w-[54%] flex flex-col'>
         <div className='self-end'>{selectedAccountData && selectedAccountData.logo && <div dangerouslySetInnerHTML={{ __html: selectedAccountData.logo }} />}</div>
         </div>
-        <div className='flex flex-col gap-4 justify-start xs:ml-4 min-w-[30%]'>
+        <div className='flex flex-col gap-2 justify-start xs:ml-4 min-w-[30%]'>
           <div className='flex items-center'>
             <label className='block text-sm font-medium text-gray-700 w-[140px]'>Account :</label>
             <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedAccount} onChange={handleAccountChange} disabled={currentUser?.usertype !== 'admin'}>
@@ -103,7 +103,7 @@ export default function ManageAccount(props) {
             </select>
           </div>
 
-          <div className='flex items-center'>
+          {/* <div className='flex items-center'>
             <label className='block text-sm font-medium text-gray-700 w-[140px]'>Items In Cart :</label>
             <p className='font-semibold'>0</p>
           </div>
@@ -111,7 +111,7 @@ export default function ManageAccount(props) {
           <div className='flex items-center'>
             <label className='block text-sm font-medium text-gray-700 w-[140px]'>Cart subtotal :</label>
             <p className='font-semibold'>$0.00</p>
-          </div>
+          </div> */}
         </div>
       </div>
 

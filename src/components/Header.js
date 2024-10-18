@@ -18,6 +18,18 @@ export default function Header(props) {
         </div>
       </div>
       <div className='flex items-center space-x-4'>
+        <div className='mr-2'>
+          <div className='flex items-center'>
+            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Items In Cart :</label>
+            <p className='font-semibold'>0</p>
+          </div>
+
+          <div className='flex items-center'>
+            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Cart subtotal :</label>
+            <p className='font-semibold'>$0.00</p>
+          </div>
+        </div>
+
         <div className='dropdown dropdown-end'>
           <label tabIndex={0} className='w-auto cursor-pointer'>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
