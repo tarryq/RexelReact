@@ -3,6 +3,7 @@ import { accounts } from '../data-schemas/accountsData';
 import { stores } from '../data-schemas/storeData';
 import Navbar from './Navbar';
 import AccountMaintenance from './AccountMaintenance'
+import StoreMaintenance from './StoreMaintenance';
 
 export default function ManageAccount(props) {
   const [selectedStore, setSelectedStore] = useState('');
@@ -69,6 +70,13 @@ export default function ManageAccount(props) {
   };
 
 
+  const handleSaveStore = (updatedStoreDetails) => {
+    const updatedStores = availableStores.map(store =>
+      store.storeName === selectedStore ? { ...store, ...updatedStoreDetails } : store
+    );
+    setAvailableStores(updatedStores);
+  };
+
   const handleStoreChange = (event) => {
     setSelectedStore(event.target.value);
   };
@@ -122,6 +130,13 @@ export default function ManageAccount(props) {
             selectedAccount={selectedAccount}
             accounts={availableAccounts}
             onSave={handleSaveAccount}
+            activeTab={activeTab}
+          />
+        ) : activeTab === 'Store' ? (
+          <StoreMaintenance
+            selectedStore={selectedStore}
+            stores={availableStores}
+            onSave={handleSaveStore}
             activeTab={activeTab}
           />
         ) : (
