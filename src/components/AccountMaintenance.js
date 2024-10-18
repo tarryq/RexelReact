@@ -20,7 +20,6 @@ import {
   InputLabel,
   RadioGroup,
   Radio
-
 } from '@mui/material';
 
 const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
@@ -29,7 +28,6 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
   const [currentSection, setCurrentSection] = useState(0);
   const [hasChanges, setHasChanges] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
 
   const sections = [
     {
@@ -70,8 +68,6 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
     'Send All Store Guides to SnapCount'
   ];
 
-
-
   useEffect(() => {
     const account = accounts.find(acc => acc.account === selectedAccount);
     if (account) {
@@ -87,6 +83,11 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
       setCurrentSection(0);
     }
   }, [selectedAccount, accounts]);
+
+  // Function to check if the details have changed compared to the original
+  const checkForChanges = (newDetails) => {
+    return JSON.stringify(newDetails) !== JSON.stringify(originalDetails);
+  };
 
   const handleSave = () => {
     const updatedDetails = Object.keys(accountDetails).reduce((acc, key) => {
@@ -105,7 +106,6 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
     setSnackbarOpen(false);
   };
 
-
   const handleCancel = () => {
     setAccountDetails(originalDetails);
     setHasChanges(false);
@@ -113,15 +113,13 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setAccountDetails(prev => ({
-      ...prev,
+    const newDetails = {
+      ...accountDetails,
       [name]: type === 'checkbox' ? checked : value
-    }));
-    setHasChanges(true);
+    };
+    setAccountDetails(newDetails);
+    setHasChanges(checkForChanges(newDetails)); // Check for changes here
   };
-
-
-  //daisyUI inputs
 
   const renderField = (fieldName) => {
     const config = getAccountConfig(fieldName);
@@ -160,6 +158,10 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
                 onChange={handleInputChange}
                 disabled={isReadOnly}
                 className="checkbox"
+                style={{
+                  '--chkbg': value ? '#4B449D' : 'white',
+                  '--chkfg': 'white'
+                }}
               />
               <span className="label-text font-semibold ml-2">{config.label}</span>
             </label>
@@ -181,9 +183,7 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
             />
           </div>
         );
-
       case 'number':
-      // case 'password':
       case 'text':
       default:
         return (
@@ -192,7 +192,7 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
               <span className="label-text font-semibold">{config.label}</span>
             </label>
             <input
-              type={config.type === 'number' ? 'number' : 'text'}
+              type="text"
               name={fieldName}
               value={value}
               onChange={handleInputChange}
@@ -290,7 +290,6 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
   //   }
   // };
 
-
   return (
     <div className='mt-8'>
       <div className="flex justify-between items-center mb-4">
@@ -309,9 +308,7 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
         </div>
       </div>
 
-
       <div className="flex bg-gray-100 bg-white shadow-md p-6 rounded-lg">
-        {/* Left sidebar */}
         <ul className="w-1/4 mr-6">
           {sections.map((section, index) => (
             <li
@@ -323,7 +320,7 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
             </li>
           ))}
         </ul>
-        {/* Right content area */}
+
         <div className="w-3/4">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {sections[currentSection].fields.map(fieldName =>
@@ -331,10 +328,9 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
             )}
           </div>
 
-          {/* Action buttons */}
           <div className="mt-6 flex justify-end space-x-4">
             <button
-              className='btn btn-sm hover:bg-[#4B449D] hover:border-[#4B449D] hover:outline-none text-[#4B449D] h-[40px]'
+              className='btn btn-sm hover:bg-[#4B449D] hover:border-[#4B449D] hover:outline-none hover:text-white text-[#4B449D] h-[40px]'
               onClick={handleCancel}
               disabled={!hasChanges}
             >
