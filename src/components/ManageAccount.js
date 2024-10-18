@@ -59,13 +59,9 @@ export default function ManageAccount(props) {
   };
 
   const handleSaveAccount = (updatedAccountDetails) => {
-    // Update the account in your data source
     const updatedAccounts = accounts.map(acc =>
       acc.account === selectedAccount ? { ...acc, ...updatedAccountDetails } : acc
     );
-    // You would typically send this update to your backend here
-    console.log('Updated accounts:', updatedAccounts);
-    // Update the local state if necessary
     setAvailableAccounts(updatedAccounts);
   };
 
@@ -75,6 +71,8 @@ export default function ManageAccount(props) {
       store.storeName === selectedStore ? { ...store, ...updatedStoreDetails } : store
     );
     setAvailableStores(updatedStores);
+    const updatedStore = updatedStores.find(store => store.storeName === selectedStore) || updatedStores[0];
+    setSelectedStore(updatedStore.storeName);
   };
 
   const handleStoreChange = (event) => {

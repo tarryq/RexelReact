@@ -309,7 +309,7 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
       </div>
 
       <div className="flex bg-gray-100 bg-white shadow-md p-6 rounded-lg">
-        <ul className="w-1/4 mr-6">
+        <ul className="w-1/5 mr-10">
           {sections.map((section, index) => (
             <li
               key={section.name}
@@ -321,7 +321,7 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
           ))}
         </ul>
 
-        <div className="w-3/4">
+        <div className="w-4/5">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {sections[currentSection].fields.map(fieldName =>
               accountDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null
@@ -330,14 +330,14 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
 
           <div className="mt-6 flex justify-end space-x-4">
             <button
-              className='btn btn-sm hover:bg-[#4B449D] hover:border-[#4B449D] hover:outline-none hover:text-white text-[#4B449D] h-[40px]'
+              className='btn btn-sm hover:bg-[#4B449D] hover:border-[#4B449D] hover:outline-none hover:text-white text-[#4B449D] h-[40px] w-[100px]'
               onClick={handleCancel}
               disabled={!hasChanges}
             >
               Cancel
             </button>
             <button
-              className='btn btn-sm bg-[#4B449D] text-white hover:bg-[#7873B5] outline-none border-none h-[40px]'
+              className='btn btn-sm bg-[#4B449D] text-white hover:bg-[#7873B5] outline-none border-none h-[40px] w-[100px]'
               onClick={handleSave}
               disabled={!hasChanges}
             >
