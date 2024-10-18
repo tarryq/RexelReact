@@ -25,15 +25,15 @@ const LoginPage = () => {
       navigate('/dashboard'); // Redirect to dashboard
     } else {
       // If user doesn't exist or credentials are wrong, show error
-      setError('User not found or incorrect credentials');
+      setError('Username not found or incorrect credentials');
     }
   };
 
   return (
     <div className='min-h-screen flex flex-col justify-center items-center bg-gray-100 px-4'>
       <div className='bg-white rounded-lg shadow-lg px-8 py-4  w-full max-w-sm sm:max-w-md lg:max-w-lg transition-all duration-300 ease-in-out'>
-        <div className='flex justify-center mb-2'>
-          <img src='/assets/capitol_light_logo.jpg' alt='logo' className='w-40 h-30' />
+        <div className='flex justify-center'>
+          <img src='/assets/capitol_light_logo.jpg' alt='logo' className='w-[100px] h-[100px]' />
         </div>
         <p className='text-gray-500 text-center mb-6'>The Capitol Light SRMS website requires user authentication. Please enter your details</p>
         <form onSubmit={handleLogin}>
@@ -72,12 +72,11 @@ const LoginPage = () => {
           </button>
         </form>
 
-        <p className='text-center text-gray-500 text-sm mt-4'>
-          Don't have an account?
-          <a href='/sign-up' className='text-blue-500 btn btn-sm btn-link no-underline leading-none p-0 m-0 ml-2'>
-            Create account
-          </a>
-        </p>
+        <div className="text-center mt-2">
+          <p className="text-sm text-red-600 font-medium">
+            For Service Channel, FM Pilot, Corrigo, Ariba users, please go back to your maintenance portal to access our webshop through punchout. You cannot log into the webshop from this screen.
+          </p>
+        </div>
 
         <p className='text-center text-gray-500 text-sm mt-2 mb-4'>
           If you are still having any login questions or issues please contact

@@ -29,7 +29,7 @@ const CapitolLightLogin = () => {
       navigate('/dashboard'); // Redirect to dashboard
     } else {
       // If user doesn't exist or credentials are wrong, show error
-      setError('User not found or incorrect credentials');
+      setError('Username not found or incorrect credentials');
     }
   };
 
@@ -46,7 +46,7 @@ const CapitolLightLogin = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center">
           <div className="flex items-center mb-4 sm:mb-0">
             <img className="h-8 sm:h-12 w-auto" src="/assets/capitol_light_logo.jpg" alt="Capitol Light Logo" />
-            <h1 className="ml-4 text-xl sm:text-2xl font-bold text-indigo-900 text-center sm:text-left">
+            <h1 style={{ fontSize: 'clamp(10px,2vw,20px)' }} className="ml-4 text-xl sm:text-2xl font-bold text-indigo-900 text-center sm:text-left">
               Store Replenishment and Management System
             </h1>
           </div>
