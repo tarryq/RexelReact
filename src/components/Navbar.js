@@ -22,22 +22,13 @@ export default function Menu(props) {
           <React.Fragment key={tab}>
             <li className='relative'>
               {tab === 'Maintenance' ? (
-                <div
-                  className='dropdown dropdown-hover h-full relative'
-                  onMouseEnter={() => setIsDropdownOpen(true)} // Open on hover
-                  onMouseLeave={() => setIsDropdownOpen(false)} // Close when hover is lost
-                >
-                  <label
-                    tabIndex={0}
-                    onClick={toggleDropdown} // Toggle dropdown on click
-                    className={`flex items-center rounded-lg text-white border-none bg-[#4B449D] h-full ${activeTab === tab ? 'bg-[#38327D]' : 'hover:bg-[#38327D]'}`}
-                  >
+                <div className='dropdown dropdown-hover h-full relative' onMouseEnter={() => setIsDropdownOpen(true)} onMouseLeave={() => setIsDropdownOpen(false)}>
+                  <label tabIndex={0} onClick={toggleDropdown} className={`flex items-center rounded-lg text-white border-none bg-[#4B449D] h-full ${activeTab === tab ? 'bg-[#38327D]' : 'hover:bg-[#38327D]'}`}>
                     {tab}
                     <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-4 h-4 ml-1 inline-block'>
                       <path strokeLinecap='round' strokeLinejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' />
                     </svg>
                   </label>
-                  {/* Conditionally render dropdown based on hover or click */}
                   {(isDropdownOpen || true) && (
                     <ul className='dropdown-content menu p-2 shadow-md bg-[#f0f2f5] rounded-box w-40 text-[#4B449D] absolute'>
                       <li>
@@ -58,6 +49,16 @@ export default function Menu(props) {
                             ${user?.usertype === 'store' ? 'pointer-events-none opacity-50' : ''}`}
                         >
                           Store
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          onClick={() => handleSubMenuClick('Location')}
+                          className={`block p-2 rounded-lg
+                            ${activeTab === 'Location' ? 'bg-[#4B449D] text-white hover:text-[#4B449D]' : 'hover:bg-[#d1d5db] text-[#4B449D]'}
+                            ${user?.usertype === 'Location' ? 'pointer-events-none opacity-50' : ''}`}
+                        >
+                          Location
                         </a>
                       </li>
                     </ul>
