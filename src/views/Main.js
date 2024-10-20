@@ -18,7 +18,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div style={{ height: '100vh', width: '100%', position:'relative' }}>
+    <div style={{height: '100vh', width: '100%', position:'relative'}}>
       <Header currentUser={currentUser} handleLogout={handleLogout} />
       <div className='bg-red-100 border-l-4 border-red-500 text-red-700 p-2' role='alert'>
         <p className='text-sm'>
