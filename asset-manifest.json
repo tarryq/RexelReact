@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/tarryq/RexelReact/static/css/main.f90901f8.css",
-    "main.js": "/tarryq/RexelReact/static/js/main.683b3aba.js",
-    "index.html": "/tarryq/RexelReact/index.html",
-    "main.f90901f8.css.map": "/tarryq/RexelReact/static/css/main.f90901f8.css.map",
-    "main.683b3aba.js.map": "/tarryq/RexelReact/static/js/main.683b3aba.js.map"
+    "main.css": "/RexelReact/static/css/main.f90901f8.css",
+    "main.js": "/RexelReact/static/js/main.683b3aba.js",
+    "index.html": "/RexelReact/index.html",
+    "main.f90901f8.css.map": "/RexelReact/static/css/main.f90901f8.css.map",
+    "main.683b3aba.js.map": "/RexelReact/static/js/main.683b3aba.js.map"
   },
   "entrypoints": [
     "static/css/main.f90901f8.css",
