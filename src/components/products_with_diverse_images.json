@@ -1,0 +1,194 @@
+[
+  {
+    "partNumber": "29909",
+    "description": "FP22/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/3357FF",
+    "location": "Luminous Panels",
+    "caseQuantity": 10,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "28944",
+    "description": "FP29/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/33FF57",
+    "location": "Cove Lighting (Graphic)",
+    "caseQuantity": 30,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "28557",
+    "description": "FP27/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/3357FF",
+    "location": "Sales Floor Ceiling",
+    "caseQuantity": 16,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "24524",
+    "description": "FP30/841/ECO",
+    "lampImage": "/mnt/data/A_variety_of_light_bulbs_including_incandescent,_L.png",
+    "location": "Sales Floor Ceiling",
+    "caseQuantity": 40,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "21819",
+    "description": "FP58/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/FF33FF",
+    "location": "Luminous Panels",
+    "caseQuantity": 40,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "28820",
+    "description": "FP35/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/FFFF33",
+    "location": "Genius Room & Manager's Office",
+    "caseQuantity": 40,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "24290",
+    "description": "FP59/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/FFFF33",
+    "location": "Cove Lighting (Graphic)",
+    "caseQuantity": 10,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "24507",
+    "description": "FP50/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/FF33FF",
+    "location": "Back of house",
+    "caseQuantity": 10,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "25486",
+    "description": "FP50/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/3357FF",
+    "location": "Sales Floor Ceiling",
+    "caseQuantity": 12,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "25114",
+    "description": "FP26/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/3357FF",
+    "location": "Sales Floor Ceiling",
+    "caseQuantity": 16,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "25869",
+    "description": "FP53/841/ECO",
+    "lampImage": "/mnt/data/A_variety_of_light_bulbs_including_incandescent,_L.png",
+    "location": "Cove Lighting (Graphic)",
+    "caseQuantity": 12,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "28577",
+    "description": "FP43/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/FF33FF",
+    "location": "Genius Room & Manager's Office",
+    "caseQuantity": 40,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "28191",
+    "description": "FP49/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/3357FF",
+    "location": "Cove Lighting (Graphic)",
+    "caseQuantity": 30,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "26803",
+    "description": "FP20/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/FF5733",
+    "location": "Back of house",
+    "caseQuantity": 30,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "21478",
+    "description": "FP56/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/FFFF33",
+    "location": "Back of house",
+    "caseQuantity": 30,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "27034",
+    "description": "FP23/841/ECO",
+    "lampImage": "/mnt/data/A_variety_of_light_bulbs_including_incandescent,_L.png",
+    "location": "Back of house",
+    "caseQuantity": 30,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "23833",
+    "description": "FP59/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/FF33FF",
+    "location": "Genius Room & Manager's Office",
+    "caseQuantity": 12,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "29905",
+    "description": "FP41/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/33FF57",
+    "location": "Luminous Panels",
+    "caseQuantity": 16,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "22374",
+    "description": "FP37/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/FF5733",
+    "location": "Genius Room & Manager's Office",
+    "caseQuantity": 30,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "29193",
+    "description": "FP42/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/33FF57",
+    "location": "Sales Floor Ceiling",
+    "caseQuantity": 16,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "24666",
+    "description": "FP43/841/ECO",
+    "lampImage": "https://via.placeholder.com/150/FF5733",
+    "location": "Cove Lighting (Graphic)",
+    "caseQuantity": 30,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "29731",
+    "description": "FP53/841/ECO",
+    "lampImage": "/mnt/data/A_variety_of_light_bulbs_including_incandescent,_L.png",
+    "location": "Cove Lighting (Graphic)",
+    "caseQuantity": 10,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "20669",
+    "description": "CF26DD/E/841",
+    "lampImage": "https://via.placeholder.com/150/33FF57",
+    "location": "Back of house",
+    "caseQuantity": 10,
+    "numberOfCasesNeeded": 0
+  },
+  {
+    "partNumber": "47913",
+    "description": "6.5MR16/LED/F25/927/D",
+    "lampImage": "https://via.placeholder.com/150/FF33FF",
+    "location": "Sales Floor Ceiling",
+    "caseQuantity": 10,
+    "numberOfCasesNeeded": 0
+  }
+]

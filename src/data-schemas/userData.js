@@ -150,5 +150,16 @@ export const users = [
     storename: null,
     menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Invoicing', 'Maintenance', 'Tracking'],
     email: 'admin@abc.com'
+  },
+  {
+    username: 'ChicosSC105',
+    password: 'aaa',
+    usertype: 'admin',
+    name: 'chicos sc 105',
+    accountname: null,
+    accountId: null,
+    storename: null,
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Invoicing', 'Maintenance', 'Tracking'],
+    email: 'ChicosSC105@abc.com'
   }
 ];

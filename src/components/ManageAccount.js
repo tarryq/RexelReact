@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import AccountMaintenance from './AccountMaintenance';
 import StoreMaintenance from './StoreMaintenance';
 import LocationMaintenance from './LocationMaintenance';
+import ProductLayout from './Products2';
 
 export default function ManageAccount(props) {
   const [selectedStore, setSelectedStore] = useState('');
@@ -18,44 +19,43 @@ export default function ManageAccount(props) {
   const { currentUser } = props;
 
   useEffect(() => {
-    if (currentUser && accounts && stores && locations) { // Ensure locations data is checked here
+    if (currentUser && accounts && stores && locations) {
+      // Ensure locations data is checked here
       if (currentUser.usertype === 'admin') {
         setAvailableAccounts(accounts);
         const defaultAccount = accounts[0] || {};
         setSelectedAccount(defaultAccount.account || '');
 
-        const filteredStores = stores.filter(store => store.accountId === defaultAccount.accountId);
+        const filteredStores = stores.filter((store) => store.accountId === defaultAccount.accountId);
         setAvailableStores(filteredStores);
         setSelectedStore(filteredStores[0]?.storeName || '');
 
-        const filteredLocations = locations.filter(location => location.accountId === defaultAccount.accountId);
+        const filteredLocations = locations.filter((location) => location.accountId === defaultAccount.accountId);
         setAvailableLocations(filteredLocations); // Set available locations based on account
-
       } else if (currentUser.usertype === 'account') {
-        const userAccount = accounts.find(acc => acc.account === currentUser.accountname);
+        const userAccount = accounts.find((acc) => acc.account === currentUser.accountname);
         if (userAccount) {
           setAvailableAccounts([userAccount]);
           setSelectedAccount(userAccount.account);
 
-          const filteredStores = stores.filter(store => store.accountId === userAccount.accountId);
+          const filteredStores = stores.filter((store) => store.accountId === userAccount.accountId);
           setAvailableStores(filteredStores);
           setSelectedStore(filteredStores[0]?.storeName || '');
 
-          const filteredLocations = locations.filter(location => location.accountId === userAccount.accountId);
+          const filteredLocations = locations.filter((location) => location.accountId === userAccount.accountId);
           setAvailableLocations(filteredLocations); // Set available locations based on account
         }
-
       } else if (currentUser.usertype === 'store') {
-        const userAccount = accounts.find(acc => acc.account === currentUser.accountname);
+        const userAccount = accounts.find((acc) => acc.account === currentUser.accountname);
         if (userAccount) {
           setAvailableAccounts([userAccount]);
           setSelectedAccount(userAccount.account);
 
-          const userStore = stores.find(store => store.storeName === currentUser.storename && store.accountId === userAccount.accountId);
+          const userStore = stores.find((store) => store.storeName === currentUser.storename && store.accountId === userAccount.accountId);
           setAvailableStores([userStore]);
           setSelectedStore(userStore?.storeName || '');
 
-          const filteredLocations = locations.filter(location => location.storeId === userStore.storeId);
+          const filteredLocations = locations.filter((location) => location.storeId === userStore.storeId);
           setAvailableLocations(filteredLocations); // Set available locations based on store
         }
       }
@@ -73,7 +73,6 @@ export default function ManageAccount(props) {
 
       const filteredLocations = locations.filter((location) => location.accountId === account.accountId);
       setAvailableLocations(filteredLocations); // Update available locations based on the selected account
-
     } else {
       setAvailableStores([]);
       setAvailableLocations([]); // Clear locations if no account is found
@@ -143,6 +142,8 @@ export default function ManageAccount(props) {
           <StoreMaintenance selectedStore={selectedStore} stores={availableStores} onSave={handleSaveStore} />
         ) : activeTab === 'Location' ? (
           <LocationMaintenance selectedAccount={selectedAccount} accounts={availableAccounts} locations={availableLocations} onSave={handleSaveLocation} />
+        ) : activeTab === 'Products' ? (
+          <ProductLayout />
         ) : (
           <div className='bg-white p-6 rounded-md'>
             <h2 className='text-2xl font-bold mb-4'>Dashboard Content</h2>
