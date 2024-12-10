@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext'; // Assuming you're using AuthContext for authentication
-import {users} from '../../data-schemas/userData';
+import { useAuth } from '../../contexts/AuthContext';
+import { partialAccessRoles } from '../../data-schemas/userData';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -9,6 +9,37 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  const roleMapping = {
+    99: 'admin',
+    3: 'account',
+    2: 'store'
+  };
+
+  const createUserObject = (response, loggedInUsername) => {
+    const { displayName, accessLevel, token } = response.loginResponse;
+
+    const roleType = roleMapping[accessLevel];
+
+    if (!roleType) {
+      throw new Error('Invalid access level received.');
+    }
+
+    const baseRole = partialAccessRoles.find((role) => role.usertype === roleType);
+
+    if (!baseRole) {
+      throw new Error('Role not found in partialAccessRoles.');
+    }
+
+    const enrichedUser = {
+      ...baseRole,
+      username: loggedInUsername,
+      name: displayName,
+      email: `${loggedInUsername}@gmail.com`
+    };
+
+    return enrichedUser;
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,14 +52,19 @@ const LoginPage = () => {
         },
         body: JSON.stringify({ username, password })
       });
+
       if (response.ok) {
         const userData = await response.json();
-        const userValid = users.find(
-          (user) => user.name === userData.loginResponse.displayName && user.password === password
-        );
-        localStorage.setItem('user', JSON.stringify(userValid));
-        login();
-        navigate('/dashboard');
+
+        if (userData.loginResponse.success) {
+          const enrichedUser = createUserObject(userData, username);
+
+          localStorage.setItem('user', JSON.stringify(enrichedUser));
+          login();
+          navigate('/dashboard');
+        } else {
+          setError(userData.loginResponse.errorMessage || 'Login failed. Please try again.');
+        }
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Invalid username or password. Please try again.');
@@ -50,30 +86,14 @@ const LoginPage = () => {
             <label htmlFor='username' className='block text-gray-600 text-sm font-medium mb-1'>
               Username
             </label>
-            <input
-              type='text'
-              id='username'
-              value={username}
-              onChange={(e) => setUsername(e.target.value)} // Handle username input
-              className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
-              placeholder='Enter your username'
-              required
-            />
+            <input type='text' id='username' value={username} onChange={(e) => setUsername(e.target.value)} className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500' placeholder='Enter your username' required />
           </div>
 
           <div className='mb-4'>
             <label htmlFor='password' className='block text-gray-600 text-sm font-medium mb-1'>
               Password
             </label>
-            <input
-              type='password'
-              id='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // Handle password input
-              className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
-              placeholder='Enter your password'
-              required
-            />
+            <input type='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500' placeholder='Enter your password' required />
           </div>
 
           {error && <p className='text-red-500 text-sm'>{error}</p>}
