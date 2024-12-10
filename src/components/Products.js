@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import products from './products_with_diverse_images.json';
+
+
 const Products = () => {
   const handleCaseChange = (e, partNumber) => {
     console.log(`Changed case quantity for ${partNumber}: ${e.target.value}`);
@@ -13,7 +15,7 @@ const Products = () => {
     <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
       {products.map((product) => (
         <div key={product.partNumber} className='bg-white rounded-lg shadow-md overflow-hidden'>
-          <img src={product.lampImage} alt={product.description} className='w-full h-48 object-cover' />
+          <img src={product.lampImage} alt={product.description} className='w-full h-48 object-contain p-2' />
 
           <div className='p-4'>
             <h2 className='text-xl font-semibold'>{product.description}</h2>
