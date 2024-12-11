@@ -11,7 +11,8 @@ export default function Menu(props) {
 
   const { user, setActiveTab, activeTab, menuTabs } = props;
 
-  const toggleDropdown = () => {
+  const toggleDropdown = (Menu) => {
+    props.setActiveTab(Menu);
     setIsDropdownOpen((prevState) => !prevState); // Toggle dropdown visibility
   };
 
@@ -23,7 +24,7 @@ export default function Menu(props) {
             <li className='relative'>
               {tab === 'Maintenance' ? (
                 <div className='dropdown dropdown-hover h-full relative' onMouseEnter={() => setIsDropdownOpen(true)} onMouseLeave={() => setIsDropdownOpen(false)}>
-                  <label tabIndex={0} onClick={toggleDropdown} className={`flex items-center rounded-lg text-white border-none bg-[#4B449D] h-full ${activeTab === tab ? 'bg-[#38327D]' : 'hover:bg-[#38327D]'}`}>
+                  <label tabIndex={0} onClick={toggleDropdown.bind(this, 'Maintenance')} className={`flex items-center rounded-lg text-white border-none bg-[#4B449D] h-full ${activeTab === tab ? 'bg-[#38327D]' : 'hover:bg-[#38327D]'}`}>
                     {tab}
                     <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-4 h-4 ml-1 inline-block'>
                       <path strokeLinecap='round' strokeLinejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' />

@@ -30,7 +30,7 @@ export const users = [
     accountname: 'Apple',
     accountId: 'APL001',
     storename: null,
-    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing' ],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing'],
     email: 'account@apple.com'
   },
 
@@ -65,7 +65,7 @@ export const users = [
     accountname: 'Samsung',
     accountId: 'SAM001',
     storename: null,
-    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing' ],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing'],
     email: 'account@samsung.com'
   },
 
@@ -100,7 +100,7 @@ export const users = [
     accountname: 'Adidas',
     accountId: 'ADD001',
     storename: null,
-    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing' ],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing'],
     email: 'account@adidas.com'
   },
 
@@ -135,7 +135,7 @@ export const users = [
     accountname: 'Nike',
     accountId: 'NIK001',
     storename: null,
-    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing' ],
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing'],
     email: 'account@nike.com'
   },
 
@@ -161,5 +161,47 @@ export const users = [
     storename: null,
     menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Invoicing', 'Maintenance', 'Tracking'],
     email: 'ChicosSC105@abc.com'
+  }
+];
+
+// creating user data based on access roles like 99, 1, 2...
+export const partialAccessRoles = [
+  // Admin User
+  {
+    username: 'adminuser',
+    password: 'adminpass',
+    usertype: 'admin',
+    name: 'John Admin',
+    accountname: null,
+    accountId: null,
+    storename: null,
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Invoicing', 'Maintenance', 'Tracking'],
+    email: 'admin@example.com'
+  },
+
+  // Account User
+  {
+    username: 'accountuser_global',
+    password: 'accountpass',
+    usertype: 'account',
+    name: 'Steve Account',
+    accountname: 'Samsung',
+    accountId: 'SAM001',
+    storename: null,
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing'],
+    email: 'account@global.com'
+  },
+
+  // Store User
+  {
+    username: 'storeuser_global',
+    password: 'storepass',
+    usertype: 'store',
+    name: 'Paul Store',
+    accountname: 'Apple',
+    accountId: 'APL001',
+    storename: 'Apple Store 1',
+    menu: ['Products', 'My Account', 'My Cart', 'Messages', 'Invoicing'],
+    email: 'storeuser@global.com'
   }
 ];

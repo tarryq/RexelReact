@@ -3,6 +3,7 @@ import { accounts } from '../data-schemas/accountsData';
 import { stores } from '../data-schemas/storeData';
 import { locations } from '../data-schemas/locationData'; // Ensure you import locations data
 import Navbar from './Navbar';
+import Maintenance from './Maintenance';
 import AccountMaintenance from './AccountMaintenance';
 import StoreMaintenance from './StoreMaintenance';
 import LocationMaintenance from './LocationMaintenance';
@@ -136,7 +137,9 @@ export default function ManageAccount(props) {
 
       <Navbar setActiveTab={setActiveTab} user={currentUser} menuTabs={currentUser?.menu} activeTab={activeTab} />
       <div className='p-6 mt-2'>
-        {activeTab === 'Accounts' ? (
+        {activeTab === 'Maintenance' ?
+          <Maintenance setActiveTab={setActiveTab} />
+        : activeTab === 'Accounts' ? (
           <AccountMaintenance selectedAccount={selectedAccount} accounts={availableAccounts} onSave={handleSaveAccount} />
         ) : activeTab === 'Store' ? (
           <StoreMaintenance selectedStore={selectedStore} stores={availableStores} onSave={handleSaveStore} />
