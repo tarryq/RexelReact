@@ -54,6 +54,16 @@ export default function Menu(props) {
                       </li>
                       <li>
                         <a
+                          onClick={() => handleSubMenuClick('Communication')}
+                          className={`block p-2 rounded-lg
+                            ${activeTab === 'Location' ? 'bg-[#4B449D] text-white hover:text-[#4B449D]' : 'hover:bg-[#d1d5db] text-[#4B449D]'}
+                            ${user?.usertype === 'Location' ? 'pointer-events-none opacity-50' : ''}`}
+                        >
+                          Communication
+                        </a>
+                      </li>
+                      <li>
+                        <a
                           onClick={() => handleSubMenuClick('Location')}
                           className={`block p-2 rounded-lg
                             ${activeTab === 'Location' ? 'bg-[#4B449D] text-white hover:text-[#4B449D]' : 'hover:bg-[#d1d5db] text-[#4B449D]'}

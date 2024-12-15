@@ -5,6 +5,11 @@
   font-family: 'Poppins' !important;
 }
 
+::selection {
+  background-color: #4B449D; /* Custom background color */
+  color: #FFFFFF;
+}
+
 .not-found-container {
   display: flex;
   flex-direction: column;

@@ -1,14 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Modal,
-  Grid,
-  Paper,
-  IconButton
-} from '@mui/material';
+import { Box, TextField, Button, Typography, Modal, Grid, Paper, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { DataGrid } from '@mui/x-data-grid';
 import { debounce, highlightText } from '../util';
@@ -29,14 +20,7 @@ const ProductTable = () => {
   const debouncedSearch = useMemo(
     () =>
       debounce((value) => {
-        const filtered = products
-          .map((product, index) => ({ ...product, id: index }))
-          .filter(
-            (product) => product.partNumber.toLowerCase().includes(value.toLowerCase()) ||
-              product.description.toLowerCase().includes(value.toLowerCase()) ||
-              product.location.toLowerCase().includes(value.toLowerCase()) ||
-              product.caseQuantity.toString().includes(value)
-          );
+        const filtered = products.map((product, index) => ({ ...product, id: index })).filter((product) => product.partNumber.toLowerCase().includes(value.toLowerCase()) || product.description.toLowerCase().includes(value.toLowerCase()) || product.location.toLowerCase().includes(value.toLowerCase()) || product.caseQuantity.toString().includes(value));
         setFilteredProducts(filtered);
       }, 300),
     []
@@ -65,7 +49,7 @@ const ProductTable = () => {
   };
 
   const handleInputChange = (partNumber, value, event) => {
-    event.stopPropagation()
+    event.stopPropagation();
     const numberValue = value === '' ? 0 : parseInt(value, 10);
     if (!isNaN(numberValue) && numberValue >= 0) {
       setQuantities((prev) => ({
@@ -186,7 +170,7 @@ const ProductTable = () => {
             size='small'
             variant='outlined'
             value={quantities[params.row.partNumber] || 0}
-            onClick = {(e)=> e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
             onChange={(e) => handleInputChange(params.row.partNumber, e.target.value, e)}
             inputProps={{
               style: {
@@ -198,9 +182,7 @@ const ProductTable = () => {
               width: '60px',
               '& .MuiOutlinedInput-root': {
                 height: '40px',
-                borderRadius: '8px'
-              },
-              '& .MuiOutlinedInput-root': {
+                borderRadius: '8px',
                 '& fieldset': {
                   borderColor: '#4B449D'
                 },
@@ -376,10 +358,6 @@ const ProductTable = () => {
                 color: 'white !important'
               }
             },
-            '& .MuiDataGrid-iconButtonContainer': {
-              visibility: 'visible',
-              opacity: 1
-            },
             '& .MuiDataGrid-cell': {
               textAlign: 'left',
               borderRight: '1px solid #CCCCCC70',
@@ -389,8 +367,10 @@ const ProductTable = () => {
               backgroundColor: '#4B449D12',
               color: '#4B449D !important',
               fontWeight: '500 !important'
-            }, 
+            },
             '& .MuiDataGrid-iconButtonContainer': {
+              visibility: 'visible',
+              opacity: 1,
               '& .MuiDataGrid-sortIcon': {
                 color: 'white !important'
               }
@@ -466,39 +446,35 @@ const ProductTable = () => {
 
                 {/* Details Section */}
                 <Grid item xs={12} md={7}>
-                  <Typography variant="h4" sx={{ color: '#4B449D', fontWeight: 'bold', mb: 2 }}>
+                  <Typography variant='h4' sx={{ color: '#4B449D', fontWeight: 'bold', mb: 2 }}>
                     {selectedProduct.description}
                   </Typography>
-                  <Box sx={{
-                    backgroundColor: '#F9F9FF',
-                    borderRadius: '12px',
-                    p: 3,
-                    border: '1px solid #4B449D20'
-                  }}>
+                  <Box
+                    sx={{
+                      backgroundColor: '#F9F9FF',
+                      borderRadius: '12px',
+                      p: 3,
+                      border: '1px solid #4B449D20'
+                    }}
+                  >
                     <Grid container spacing={2}>
                       <Grid item xs={6}>
-                        <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#4B449D' }}>
+                        <Typography variant='subtitle1' sx={{ fontWeight: 'bold', color: '#4B449D' }}>
                           Part Number
                         </Typography>
-                        <Typography variant="body1">
-                          {selectedProduct.partNumber}
-                        </Typography>
+                        <Typography variant='body1'>{selectedProduct.partNumber}</Typography>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#4B449D' }}>
+                        <Typography variant='subtitle1' sx={{ fontWeight: 'bold', color: '#4B449D' }}>
                           Location
                         </Typography>
-                        <Typography variant="body1">
-                          {selectedProduct.location}
-                        </Typography>
+                        <Typography variant='body1'>{selectedProduct.location}</Typography>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#4B449D' }}>
+                        <Typography variant='subtitle1' sx={{ fontWeight: 'bold', color: '#4B449D' }}>
                           Case Quantity
                         </Typography>
-                        <Typography variant="body1">
-                          {selectedProduct.caseQuantity}
-                        </Typography>
+                        <Typography variant='body1'>{selectedProduct.caseQuantity}</Typography>
                       </Grid>
                     </Grid>
                   </Box>

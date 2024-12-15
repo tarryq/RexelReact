@@ -16,6 +16,7 @@ const AccountMaintenance = (props) => {
       <h2 className='text-2xl font-bold mb-4' >Maintenance Dashboard</h2>
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'Accounts')}>Account Maintenance <EastIcon sx={{fontSize: '14px'}} /></p>
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'Store')}>Store Maintenance <EastIcon sx={{fontSize: '14px'}} /></p>
+      <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'Communication')}>Account Communication <EastIcon sx={{fontSize: '14px'}} /></p>
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'Location')}>Location Maintenance <EastIcon sx={{fontSize: '14px'}} /></p>
     </div>
   );

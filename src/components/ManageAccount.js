@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import Maintenance from './Maintenance';
 import AccountMaintenance from './AccountMaintenance';
 import StoreMaintenance from './StoreMaintenance';
+import AccountCommunication from './AccountCommunication';
 import LocationMaintenance from './LocationMaintenance';
 import ProductLayout from './Products2';
 
@@ -143,6 +144,8 @@ export default function ManageAccount(props) {
           <AccountMaintenance selectedAccount={selectedAccount} accounts={availableAccounts} onSave={handleSaveAccount} />
         ) : activeTab === 'Store' ? (
           <StoreMaintenance selectedStore={selectedStore} stores={availableStores} onSave={handleSaveStore} />
+        ) : activeTab === 'Communication' ? (
+          <AccountCommunication selectedAccount={selectedAccount} accounts={availableAccounts} locations={availableLocations} onSave={handleSaveLocation} />
         ) : activeTab === 'Location' ? (
           <LocationMaintenance selectedAccount={selectedAccount} accounts={availableAccounts} locations={availableLocations} onSave={handleSaveLocation} />
         ) : activeTab === 'Products' ? (
