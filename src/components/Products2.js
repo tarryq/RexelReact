@@ -48,22 +48,25 @@ const ProductTable = () => {
     debouncedSearch(value);
   };
 
-  const handleIncrement = (partNumber) => {
+  const handleIncrement = (partNumber, event) => {
+    event.stopPropagation();
     setQuantities((prev) => ({
       ...prev,
       [partNumber]: prev[partNumber] + 1
     }));
   };
 
-  const handleDecrement = (partNumber) => {
+  const handleDecrement = (partNumber, event) => {
+    event.stopPropagation();
     setQuantities((prev) => ({
       ...prev,
       [partNumber]: Math.max(prev[partNumber] - 1, 0)
     }));
   };
 
-  const handleInputChange = (partNumber, value) => {
-    const numberValue = parseInt(value, 10);
+  const handleInputChange = (partNumber, value, event) => {
+    event.stopPropagation()
+    const numberValue = value === '' ? 0 : parseInt(value, 10);
     if (!isNaN(numberValue) && numberValue >= 0) {
       setQuantities((prev) => ({
         ...prev,
@@ -174,7 +177,7 @@ const ProductTable = () => {
                 backgroundColor: '#FF292920'
               }
             }}
-            onClick={() => handleDecrement(params.row.partNumber)}
+            onClick={(event) => handleDecrement(params.row.partNumber, event)}
           >
             -
           </Button>
@@ -183,7 +186,8 @@ const ProductTable = () => {
             size='small'
             variant='outlined'
             value={quantities[params.row.partNumber] || 0}
-            onChange={(e) => handleInputChange(params.row.partNumber, e.target.value)}
+            onClick = {(e)=> e.stopPropagation()}
+            onChange={(e) => handleInputChange(params.row.partNumber, e.target.value, e)}
             inputProps={{
               style: {
                 textAlign: 'center',
@@ -236,7 +240,7 @@ const ProductTable = () => {
                 backgroundColor: '#54C39220'
               }
             }}
-            onClick={() => handleIncrement(params.row.partNumber)}
+            onClick={(event) => handleIncrement(params.row.partNumber, event)}
           >
             +
           </Button>
@@ -520,7 +524,7 @@ const ProductTable = () => {
                           backgroundColor: '#FF292920'
                         }
                       }}
-                      onClick={() => handleDecrement(selectedProduct.partNumber)}
+                      onClick={(event) => handleDecrement(selectedProduct.partNumber, event)}
                     >
                       -
                     </Button>
@@ -529,7 +533,7 @@ const ProductTable = () => {
                       size='small'
                       variant='outlined'
                       value={quantities[selectedProduct.partNumber] || 0}
-                      onChange={(e) => handleInputChange(selectedProduct.partNumber, e.target.value)}
+                      onChange={(e) => handleInputChange(selectedProduct.partNumber, e.target.value, e)}
                       inputProps={{
                         style: {
                           textAlign: 'center',
@@ -564,7 +568,7 @@ const ProductTable = () => {
                           backgroundColor: '#54C39220'
                         }
                       }}
-                      onClick={() => handleIncrement(selectedProduct.partNumber)}
+                      onClick={(event) => handleIncrement(selectedProduct.partNumber, event)}
                     >
                       +
                     </Button>
