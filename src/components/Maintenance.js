@@ -18,6 +18,9 @@ const AccountMaintenance = (props) => {
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'Store')}>Store Maintenance <EastIcon sx={{fontSize: '14px'}} /></p>
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'Communication')}>Account Communication <EastIcon sx={{fontSize: '14px'}} /></p>
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'Location')}>Location Maintenance <EastIcon sx={{fontSize: '14px'}} /></p>
+      <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'AccountCustomField')}>Account Custom Field Maintenance<EastIcon sx={{fontSize: '14px'}} /></p>
+      <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'CustomGridColumnDefinitions')}>Custom Grid Column Definition<EastIcon sx={{fontSize: '14px'}} /></p>
+      <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'LampGuideDisplayOptions')}>Lamp Guide Display Definition<EastIcon sx={{fontSize: '14px'}} /></p>
     </div>
   );
 };

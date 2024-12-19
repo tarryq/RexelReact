@@ -39,14 +39,11 @@ export default function Header(props) {
                 }}
               />
               <span className='ml-2 font-bold flex items-center' style={{ color: '#4B449D' }}>
-                Hi, {currentUser?.name}
+                Hi, {currentUser?.username}
               </span>
             </div>
           </label>
           <ul tabIndex={0} className='mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52'>
-            <li>
-              <a>{currentUser?.email}</a>
-            </li>
             <li>
               <a onClick={() => props.handleLogout()}>Logout</a>
             </li>

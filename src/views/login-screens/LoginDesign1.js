@@ -1,51 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { partialAccessRoles } from '../../data-schemas/userData';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const roleMapping = {
-    99: 'admin',
-    3: 'account',
-    2: 'store'
-  };
-
-  const createUserObject = (response, loggedInUsername) => {
-    const { displayName, accessLevel, token } = response.loginResponse;
-
-    const roleType = roleMapping[accessLevel];
-
-    if (!roleType) {
-      throw new Error('Invalid access level received.');
-    }
-
-    const baseRole = partialAccessRoles.find((role) => role.usertype === roleType);
-
-    if (!baseRole) {
-      throw new Error('Role not found in partialAccessRoles.');
-    }
-
-    const enrichedUser = {
-      ...baseRole,
-      username: loggedInUsername,
-      name: displayName,
-      email: `${loggedInUsername}@gmail.com`
-    };
-
-    return enrichedUser;
-  };
+  // Base URL for APIs
+  const BASE_URL = 'https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api';
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError('');
+    setIsLoading(true);
 
     try {
-      const response = await fetch('https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/authenticate/login', {
+      // Step 1: Login Authentication
+      const loginResponse = await fetch(`${BASE_URL}/authenticate/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -53,24 +29,63 @@ const LoginPage = () => {
         body: JSON.stringify({ username, password })
       });
 
-      if (response.ok) {
-        const userData = await response.json();
-
-        if (userData.loginResponse.success) {
-          const enrichedUser = createUserObject(userData, username);
-
-          localStorage.setItem('user', JSON.stringify(enrichedUser));
-          login();
-          navigate('/dashboard');
-        } else {
-          setError(userData.loginResponse.errorMessage || 'Login failed. Please try again.');
-        }
-      } else {
-        const errorData = await response.json();
+      if (!loginResponse.ok) {
+        const errorData = await loginResponse.json();
         setError(errorData.message || 'Invalid username or password. Please try again.');
+        return;
       }
+
+      const loginData = await loginResponse.json();
+
+      if (!loginData.loginResponse.success) {
+        setError(loginData.loginResponse.errorMessage || 'Login failed. Please try again.');
+        return;
+      }
+
+      // Step 2: Find User Account by Username
+      const accountResponse = await fetch(
+        `${BASE_URL}/account/FindAccountByUsername?userName=${username}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            // Add authorization header if required
+            // 'Authorization': `Bearer ${loginData.loginResponse.token}`
+          }
+        }
+      );
+
+      if (!accountResponse.ok) {
+        const errorData = await accountResponse.json();
+        setError(errorData.message || 'Failed to fetch user account. Please try again.');
+        return;
+      }
+
+      const accountData = await accountResponse.json();
+
+      // Create user object
+      const userObject = {
+        username: username,
+        userId: accountData.id,
+        displayName: loginData.loginResponse.displayName,
+        accessLevel: loginData.loginResponse.accessLevel,
+        token: loginData.loginResponse.token,
+        // email: `${username}@example.com` // Adjust as needed
+      };
+
+      // Store user information
+      localStorage.setItem('user', JSON.stringify(userObject));
+
+      // Update auth context
+      login(userObject);
+
+      // Navigate to dashboard
+      navigate('/dashboard');
+
     } catch (err) {
       setError('An error occurred while connecting to the server. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
