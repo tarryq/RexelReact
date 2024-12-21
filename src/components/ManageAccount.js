@@ -11,78 +11,11 @@ import LocationMaintenance from './LocationMaintenance';
 import AccountCustomFieldMaintenance from './AccountCustomFieldMaintenance';
 import CustomGridColumnDefinitions from './CustomGridColumnDefinitions.js';
 import LampGuideDisplayOptions from './LampGuideDisplayOptions.js';
+import MaxOrderValueMaintenance from './MaxOrderValueMaintenance.js';
 import ProductLayout from './Products2';
+import { DashboardSkeleton } from '../skeletons/skeleton.js';
 
 
-const SkeletonLoader = () => (
-  <div className="animate-pulse min-h-[90vh] pb-4 h-auto flex flex-col bg-gray-100 px-6">
-    {/* Header Area */}
-    <div className="flex items-center justify-between my-4" style={{ minHeight: '100px' }}>
-      <div className="w-[54%] h-16 bg-gray-200 rounded"></div>
-      <div className="flex flex-col gap-2 min-w-[30%]">
-        <div className="flex items-center">
-          <div className="w-[140px] h-4 bg-gray-200 rounded"></div>
-          <div className="w-full h-8 bg-gray-200 rounded ml-2"></div>
-        </div>
-        <div className="flex items-center">
-          <div className="w-[140px] h-4 bg-gray-200 rounded"></div>
-          <div className="w-full h-8 bg-gray-200 rounded ml-2"></div>
-        </div>
-      </div>
-    </div>
-
-    {/* Navbar Skeleton */}
-    <div className="h-12 bg-gray-200 rounded-lg flex gap-2 px-4 mb-4 items-center justify-center">
-      {[1, 2, 3, 4, 5].map((item) => (
-        <div key={item} className="h-8 w-24 bg-gray-300 rounded"></div>
-      ))}
-    </div>
-
-    {/* Content Area Skeleton */}
-    <div className="p-6 mt-2 bg-white rounded-lg">
-
-      <div className="w-full mb-8 gap-4 ">
-        <div className="h-8 w-[200px] mb-2 bg-gray-200 rounded"></div>
-        <div className="h-8 w-[300px] bg-gray-200 rounded"></div>
-
-      </div>
-
-      {/* Table Header */}
-      <div className="w-full mb-4 flex gap-4  justify-center">
-        <div className="h-8 w-[150px] bg-gray-200 rounded"></div>
-        <div className="h-8 w-[150px] bg-gray-200 rounded"></div>
-        <div className="h-8 w-[150px] bg-gray-200 rounded"></div>
-        <div className="h-8 w-[150px] bg-gray-200 rounded"></div>
-        <div className="h-8 w-[150px] bg-gray-200 rounded"></div>
-      </div>
-
-
-
-      {/* Table Body */}
-      <div className="space-y-2 justify-center">
-        {[1, 2, 3, 4, 5].map((row) => (
-          <div key={row} className="w-full h-12 flex items-center gap-4 border-b border-gray-100 py-2 justify-center">
-            <div className="h-6 w-[150px] bg-gray-200 rounded"></div>
-            <div className="h-6 w-[150px] bg-gray-200 rounded"></div>
-            <div className="h-6 w-[150px] bg-gray-200 rounded"></div>
-            <div className="h-6 w-[150px] bg-gray-200 rounded"></div>
-            <div className="h-6 w-[150px] bg-gray-200 rounded"></div>
-          </div>
-        ))}
-      </div>
-
-      {/* Table Footer/Pagination */}
-      <div className="mt-4 flex justify-between items-center">
-        <div className="h-8 w-32 rounded"></div>
-        <div className="flex gap-2">
-          {[1, 2, 3].map((item) => (
-            <div key={item} className="h-8 w-8 bg-gray-200 rounded"></div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 export default function ManageAccount(props) {
   const [selectedStore, setSelectedStore] = useState('');
@@ -122,7 +55,7 @@ export default function ManageAccount(props) {
       setAvailableStores(data);
 
       if (data.length > 0) {
-        setSelectedStore(data[0].storeName); // Default to the zeroth index store
+        setSelectedStore(data[0]); // Default to the zeroth index store
       }
     } catch (error) {
       console.error('Error fetching stores:', error);
@@ -142,8 +75,8 @@ export default function ManageAccount(props) {
     fetchStores(account.id); // Fetch stores for the selected account
   };
 
-  const handleStoreChange = (event) => {
-    setSelectedStore(event.target.value);
+  const handleStoreChange = (store) => {
+    setSelectedStore(store);
   };
 
   // const handleSaveAccount = (updatedAccountDetails) => {
@@ -182,7 +115,7 @@ export default function ManageAccount(props) {
 
 
   if (isLoading) {
-    return <SkeletonLoader />;
+    return <DashboardSkeleton />;
   }
 
   const filteredStores = stores.filter((store) => store.accountId === accounts[0].accountId);
@@ -214,7 +147,7 @@ export default function ManageAccount(props) {
             <label className='block text-sm font-medium text-gray-700 w-[140px]'>Store :</label>
             <select
               className='block w-full border-gray-300 select select-bordered select-sm'
-              value={selectedStore}
+              value={selectedStore.storeName}
               onChange={handleStoreChange}
               disabled={currentUser?.accessLevel !== (99 || 3)}
             >
@@ -246,8 +179,11 @@ export default function ManageAccount(props) {
           <CustomGridColumnDefinitions />
         ) : activeTab === 'LampGuideDisplayOptions' ? (
           <LampGuideDisplayOptions />
-        ) : activeTab === 'Products' ? (
-        <ProductLayout user={currentUser} selectedAccount={selectedAccount} />
+        ) : activeTab === 'MaxOrderValueMaintenance' ? (
+            <MaxOrderValueMaintenance />
+        )       
+        : activeTab === 'Products' ? (
+        <ProductLayout user={currentUser} selectedAccount={selectedAccount} selectedStore = {selectedStore} />
         ) : (
           <div className='bg-white p-6 rounded-md'>
             <h2 className='text-2xl font-bold mb-4'>Dashboard Content</h2>

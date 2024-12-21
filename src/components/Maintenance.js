@@ -21,6 +21,7 @@ const AccountMaintenance = (props) => {
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'AccountCustomField')}>Account Custom Field Maintenance<EastIcon sx={{fontSize: '14px'}} /></p>
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'CustomGridColumnDefinitions')}>Custom Grid Column Definition<EastIcon sx={{fontSize: '14px'}} /></p>
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'LampGuideDisplayOptions')}>Lamp Guide Display Definition<EastIcon sx={{fontSize: '14px'}} /></p>
+      <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'MaxOrderValueMaintenance')}>Maximum Order Value Maintenance<EastIcon sx={{fontSize: '14px'}} /></p>
     </div>
   );
 };
