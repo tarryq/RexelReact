@@ -23,7 +23,7 @@ const AccountMaintenance = (props) => {
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'LampGuideDisplayOptions')}>Lamp Guide Display Definition<EastIcon sx={{fontSize: '14px'}} /></p>
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'MaxOrderValueMaintenance')}>Maximum Order Value Maintenance<EastIcon sx={{fontSize: '14px'}} /></p>
       <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'ImageMaintenance')}>Image Maintenance<EastIcon sx={{fontSize: '14px'}} /></p>
-      <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'UpdateLampGuideProduct')}>Update Lamp Guide Product<EastIcon sx={{fontSize: '14px'}} /></p>
+      <p style={labelStyle} onClick={setMaintenanceCapture.bind(this, 'LampGuide')}>Lamp Guide<EastIcon sx={{fontSize: '14px'}} /></p>
     </div>
   );
 };
