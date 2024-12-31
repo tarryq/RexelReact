@@ -12,6 +12,7 @@ import AccountCustomFieldMaintenance from './AccountCustomFieldMaintenance';
 import CustomGridColumnDefinitions from './CustomGridColumnDefinitions.js';
 import LampGuideDisplayOptions from './LampGuideDisplayOptions.js';
 import MaxOrderValueMaintenance from './MaxOrderValueMaintenance.js';
+import ImageMaintenance from './ImageMaintenance';
 import ProductLayout from './Products2';
 import { DashboardSkeleton } from '../skeletons/skeleton.js';
 
@@ -181,6 +182,8 @@ export default function ManageAccount(props) {
           <LampGuideDisplayOptions />
         ) : activeTab === 'MaxOrderValueMaintenance' ? (
             <MaxOrderValueMaintenance />
+        ) : activeTab === 'ImageMaintenance' ? (
+            <ImageMaintenance />
         )       
         : activeTab === 'Products' ? (
         <ProductLayout user={currentUser} selectedAccount={selectedAccount} selectedStore = {selectedStore} />
