@@ -74,11 +74,14 @@ export default function ManageAccount(props) {
     const accountId = event.target.value;
     const account = availableAccounts.find((acc) => acc.id === parseInt(accountId, 10));
     setSelectedAccount(account);
+    setSelectedStore([]);
+    setAvailableStores([]);
     fetchStores(account.id); // Fetch stores for the selected account
   };
 
-  const handleStoreChange = (store) => {
-    setSelectedStore(store);
+  const handleStoreChange = (e) => {
+    const findStore = availableStores.find((store) => store.id === parseInt(e.target.value, 10));
+    setSelectedStore(findStore);
   };
 
   // const handleSaveAccount = (updatedAccountDetails) => {
@@ -149,12 +152,12 @@ export default function ManageAccount(props) {
             <label className='block text-sm font-medium text-gray-700 w-[140px]'>Store :</label>
             <select
               className='block w-full border-gray-300 select select-bordered select-sm'
-              value={selectedStore.storeName}
+              value={selectedStore}
               onChange={handleStoreChange}
               disabled={currentUser?.accessLevel !== (99 || 3)}
             >
               {availableStores.map((store) => (
-                <option key={store.id} value={store.storeName}>
+                <option key={store.id} value={store.id}>
                   {store.storeName}
                 </option>
               ))}

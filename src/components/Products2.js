@@ -204,13 +204,13 @@
 
 //   useEffect(() => {
 //     const requiredColumns = [
-//       { field: 'vendorPartNumber', 
-//         headerName: 'Part Number', 
+//       { field: 'vendorPartNumber',
+//         headerName: 'Part Number',
 //         width: 170,
 //         renderCell: (params) => <Box>{highlightText(params.value.toString(), searchTerm)}</Box>
 //        },
-//       { field: 'descriptionShort', 
-//         headerName: 'Description', 
+//       { field: 'descriptionShort',
+//         headerName: 'Description',
 //         width: 200,
 //         renderCell: (params) => <Box>{highlightText(params.value, searchTerm)}</Box>
 //       },
@@ -241,13 +241,13 @@
 //             'N/A'
 //           ),
 //       },
-//       { field: 'locationInStoreText', 
+//       { field: 'locationInStoreText',
 //         headerName: 'Location',
 //          width: 200,
 //         renderCell: (params) => <Box>{highlightText(params.value, searchTerm)}</Box>
 //          },
-//       { field: 'quantityInCase', 
-//         headerName: 'Case Quantity', 
+//       { field: 'quantityInCase',
+//         headerName: 'Case Quantity',
 //         width: 180,
 //         renderCell: (params) => <Box>{highlightText(params.value.toString(), searchTerm)}</Box>
 //        },
@@ -646,10 +646,10 @@
 //                       border: '1px solid #4B449D20'
 //                     }}
 //                   >
-                    
+
 //                     <Grid container spacing={2}>
 //                       <Grid item xs={6}>
-            
+
 //                         <Typography variant='subtitle1' sx={{ fontWeight: 'bold', color: '#4B449D' }}>
 //                           Part Number
 //                         </Typography>
