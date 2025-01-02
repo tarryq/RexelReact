@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import LoginPage1 from './views/login-screens/LoginDesign1';
-import LoginPage2 from './views/login-screens/LoginDesign2';
-import LoginPage3 from './views/login-screens/LoginDesign3';
-import SignUpPage from './views/SignUp';
-import Dashboard from './views/Main';
-import NotFoundPage from './views/NotFoundPage';
+import LoginPage1 from './pages/login-screens/LoginDesign1';
+import LoginPage2 from './pages/login-screens/LoginDesign2';
+import LoginPage3 from './pages/login-screens/LoginDesign3';
+import SignUpPage from './pages/SignUp';
+import Dashboard from './pages/Main';
+import NotFoundPage from './pages/NotFoundPage';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {

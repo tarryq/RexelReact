@@ -775,7 +775,7 @@ import React, { useState,useEffect, useMemo } from 'react';
 import { Box, TextField, Button, Typography, Modal, Grid, Paper, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { DataGrid } from '@mui/x-data-grid';
-import { debounce, highlightText } from '../util';
+import { debounce, highlightText } from '../utils';
 import { ProductTableSkeleton } from '../skeletons/skeleton';
 
 const ProductTable = (props) => {
@@ -791,6 +791,10 @@ const ProductTable = (props) => {
   const [returnAccountStoreProducts, setReturnAccountStoreProducts] = useState([]);
 
   useEffect(() => {
+    if (!storeid || !accountid || !userid) {
+      setReturnAccountStoreProducts([]);
+      return;
+    };
     const fetchData = async () => {
       try {
         // Fetch columns
