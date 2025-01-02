@@ -805,11 +805,9 @@ const ProductTable = (props) => {
         // Fetch products
         const productsResponse = await fetch(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/ReturnAccountStoreProducts?accountid=${accountid}&storeid=${storeid}&userid=${userid}`);
         const productsData = await productsResponse.json();
-        console.log('Products Data:', productsData); // Log to check the structure
         setReturnAccountStoreProducts(productsData);
       } catch (error) {
         console.error('Error fetching data:', error);
-        // Handle errors appropriately, maybe show an error message to the user
       }
     };
 

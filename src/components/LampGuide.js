@@ -10,13 +10,9 @@ const UpdateLampGuideProduct = () => {
 
   const handleFileUpload = () => {
     if (selectedFile) {
-      console.log('Uploading file:', selectedFile.name);
-      // Add logic to load the file into memory for processing
       const reader = new FileReader();
       reader.onload = (e) => {
         const fileContent = e.target.result;
-        console.log('File content loaded into memory:', fileContent);
-        // Process the file content here
       };
       reader.readAsBinaryString(selectedFile);
     } else {
@@ -25,8 +21,6 @@ const UpdateLampGuideProduct = () => {
   };
 
   const handleDownloadTemplate = (templateType) => {
-    console.log(`Downloading ${templateType} template...`);
-    // Logic to download a predefined template in xlsx format
     const templates = {
       lampGuide: '/path-to-template/lamp-guide-template.xlsx',
       storeProduct: '/path-to-template/store-product-template.xlsx',

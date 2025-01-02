@@ -66,12 +66,10 @@ const LampGuideGrid = () => {
   };
 
   const saveGridChanges = () => {
-    console.log("Columns Data:", columns);
     alert("Grid changes saved!");
   };
 
   const saveSortingOptions = () => {
-    console.log("Sorting Options Data:", sortingOptions);
     alert("Sorting and break options saved!");
   };
 
