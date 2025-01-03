@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const ImageMaintenance = () => {
- const [activeTab, setActiveTab] = useState("upload");
+ const [activeTab, setActiveTab] = useState("images");
  const [searchTerm, setSearchTerm] = useState("");
  const [selectedType, setSelectedType] = useState("all");
  const [isLimitedToAccount, setIsLimitedToAccount] = useState(false);
@@ -64,7 +64,7 @@ const ImageMaintenance = () => {
      </div>
 
      <div className="p-6">
-      {activeTab === "upload" && (
+      {activeTab === "images" && (
        <div className="space-y-6">
         {/* Search Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
