@@ -49,6 +49,7 @@ export default function ManageAccount() {
         setAvailableAccounts(data);
         const defaultAccount = data[0];
         setSelectedAccount(defaultAccount);
+        updateSearchParams(defaultAccount.name, ''); // Update URL with default account
         await fetchStores(defaultAccount.id); // Fetch stores for the default account
       } else {
         setAvailableAccounts([]);
@@ -74,16 +75,25 @@ export default function ManageAccount() {
         if (data?.length) {
           setAvailableStores(data);
           setSelectedStore(data[0]); // Default to the first store
+          updateSearchParams(selectedAccount.name, data[0]?.storeName || '');
         } else {
           setAvailableStores([]);
           setSelectedStore(null);
+          updateSearchParams(selectedAccount.name, ''); // Update URL with empty store
         }
       } catch (error) {
         console.error('Error fetching stores:', error);
       }
     },
-    [currentUser]
+    [currentUser, selectedAccount]
   );
+
+  const updateSearchParams = (accountName, storeName) => {
+    setSearchParams({
+      account: accountName || '',
+      store: storeName || ''
+    });
+  };
 
   const handleAccountChange = (event) => {
     const accountId = parseInt(event.target.value, 10);
@@ -91,6 +101,7 @@ export default function ManageAccount() {
     setSelectedAccount(account);
     setAvailableStores([]);
     setSelectedStore(null);
+    updateSearchParams(account.name, ''); // Update URL when account changes
     fetchStores(accountId);
   };
 
@@ -98,6 +109,7 @@ export default function ManageAccount() {
     const storeId = parseInt(event.target.value, 10);
     const store = availableStores.find((s) => s.id === storeId);
     setSelectedStore(store || null);
+    updateSearchParams(selectedAccount.name, store?.storeName || ''); // Update URL when store changes
   };
 
   const getMenuTabs = (user) => {
