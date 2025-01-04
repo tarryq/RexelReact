@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { accounts } from '../data-schemas/accountsData';
-import { stores } from '../data-schemas/storeData';
-import { locations } from '../data-schemas/locationData';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import accountService from '../store/services';
 import Navbar from './Navbar';
 import Maintenance from './Maintenance';
 import AccountMaintenance from './AccountMaintenance';
@@ -9,126 +8,160 @@ import StoreMaintenance from './StoreMaintenance';
 import AccountCommunication from './AccountCommunication';
 import LocationMaintenance from './LocationMaintenance';
 import AccountCustomFieldMaintenance from './AccountCustomFieldMaintenance';
-import CustomGridColumnDefinitions from './CustomGridColumnDefinitions.js';
-import LampGuideDisplayOptions from './LampGuideDisplayOptions.js';
-import MaxOrderValueMaintenance from './MaxOrderValueMaintenance.js';
+import CustomGridColumnDefinitions from './CustomGridColumnDefinitions';
+import LampGuideDisplayOptions from './LampGuideDisplayOptions';
+import MaxOrderValueMaintenance from './MaxOrderValueMaintenance';
 import ImageMaintenance from './ImageMaintenance';
-import LampGuide from './LampGuide.js';
+import LampGuide from './LampGuide';
 import ProductLayout from './Products2';
-import { DashboardSkeleton } from '../skeletons/skeleton.js';
+import { DashboardSkeleton } from '../skeletons/skeleton';
 
-export default function ManageAccount(props) {
-  const [selectedStore, setSelectedStore] = useState('');
+export default function ManageAccount() {
+  const [selectedStore, setSelectedStore] = useState(null);
   const [availableAccounts, setAvailableAccounts] = useState([]);
   const [availableStores, setAvailableStores] = useState([]);
   const [activeTab, setActiveTab] = useState('Products');
-  const [selectedAccount, setSelectedAccount] = useState('');
+  const [selectedAccount, setSelectedAccount] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { currentUser } = props;
+  const [currentUser, setCurrentUser] = useState(null);
 
-  const fetchAccounts = async () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setCurrentUser(user);
+      fetchAccounts(user.userId);
+    }
+  }, []);
+
+  const fetchAccounts = useCallback(async (userId) => {
+    if (!userId) {
+      console.warn('userId is not defined. Cannot fetch accounts.');
+      return;
+    }
+
     setIsLoading(true);
     try {
-      const response = await fetch(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/GetAccountsByUserId?userId=${currentUser.userId}`);
-      const data = await response.json();
-      setAvailableAccounts(data);
+      const data = await accountService.getAccounts(userId);
 
-      if (data.length > 0) {
-        setSelectedAccount(data[0]); // Default to the zeroth index account
-        fetchStores(data[0].id); // Fetch stores for the default account
+      if (data?.length) {
+        setAvailableAccounts(data);
+        const defaultAccount = data[0];
+        setSelectedAccount(defaultAccount);
+        await fetchStores(defaultAccount.id); // Fetch stores for the default account
+      } else {
+        setAvailableAccounts([]);
+        setSelectedAccount(null);
       }
     } catch (error) {
       console.error('Error fetching accounts:', error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const fetchStores = async (accountId) => {
-    try {
-      const response = await fetch(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/GetStoresForUser?userId=${currentUser.userId}&accountId=${accountId}`);
-      const data = await response.json();
-      setAvailableStores(data);
-
-      if (data.length > 0) {
-        setSelectedStore(data[0]); // Default to the zeroth index store
+  const fetchStores = useCallback(
+    async (accountId) => {
+      if (!currentUser || !currentUser.userId || !accountId) {
+        console.warn('Missing currentUser or accountId. Cannot fetch stores.');
+        return;
       }
-    } catch (error) {
-      console.error('Error fetching stores:', error);
-    }
-  };
 
-  useEffect(() => {
-    if (currentUser) {
-      fetchAccounts();
-    }
-  }, [currentUser]);
+      try {
+        const data = await accountService.getStores(currentUser.userId, accountId);
+
+        if (data?.length) {
+          setAvailableStores(data);
+          setSelectedStore(data[0]); // Default to the first store
+        } else {
+          setAvailableStores([]);
+          setSelectedStore(null);
+        }
+      } catch (error) {
+        console.error('Error fetching stores:', error);
+      }
+    },
+    [currentUser]
+  );
 
   const handleAccountChange = (event) => {
-    const accountId = event.target.value;
-    const account = availableAccounts.find((acc) => acc.id === parseInt(accountId, 10));
+    const accountId = parseInt(event.target.value, 10);
+    const account = availableAccounts.find((acc) => acc.id === accountId);
     setSelectedAccount(account);
-    setSelectedStore([]);
     setAvailableStores([]);
-    fetchStores(account.id); // Fetch stores for the selected account
+    setSelectedStore(null);
+    fetchStores(accountId);
   };
 
-  const handleStoreChange = (e) => {
-    const findStore = availableStores.find((store) => store.id === parseInt(e.target.value, 10));
-    setSelectedStore(findStore);
+  const handleStoreChange = (event) => {
+    const storeId = parseInt(event.target.value, 10);
+    const store = availableStores.find((s) => s.id === storeId);
+    setSelectedStore(store || null);
   };
 
-  // const handleSaveAccount = (updatedAccountDetails) => {
-  //   const updatedAccounts = accounts.map((acc) => (acc.account === selectedAccount ? { ...acc, ...updatedAccountDetails } : acc));
-  //   setAvailableAccounts(updatedAccounts);
-  // };
-
-  // const handleSaveLocation = (updatedLocationDetails) => {
-  //   const updatedLocations = availableLocations.map((loc) => (loc.locationName === updatedLocationDetails.locationName ? { ...loc, ...updatedLocationDetails } : loc));
-  //   setAvailableLocations(updatedLocations);
-  // };
-
-  // const handleSaveStore = (updatedStoreDetails) => {
-  //   const updatedStores = availableStores.map((store) => (store.storeName === selectedStore ? { ...store, ...updatedStoreDetails } : store));
-  //   setAvailableStores(updatedStores);
-  //   const updatedStore = updatedStores.find((store) => store.storeName === selectedStore) || updatedStores[0];
-  //   setSelectedStore(updatedStore.storeName);
-  // };
-
-  const menuOptions = {
-    99: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Invoicing', 'Maintenance', 'Tracking'],
-    3: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing'],
-    default: ['Products', 'My Account', 'My Cart', 'Messages', 'Invoicing']
+  const getMenuTabs = (user) => {
+    const menuOptions = {
+      99: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Invoicing', 'Maintenance', 'Tracking'],
+      3: ['Products', 'My Account', 'My Cart', 'Messages', 'Reports', 'Instructions', 'Maintenance', 'Invoicing'],
+      default: ['Products', 'My Account', 'My Cart', 'Messages', 'Invoicing']
+    };
+    return menuOptions[user?.accessLevel] || menuOptions.default;
   };
 
-  function getMenuTabs(currentUser) {
-    switch (currentUser?.accessLevel) {
-      case 99:
-        return menuOptions[99];
-      case 3:
-        return menuOptions[3];
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'Maintenance':
+        return <Maintenance setActiveTab={setActiveTab} />;
+      case 'Accounts':
+        return <AccountMaintenance selectedAccount={selectedAccount} accounts={availableAccounts} />;
+      case 'Store':
+        return <StoreMaintenance selectedStore={selectedStore} stores={availableStores} />;
+      case 'Communication':
+        return <AccountCommunication selectedAccount={selectedAccount} accounts={availableAccounts} />;
+      case 'Location':
+        return <LocationMaintenance selectedAccount={selectedAccount} accounts={availableAccounts} />;
+      case 'AccountCustomField':
+        return <AccountCustomFieldMaintenance />;
+      case 'CustomGridColumnDefinitions':
+        return <CustomGridColumnDefinitions />;
+      case 'LampGuideDisplayOptions':
+        return <LampGuideDisplayOptions />;
+      case 'MaxOrderValueMaintenance':
+        return <MaxOrderValueMaintenance />;
+      case 'ImageMaintenance':
+        return <ImageMaintenance />;
+      case 'LampGuide':
+        return <LampGuide />;
+      case 'Products':
+        return <ProductLayout user={currentUser} selectedAccount={selectedAccount} selectedStore={selectedStore} />;
       default:
-        return menuOptions.default;
+        return (
+          <div className='bg-white p-6 rounded-md'>
+            <h2 className='text-2xl font-bold mb-4'>Dashboard Content</h2>
+            <p>Welcome, {currentUser?.name}!</p>
+          </div>
+        );
     }
-  }
+  };
 
-  if (isLoading) {
-    return <DashboardSkeleton />;
-  }
+  if (isLoading) return <DashboardSkeleton />;
 
-  const filteredStores = stores.filter((store) => store.accountId === accounts[0].accountId);
-  const filteredLocations = locations.filter((location) => location.accountId === accounts[0].accountId);
+  if (!availableAccounts.length) {
+    return (
+      <div className='min-h-[90vh] flex flex-col justify-center items-center bg-gray-100'>
+        <p className='text-lg text-gray-600'>No accounts found. Please contact support.</p>
+      </div>
+    );
+  }
 
   return (
     <div className='min-h-[90vh] pb-4 h-auto flex flex-col bg-gray-100 px-6'>
       <div className='flex items-center justify-between my-4' style={{ minHeight: '100px' }}>
-        <div className='w-[54%] flex flex-col'>
-          <div className='self-end'>{selectedAccount && selectedAccount.logo && <div dangerouslySetInnerHTML={{ __html: selectedAccount.logo }} />}</div>
-        </div>
-
+        <div className='w-[54%] flex flex-col'>{selectedAccount?.logo && <div className='self-end' dangerouslySetInnerHTML={{ __html: selectedAccount.logo }} />}</div>
         <div className='flex flex-col gap-2 justify-start xs:ml-4 min-w-[30%]'>
           <div className='flex items-center'>
-            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Account :</label>
+            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Account:</label>
             <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedAccount?.id || ''} onChange={handleAccountChange} disabled={currentUser?.accessLevel !== 99}>
               {availableAccounts.map((account) => (
                 <option key={account.id} value={account.id}>
@@ -137,10 +170,9 @@ export default function ManageAccount(props) {
               ))}
             </select>
           </div>
-
           <div className='flex items-center'>
-            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Store :</label>
-            <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedStore} onChange={handleStoreChange} disabled={currentUser?.accessLevel !== (99 || 3)}>
+            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Store:</label>
+            <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedStore?.id || ''} onChange={handleStoreChange} disabled={!selectedAccount || currentUser?.accessLevel < 3}>
               {availableStores.map((store) => (
                 <option key={store.id} value={store.id}>
                   {store.storeName}
@@ -150,43 +182,8 @@ export default function ManageAccount(props) {
           </div>
         </div>
       </div>
-
       <Navbar setActiveTab={setActiveTab} user={currentUser} menuTabs={getMenuTabs(currentUser)} activeTab={activeTab} />
-      <div className='p-6 mt-2'>
-        {activeTab === 'Maintenance' ? (
-          <Maintenance setActiveTab={setActiveTab} />
-        ) : activeTab === 'Accounts' ? (
-          <AccountMaintenance selectedAccount={accounts[0].account} accounts={accounts} />
-        ) : activeTab === 'Store' ? (
-          <StoreMaintenance selectedStore={filteredStores[0]?.storeName || ''} stores={filteredStores} />
-        ) : activeTab === 'Communication' ? (
-          <AccountCommunication selectedAccount={accounts[0].account} accounts={accounts} locations={filteredLocations} />
-        ) : activeTab === 'Location' ? (
-          <LocationMaintenance selectedAccount={accounts[0].account} accounts={accounts} locations={filteredLocations} />
-        ) : activeTab === 'AccountCustomField' ? (
-          <AccountCustomFieldMaintenance />
-        ) : activeTab === 'CustomGridColumnDefinitions' ? (
-          <CustomGridColumnDefinitions />
-        ) : activeTab === 'LampGuideDisplayOptions' ? (
-          <LampGuideDisplayOptions />
-        ) : activeTab === 'MaxOrderValueMaintenance' ? (
-          <MaxOrderValueMaintenance />
-        ) : activeTab === 'ImageMaintenance' ? (
-          <ImageMaintenance />
-        ) : activeTab === 'LampGuide' ? (
-          <LampGuide />
-        ) : activeTab === 'Products' ? (
-          <ProductLayout user={currentUser} selectedAccount={selectedAccount} selectedStore={selectedStore} />
-        ) : (
-          <div className='bg-white p-6 rounded-md'>
-            <h2 className='text-2xl font-bold mb-4'>Dashboard Content</h2>
-            <p>Active Tab: {activeTab}</p>
-            <p>Welcome, {currentUser?.name}!</p>
-            <p>User Type: {currentUser?.usertype}</p>
-            <p>Email: {currentUser?.email}</p>
-          </div>
-        )}
-      </div>
+      <div className='p-6 mt-2'>{renderTabContent()}</div>
     </div>
   );
 }
