@@ -7,7 +7,7 @@ export const fetchAccounts = createAsyncThunk('accounts/fetchAccounts', async (u
     const response = await accountService.getAccounts(userId);
     return response;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data);
+    return thunkAPI.rejectWithValue(error.response?.data || 'Failed to fetch accounts');
   }
 });
 
@@ -15,8 +15,8 @@ export const fetchAccounts = createAsyncThunk('accounts/fetchAccounts', async (u
 export const fetchStores = createAsyncThunk('accounts/fetchStores', async ({ userId, accountId }, thunkAPI) => {
   try {
     const response = await accountService.getStores(userId, accountId);
-    return response;
+    return { accountId, stores: response };
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data);
+    return thunkAPI.rejectWithValue(error.response?.data || 'Failed to fetch stores');
   }
 });

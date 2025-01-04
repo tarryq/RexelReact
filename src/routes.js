@@ -12,6 +12,19 @@ import ImageMaintenance from './components/ImageMaintenance';
 import LampGuide from './components/LampGuide';
 import LampGuideDisplayOptions from './components/LampGuideDisplayOptions';
 
+// import Maintenance from './Maintenance';
+// import AccountMaintenance from './AccountMaintenance';
+// import StoreMaintenance from './StoreMaintenance';
+// import AccountCommunication from './AccountCommunication';
+// import LocationMaintenance from './LocationMaintenance';
+// import AccountCustomFieldMaintenance from './AccountCustomFieldMaintenance';
+// import CustomGridColumnDefinitions from './CustomGridColumnDefinitions';
+// import LampGuideDisplayOptions from './LampGuideDisplayOptions';
+// import MaxOrderValueMaintenance from './MaxOrderValueMaintenance';
+// import ImageMaintenance from './ImageMaintenance';
+// import LampGuide from './LampGuide';
+// import ProductLayout from './Products2';
+
 const PrivateRouteWrapper = ({ element: Element }) => (
   <PrivateRoute>
     <Dashboard>

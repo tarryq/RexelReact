@@ -1,29 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchAccounts, fetchStores } from '../actions';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import accountService from '../services';
+
+export const fetchAccounts = createAsyncThunk('accounts/fetchAccounts', async (userId) => {
+  const response = await accountService.getAccounts(userId);
+  return response;
+});
+
+export const fetchStores = createAsyncThunk('accounts/fetchStores', async ({ userId, accountId }) => {
+  const response = await accountService.getStores(userId, accountId);
+  return { accountId, stores: response };
+});
 
 const accountSlice = createSlice({
   name: 'accounts',
   initialState: {
     accounts: [],
+    stores: {},
     selectedAccount: null,
-    stores: [],
     selectedStore: null,
     loading: false,
-    error: null,
+    error: null
   },
   reducers: {
     selectAccount(state, action) {
       state.selectedAccount = action.payload;
-      state.stores = []; // Reset stores when a new account is selected
-      state.selectedStore = null;
+      state.selectedStore = null; // Reset store when a new account is selected
     },
     selectStore(state, action) {
       state.selectedStore = action.payload;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
-      // Fetch Accounts
       .addCase(fetchAccounts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -37,21 +45,20 @@ const accountSlice = createSlice({
         state.loading = false;
         state.error = action.payload || 'Failed to fetch accounts.';
       })
-      // Fetch Stores
       .addCase(fetchStores.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchStores.fulfilled, (state, action) => {
         state.loading = false;
-        state.stores = action.payload;
-        state.selectedStore = action.payload.length > 0 ? action.payload[0] : null;
+        state.stores[action.payload.accountId] = action.payload.stores;
+        state.selectedStore = action.payload.stores.length > 0 ? action.payload.stores[0] : null;
       })
       .addCase(fetchStores.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to fetch stores.';
       });
-  },
+  }
 });
 
 export const { selectAccount, selectStore } = accountSlice.actions;
