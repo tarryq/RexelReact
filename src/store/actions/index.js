@@ -20,3 +20,21 @@ export const fetchStores = createAsyncThunk('accounts/fetchStores', async ({ use
     return thunkAPI.rejectWithValue(error.response?.data || 'Failed to fetch stores');
   }
 });
+
+
+// Updated product actions using services
+export const fetchProductColumns = createAsyncThunk(
+  'accounts/fetchProductColumns',
+  async ({ userid, accountid }) => {
+    const response = await accountService.getProductColumns(userid, accountid);
+    return response;
+  }
+);
+
+export const fetchProducts = createAsyncThunk(
+  'accounts/fetchProducts',
+  async ({ userid, accountid, storeid }) => {
+    const response = await accountService.getProducts(userid, accountid, storeid);
+    return response;
+  }
+);

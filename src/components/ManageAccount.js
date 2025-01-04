@@ -1,7 +1,9 @@
 import React, { useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAccounts, fetchStores, selectAccount, selectStore } from '../store/reducers/index';
+// import { selectAccount, selectStore } from '../store/reducers/index';
+import { selectAccount, selectStore } from '../store/features/accounts/accountSlice';
+import { fetchAccounts, fetchStores } from '../store/features/accounts/accountActions';
 import Navbar from './Navbar';
 import { DashboardSkeleton } from '../skeletons/skeleton';
 
@@ -72,8 +74,8 @@ export default function ManageAccount() {
     );
   }
 
-  return (
-    <div className='min-h-[90vh] pb-4 h-auto flex flex-col bg-gray-100 px-6'>
+    return (
+    <div className='min-h-[30vh] pb-4 h-auto flex flex-col bg-gray-100 px-6'>
       <div className='flex items-center justify-between my-4' style={{ minHeight: '100px' }}>
         <div className='w-[54%] flex flex-col'>{selectedAccount?.logo && <div className='self-end' dangerouslySetInnerHTML={{ __html: selectedAccount.logo }} />}</div>
         <div className='flex flex-col gap-2 justify-start xs:ml-4 min-w-[30%]'>

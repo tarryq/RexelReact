@@ -1,15 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import accountService from '../services';
-
-export const fetchAccounts = createAsyncThunk('accounts/fetchAccounts', async (userId) => {
-  const response = await accountService.getAccounts(userId);
-  return response;
-});
-
-export const fetchStores = createAsyncThunk('accounts/fetchStores', async ({ userId, accountId }) => {
-  const response = await accountService.getStores(userId, accountId);
-  return { accountId, stores: response };
-});
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchAccounts, fetchStores, fetchProductColumns, fetchProducts } from '../actions';
 
 const accountSlice = createSlice({
   name: 'accounts',
@@ -18,8 +8,18 @@ const accountSlice = createSlice({
     stores: {},
     selectedAccount: null,
     selectedStore: null,
-    loading: false,
-    error: null
+    accountLoading: false,
+    storeLoading: false,
+    error: null,
+
+    //products        
+    productColumns: [],
+    products: [],
+    productLoading: false,
+    productError: null,
+    quantities: {},
+    selectedProduct: null
+
   },
   reducers: {
     selectAccount(state, action) {
@@ -28,38 +28,84 @@ const accountSlice = createSlice({
     },
     selectStore(state, action) {
       state.selectedStore = action.payload;
+    },
+    updateQuantity(state, action) {
+      const { partNumber, quantity } = action.payload;
+      state.quantities[partNumber] = quantity;
+    },
+    setSelectedProduct(state, action) {
+      state.selectedProduct = action.payload;
+    },
+    clearSelectedProduct(state) {
+      state.selectedProduct = null;
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAccounts.pending, (state) => {
-        state.loading = true;
+        state.accountLoading = true;
         state.error = null;
       })
       .addCase(fetchAccounts.fulfilled, (state, action) => {
-        state.loading = false;
+        state.accountLoading = false;
         state.accounts = action.payload;
         state.selectedAccount = action.payload.length > 0 ? action.payload[0] : null;
       })
       .addCase(fetchAccounts.rejected, (state, action) => {
-        state.loading = false;
+        state.accountLoading = false;
         state.error = action.payload || 'Failed to fetch accounts.';
       })
       .addCase(fetchStores.pending, (state) => {
-        state.loading = true;
+        state.storeLoading = true;
         state.error = null;
       })
       .addCase(fetchStores.fulfilled, (state, action) => {
-        state.loading = false;
+        state.storeLoading = false;
         state.stores[action.payload.accountId] = action.payload.stores;
         state.selectedStore = action.payload.stores.length > 0 ? action.payload.stores[0] : null;
       })
       .addCase(fetchStores.rejected, (state, action) => {
-        state.loading = false;
+        state.storeLoading = false;
         state.error = action.payload || 'Failed to fetch stores.';
+      })
+
+      // Product cases
+      .addCase(fetchProductColumns.pending, (state) => {
+        state.productLoading = true;
+        state.productError = null;
+      })
+      .addCase(fetchProductColumns.fulfilled, (state, action) => {
+        state.productLoading = false;
+        state.productColumns = action.payload;
+      })
+      .addCase(fetchProductColumns.rejected, (state, action) => {
+        state.productLoading = false;
+        state.productError = action.payload;
+      })
+      .addCase(fetchProducts.pending, (state) => {
+        state.productLoading = true;
+        state.productError = null;
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.productLoading = false;
+        state.products = action.payload;
+        state.quantities = action.payload.reduce((acc, product) => {
+          acc[product.partNumber] = product.quantitytoorder || 0;
+          return acc;
+        }, {});
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.productLoading = false;
+        state.productError = action.payload;
       });
   }
 });
 
-export const { selectAccount, selectStore } = accountSlice.actions;
-export default accountSlice.reducer;
+export const {
+  selectAccount,
+  selectStore,
+  updateQuantity,
+  setSelectedProduct,
+  clearSelectedProduct,
+} = accountSlice.actions
+export default accountSlice.reducer

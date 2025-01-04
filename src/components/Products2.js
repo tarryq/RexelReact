@@ -1,61 +1,71 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, TextField, Button, Typography, Modal, Grid, Paper, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { DataGrid } from '@mui/x-data-grid';
 import { debounce, highlightText } from '../utils';
 import { ProductTableSkeleton } from '../skeletons/skeleton';
+// import { fetchProductColumns, fetchProducts } from '../store/actions';
+import { fetchProductColumns, fetchProducts } from '../store/features/products/productActions';
+
 
 const ProductTable = (props) => {
-  const { user, selectedStore, selectedAccount } = props;
+  // const { user, selectedStore, selectedAccount } = props;
+  const [user, setUser] = useState(null);
+
+    useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem('user'));
+    setUser(loggedInUser);
+  }, []);
+  // const selectedAccount = useSelector((state) => state.accounts.selectedAccount);
+  // const selectedStore = useSelector((state) => state.accounts.selectedStore);
+  // const productColumns = useSelector((state) => state.products.productColumns);
+  // const products = useSelector((state) => state.products.products);
+  // const accountLoading = useSelector((state) => state.accounts.accountLoading);
+  // const storeLoading = useSelector((state) => state.products.storeLoading);
+  // const productLoading = useSelector((state) => state.products.productLoading);
+  // const productError = useSelector((state) => state.accounts.productError);
+
+  const { selectedAccount, selectedStore, accountLoading, storeLoading } =
+    useSelector((state) => state.accounts)
+
+  const { productColumns, products, productLoading, productError } =
+    useSelector((state) => state.products)
+
+  const stateAccounts = useSelector((state) => state.accounts);
+  const stateProducts = useSelector((state) => state.products);
+  console.log('stateAccounts', stateAccounts);
+  console.log('stateProducts', stateProducts);
+
   const userid = user?.userId;
   const accountid = selectedAccount?.id;
   const storeid = selectedStore?.id;
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [returnAccountGridCloumns, setReturnAccountGridCloumns] = useState([]);
-  const [returnAccountStoreProducts, setReturnAccountStoreProducts] = useState([]);
+  console.log('userid', userid);
+  console.log('accountid', accountid);
+  console.log('storeid', storeid);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!storeid || !accountid || !userid) {
-      setReturnAccountStoreProducts([]);
-      return;
+    if (userid && accountid && storeid) {
+      dispatch(fetchProductColumns({ userid, accountid }));
+      dispatch(fetchProducts({ userid, accountid, storeid }));
     }
-    const fetchData = async () => {
-      try {
-        // Fetch columns
-        const columnsResponse = await fetch(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/ReturnAccountGridColumns?accountid=${accountid}&userid=${userid}`);
-        const columnsData = await columnsResponse.json();
-        setReturnAccountGridCloumns(columnsData);
+  }, [userid, accountid, storeid, dispatch]);
 
-        // Fetch products
-        const productsResponse = await fetch(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/ReturnAccountStoreProducts?accountid=${accountid}&storeid=${storeid}&userid=${userid}`);
-        const productsData = await productsResponse.json();
-        setReturnAccountStoreProducts(productsData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, [userid, storeid, accountid]);
-
-  function keysToLowerCase(obj) {
-    return Object.keys(obj).reduce((acc, key) => {
-      acc[key.toLowerCase()] = obj[key];
-      return acc;
-    }, {});
-  }
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const initialProducts = useMemo(() => {
-    if (Array.isArray(returnAccountStoreProducts)) {
-      return returnAccountStoreProducts.map((product, index) => {
+    if (Array.isArray(products)) {
+      return products.map((product, index) => {
         const dynamicProduct = {
           id: index,
           originalProduct: product
         };
         const productWithLowerKeys = keysToLowerCase(product);
-        returnAccountGridCloumns.forEach((column) => {
+        productColumns.forEach((column) => {
           if (column.columnName !== 'N/A' && column.accountColumnName !== '') {
             const lowerCaseFieldName = column.columnName.toLowerCase();
 
@@ -72,7 +82,7 @@ const ProductTable = (props) => {
     } else {
       return [];
     }
-  }, [returnAccountStoreProducts, returnAccountGridCloumns]);
+  }, [products, productColumns]);
 
   const [filteredProducts, setFilteredProducts] = useState(initialProducts);
   const [quantities, setQuantities] = useState(
@@ -87,8 +97,7 @@ const ProductTable = (props) => {
       setFilteredProducts(initialProducts);
       setQuantities(
         initialProducts.reduce((acc, product) => {
-          // We're setting the part number as the key, with the initial quantity to order as the value
-          acc[product.partnumber] = product.quantitytoorder || 0; // Default to 0 if quantitytoorder is undefined
+          acc[product.partnumber] = product.quantitytoorder || 0;
           return acc;
         }, {})
       );
@@ -99,7 +108,7 @@ const ProductTable = (props) => {
     () =>
       debounce((value) => {
         const filtered = initialProducts.filter((product) =>
-          returnAccountGridCloumns.some((column) => {
+          productColumns.some((column) => {
             const fieldName = column.columnName.toLowerCase();
             if (fieldName !== 'n/a' && column.accountColumnName !== '') {
               const productField = product[fieldName];
@@ -162,12 +171,12 @@ const ProductTable = (props) => {
     setSelectedProduct(null);
   };
 
-  const columns = returnAccountGridCloumns
+  const columns = productColumns
     .filter((column) => column.columnName !== 'N/A' && column.accountColumnName !== '')
     .map((column) => ({
       field: column.columnName.toLowerCase(),
       headerName: column.gridDisplayLabel || column.accountColumnName,
-      width: column.accountColumnWidth * 20, // Assuming width is in percentage, converting to px might need adjustment
+      width: column.accountColumnWidth * 20,
       sortable: true,
       renderCell: (params) => {
         const fieldName = column.columnName.toLowerCase();
@@ -296,11 +305,305 @@ const ProductTable = (props) => {
       }
     }));
 
+  if (accountLoading || storeLoading || productLoading ) return <ProductTableSkeleton />;
+
+  
+  if (productError) return <div>Error loading products: {productError}</div>;
+
+
+
+  // const [searchTerm, setSearchTerm] = useState('');
+  // const [selectedProduct, setSelectedProduct] = useState(null);
+  // const [returnAccountGridCloumns, setReturnAccountGridCloumns] = useState([]);
+  // const [returnAccountStoreProducts, setReturnAccountStoreProducts] = useState([]);
+
+
+
+
+
+  // useEffect(() => {
+  //   if (!storeid || !accountid || !userid) {
+  //     setReturnAccountStoreProducts([]);
+  //     return;
+  //   }
+  //   const fetchData = async () => {
+  //     try {
+  //       // Fetch columns
+  //       const columnsResponse = await fetch(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/ReturnAccountGridColumns?accountid=${accountid}&userid=${userid}`);
+  //       const columnsData = await columnsResponse.json();
+  //       setReturnAccountGridCloumns(columnsData);
+
+  //       // Fetch products
+  //       const productsResponse = await fetch(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/ReturnAccountStoreProducts?accountid=${accountid}&storeid=${storeid}&userid=${userid}`);
+  //       const productsData = await productsResponse.json();
+  //       setReturnAccountStoreProducts(productsData);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [userid, storeid, accountid]);
+
+  function keysToLowerCase(obj) {
+    return Object.keys(obj).reduce((acc, key) => {
+      acc[key.toLowerCase()] = obj[key];
+      return acc;
+    }, {});
+  }
+
+  // const initialProducts = useMemo(() => {
+  //   if (Array.isArray(returnAccountStoreProducts)) {
+  //     return returnAccountStoreProducts.map((product, index) => {
+  //       const dynamicProduct = {
+  //         id: index,
+  //         originalProduct: product
+  //       };
+  //       const productWithLowerKeys = keysToLowerCase(product);
+  //       returnAccountGridCloumns.forEach((column) => {
+  //         if (column.columnName !== 'N/A' && column.accountColumnName !== '') {
+  //           const lowerCaseFieldName = column.columnName.toLowerCase();
+
+  //           dynamicProduct[lowerCaseFieldName] = productWithLowerKeys[lowerCaseFieldName] || 'N/A';
+  //           if (lowerCaseFieldName === 'quantitytoorder') {
+  //             dynamicProduct[lowerCaseFieldName] = productWithLowerKeys[lowerCaseFieldName] || 0;
+  //           } else if (lowerCaseFieldName === 'thumbnailimageidurl') {
+  //             dynamicProduct[lowerCaseFieldName] = productWithLowerKeys[lowerCaseFieldName] || product['fixtureImageIDURL'] || '';
+  //           }
+  //         }
+  //       });
+  //       return dynamicProduct;
+  //     });
+  //   } else {
+  //     return [];
+  //   }
+  // }, [returnAccountStoreProducts, returnAccountGridCloumns]);
+
+  // const [filteredProducts, setFilteredProducts] = useState(initialProducts);
+  // const [quantities, setQuantities] = useState(
+  //   initialProducts.reduce((acc, product) => {
+  //     acc[product.partnumber] = product.quantitytoorder || 0;
+  //     return acc;
+  //   }, {})
+  // );
+
+  // useEffect(() => {
+  //   if (initialProducts.length > 0) {
+  //     setFilteredProducts(initialProducts);
+  //     setQuantities(
+  //       initialProducts.reduce((acc, product) => {
+  //         // We're setting the part number as the key, with the initial quantity to order as the value
+  //         acc[product.partnumber] = product.quantitytoorder || 0; // Default to 0 if quantitytoorder is undefined
+  //         return acc;
+  //       }, {})
+  //     );
+  //   }
+  // }, [initialProducts]);
+
+  // const debouncedSearch = useMemo(
+  //   () =>
+  //     debounce((value) => {
+  //       const filtered = initialProducts.filter((product) =>
+  //         returnAccountGridCloumns.some((column) => {
+  //           const fieldName = column.columnName.toLowerCase();
+  //           if (fieldName !== 'n/a' && column.accountColumnName !== '') {
+  //             const productField = product[fieldName];
+  //             if (typeof productField === 'string') {
+  //               return productField.toLowerCase().includes(value.toLowerCase());
+  //             } else if (typeof productField === 'number') {
+  //               return productField.toString().includes(value);
+  //             }
+  //           }
+  //           return false;
+  //         })
+  //       );
+  //       setFilteredProducts(filtered);
+  //     }, 300),
+  //   [initialProducts]
+  // );
+
+  // const handleSearchChange = (e) => {
+  //   const value = e.target.value;
+  //   setSearchTerm(value);
+  //   debouncedSearch(value);
+  // };
+
+  // const handleIncrement = (partNumber, event) => {
+  //   event.stopPropagation();
+  //   setQuantities((prev) => ({
+  //     ...prev,
+  //     [partNumber]: prev[partNumber] + 1
+  //   }));
+  // };
+
+  // const handleDecrement = (partNumber, event) => {
+  //   event.stopPropagation();
+  //   setQuantities((prev) => ({
+  //     ...prev,
+  //     [partNumber]: Math.max(prev[partNumber] - 1, 0)
+  //   }));
+  // };
+
+  // const handleInputChange = (partNumber, value, event) => {
+  //   event.stopPropagation();
+  //   const numberValue = value === '' ? 0 : parseInt(value, 10);
+  //   if (!isNaN(numberValue) && numberValue >= 0) {
+  //     setQuantities((prev) => ({
+  //       ...prev,
+  //       [partNumber]: numberValue
+  //     }));
+  //   }
+  // };
+
+  // const handleAddToCart = (product) => {
+  //   console.log('Added to cart:', product, 'Quantity:', quantities[product.partnumber]);
+  // };
+
+  // const handleRowClick = (params) => {
+  //   setSelectedProduct(params.row);
+  // };
+
+  // const handleCloseModal = () => {
+  //   setSelectedProduct(null);
+  // };
+
+  // const columns = returnAccountGridCloumns
+  //   .filter((column) => column.columnName !== 'N/A' && column.accountColumnName !== '')
+  //   .map((column) => ({
+  //     field: column.columnName.toLowerCase(),
+  //     headerName: column.gridDisplayLabel || column.accountColumnName,
+  //     width: column.accountColumnWidth * 20, // Assuming width is in percentage, converting to px might need adjustment
+  //     sortable: true,
+  //     renderCell: (params) => {
+  //       const fieldName = column.columnName.toLowerCase();
+  //       if (fieldName === 'thumbnailimageidurl') {
+  //         return (
+  //           <Box
+  //             display='flex'
+  //             justifyContent='center'
+  //             alignItems='center'
+  //             sx={{
+  //               width: '100%',
+  //               height: '100%'
+  //             }}
+  //           >
+  //             <img
+  //               src={params.value}
+  //               alt={params.row.description || 'Product Image'}
+  //               style={{
+  //                 width: 50,
+  //                 height: 50,
+  //                 borderRadius: '4px',
+  //                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)'
+  //               }}
+  //             />
+  //           </Box>
+  //         );
+  //       }
+  //       if (fieldName === 'quantitytoorder') {
+  //         return (
+  //           <Box
+  //             display='flex'
+  //             alignItems='center'
+  //             justifyContent='end'
+  //             sx={{
+  //               width: '100%',
+  //               height: '100%'
+  //             }}
+  //             gap={1}
+  //           >
+  //             <Button
+  //               variant='outlined'
+  //               sx={{
+  //                 backgroundColor: 'transparent',
+  //                 color: '#4B449D',
+  //                 fontSize: '24px',
+  //                 padding: 0,
+  //                 height: '40px',
+  //                 width: '40px',
+  //                 minWidth: '40px',
+  //                 borderRadius: '50%',
+  //                 display: 'flex',
+  //                 alignItems: 'center',
+  //                 justifyContent: 'center',
+  //                 border: '0px',
+  //                 '&:hover': {
+  //                   backgroundColor: '#FF292920'
+  //                 }
+  //               }}
+  //               onClick={(event) => handleDecrement(params.row.partnumber, event)}
+  //             >
+  //               -
+  //             </Button>
+  //             <TextField
+  //               size='small'
+  //               variant='outlined'
+  //               value={quantities[params.row.partnumber] || 0}
+  //               onClick={(e) => e.stopPropagation()}
+  //               onChange={(e) => handleInputChange(params.row.partnumber, e.target.value, e)}
+  //               inputProps={{
+  //                 style: {
+  //                   textAlign: 'center',
+  //                   fontSize: '16px'
+  //                 }
+  //               }}
+  //               sx={{
+  //                 width: '60px',
+  //                 '& .MuiOutlinedInput-root': {
+  //                   height: '40px',
+  //                   borderRadius: '8px',
+  //                   '& fieldset': {
+  //                     borderColor: '#4B449D'
+  //                   },
+  //                   '&:hover fieldset': {
+  //                     borderColor: '#4B449D'
+  //                   },
+  //                   '&.Mui-focused fieldset': {
+  //                     borderWidth: '2px',
+  //                     borderColor: '#4B449D'
+  //                   }
+  //                 },
+  //                 '& .MuiInputLabel-root': {
+  //                   color: '#4B449D'
+  //                 },
+  //                 '& .MuiInputLabel-root.Mui-focused': {
+  //                   color: '#4B449D'
+  //                 }
+  //               }}
+  //             />
+  //             <Button
+  //               variant='outlined'
+  //               sx={{
+  //                 backgroundColor: 'transparent',
+  //                 color: '#4B449D',
+  //                 fontSize: '24px',
+  //                 padding: 0,
+  //                 height: '40px',
+  //                 width: '40px',
+  //                 minWidth: '40px',
+  //                 borderRadius: '50%',
+  //                 display: 'flex',
+  //                 alignItems: 'center',
+  //                 justifyContent: 'center',
+  //                 border: '0px',
+  //                 '&:hover': {
+  //                   backgroundColor: '#54C39220'
+  //                 }
+  //               }}
+  //               onClick={(event) => handleIncrement(params.row.partnumber, event)}
+  //             >
+  //               +
+  //             </Button>
+  //           </Box>
+  //         );
+  //       }
+  //       return <Box textAlign={column.cellAlignment.toLowerCase()}>{highlightText(params.value.toString(), searchTerm)}</Box>;
+  //     }
+  //   }));
+
   return (
     <>
-      {returnAccountStoreProducts.length === 0 ? (
-        <ProductTableSkeleton />
-      ) : (
+
         <>
           <Box sx={{ padding: '20px 30px', backgroundColor: '#FFFFFF', margin: '10px 0px', borderRadius: '12px', boxShadow: 'rgba(0, 0, 0, 0.25) 0px 25px 50px -12px' }}>
             <Typography variant='body1' sx={{ display: 'flex', alignItems: 'start', color: '#4B449D', fontWeight: 600, fontSize: '24px' }}>
@@ -575,7 +878,6 @@ const ProductTable = (props) => {
             </Paper>
           </Modal>
         </>
-      )}
     </>
   );
 };
