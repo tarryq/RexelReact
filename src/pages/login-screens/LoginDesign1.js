@@ -73,14 +73,11 @@ const LoginPage = () => {
         // email: `${username}@example.com` // Adjust as needed
       };
 
-      // Store user information
       localStorage.setItem('user', JSON.stringify(userObject));
 
-      // Update auth context
       login(userObject);
 
-      // Navigate to dashboard
-      navigate('/dashboard');
+      navigate('/products');
 
     } catch (err) {
       setError('An error occurred while connecting to the server. Please try again.');

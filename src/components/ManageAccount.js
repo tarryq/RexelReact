@@ -17,8 +17,6 @@ import LampGuide from './LampGuide.js';
 import ProductLayout from './Products2';
 import { DashboardSkeleton } from '../skeletons/skeleton.js';
 
-
-
 export default function ManageAccount(props) {
   const [selectedStore, setSelectedStore] = useState('');
   const [availableAccounts, setAvailableAccounts] = useState([]);
@@ -31,9 +29,7 @@ export default function ManageAccount(props) {
   const fetchAccounts = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/GetAccountsByUserId?userId=${currentUser.userId}`
-      );
+      const response = await fetch(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/GetAccountsByUserId?userId=${currentUser.userId}`);
       const data = await response.json();
       setAvailableAccounts(data);
 
@@ -50,9 +46,7 @@ export default function ManageAccount(props) {
 
   const fetchStores = async (accountId) => {
     try {
-      const response = await fetch(
-        `https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/GetStoresForUser?userId=${currentUser.userId}&accountId=${accountId}`
-      );
+      const response = await fetch(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/GetStoresForUser?userId=${currentUser.userId}&accountId=${accountId}`);
       const data = await response.json();
       setAvailableStores(data);
 
@@ -118,7 +112,6 @@ export default function ManageAccount(props) {
     }
   }
 
-
   if (isLoading) {
     return <DashboardSkeleton />;
   }
@@ -128,8 +121,6 @@ export default function ManageAccount(props) {
 
   return (
     <div className='min-h-[90vh] pb-4 h-auto flex flex-col bg-gray-100 px-6'>
-
-
       <div className='flex items-center justify-between my-4' style={{ minHeight: '100px' }}>
         <div className='w-[54%] flex flex-col'>
           <div className='self-end'>{selectedAccount && selectedAccount.logo && <div dangerouslySetInnerHTML={{ __html: selectedAccount.logo }} />}</div>
@@ -138,8 +129,7 @@ export default function ManageAccount(props) {
         <div className='flex flex-col gap-2 justify-start xs:ml-4 min-w-[30%]'>
           <div className='flex items-center'>
             <label className='block text-sm font-medium text-gray-700 w-[140px]'>Account :</label>
-            <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedAccount?.id || ''} onChange={handleAccountChange} disabled={currentUser?.accessLevel !== 99}
-            >
+            <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedAccount?.id || ''} onChange={handleAccountChange} disabled={currentUser?.accessLevel !== 99}>
               {availableAccounts.map((account) => (
                 <option key={account.id} value={account.id}>
                   {account.name}
@@ -150,12 +140,7 @@ export default function ManageAccount(props) {
 
           <div className='flex items-center'>
             <label className='block text-sm font-medium text-gray-700 w-[140px]'>Store :</label>
-            <select
-              className='block w-full border-gray-300 select select-bordered select-sm'
-              value={selectedStore}
-              onChange={handleStoreChange}
-              disabled={currentUser?.accessLevel !== (99 || 3)}
-            >
+            <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedStore} onChange={handleStoreChange} disabled={currentUser?.accessLevel !== (99 || 3)}>
               {availableStores.map((store) => (
                 <option key={store.id} value={store.id}>
                   {store.storeName}
@@ -168,16 +153,16 @@ export default function ManageAccount(props) {
 
       <Navbar setActiveTab={setActiveTab} user={currentUser} menuTabs={getMenuTabs(currentUser)} activeTab={activeTab} />
       <div className='p-6 mt-2'>
-        {activeTab === 'Maintenance' ?
+        {activeTab === 'Maintenance' ? (
           <Maintenance setActiveTab={setActiveTab} />
-        : activeTab === 'Accounts' ? (
+        ) : activeTab === 'Accounts' ? (
           <AccountMaintenance selectedAccount={accounts[0].account} accounts={accounts} />
         ) : activeTab === 'Store' ? (
-          <StoreMaintenance selectedStore={filteredStores[0]?.storeName || ''} stores={filteredStores}  />
+          <StoreMaintenance selectedStore={filteredStores[0]?.storeName || ''} stores={filteredStores} />
         ) : activeTab === 'Communication' ? (
           <AccountCommunication selectedAccount={accounts[0].account} accounts={accounts} locations={filteredLocations} />
         ) : activeTab === 'Location' ? (
-                <LocationMaintenance selectedAccount={accounts[0].account} accounts={accounts} locations={filteredLocations} />
+          <LocationMaintenance selectedAccount={accounts[0].account} accounts={accounts} locations={filteredLocations} />
         ) : activeTab === 'AccountCustomField' ? (
           <AccountCustomFieldMaintenance />
         ) : activeTab === 'CustomGridColumnDefinitions' ? (
@@ -185,14 +170,13 @@ export default function ManageAccount(props) {
         ) : activeTab === 'LampGuideDisplayOptions' ? (
           <LampGuideDisplayOptions />
         ) : activeTab === 'MaxOrderValueMaintenance' ? (
-            <MaxOrderValueMaintenance />
+          <MaxOrderValueMaintenance />
         ) : activeTab === 'ImageMaintenance' ? (
-            <ImageMaintenance />
+          <ImageMaintenance />
         ) : activeTab === 'LampGuide' ? (
-            <LampGuide />
-        )
-        : activeTab === 'Products' ? (
-        <ProductLayout user={currentUser} selectedAccount={selectedAccount} selectedStore = {selectedStore} />
+          <LampGuide />
+        ) : activeTab === 'Products' ? (
+          <ProductLayout user={currentUser} selectedAccount={selectedAccount} selectedStore={selectedStore} />
         ) : (
           <div className='bg-white p-6 rounded-md'>
             <h2 className='text-2xl font-bold mb-4'>Dashboard Content</h2>
