@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import { selectAccount, selectStore } from '../store/reducers/index';
 import { selectAccount, selectStore } from '../store/features/accounts/accountSlice';
 import { fetchAccounts, fetchStores } from '../store/features/accounts/accountActions';
 import Navbar from './Navbar';
@@ -14,6 +13,8 @@ export default function ManageAccount() {
   // Redux state selectors
   const { accounts, stores, selectedAccount, selectedStore, accountLoading, storeLoading, error } = useSelector((state) => state.accounts);
 
+  console.log('stores', stores);
+
   // Fetch accounts when the component mounts
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -21,6 +22,14 @@ export default function ManageAccount() {
       dispatch(fetchAccounts(user.userId));
     }
   }, [dispatch]);
+
+  // Fetch stores whenever selectedAccount changes
+  useEffect(() => {
+    if (selectedAccount) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      dispatch(fetchStores({ userId: user.userId, accountId: selectedAccount.id }));
+    }
+  }, [dispatch, selectedAccount]);
 
   // Update query parameters when selectedAccount or selectedStore changes
   useEffect(() => {
@@ -37,13 +46,12 @@ export default function ManageAccount() {
     const accountId = parseInt(event.target.value, 10);
     const account = accounts.find((acc) => acc.id === accountId);
     dispatch(selectAccount(account));
-    dispatch(fetchStores({ userId: JSON.parse(localStorage.getItem('user')).userId, accountId }));
   };
 
   // Handle store changes
   const handleStoreChange = (event) => {
     const storeId = parseInt(event.target.value, 10);
-    const store = stores[selectedAccount?.id]?.find((s) => s.id === storeId);
+    const store = stores?.find((s) => s.id === storeId);
     dispatch(selectStore(store));
   };
 
@@ -56,7 +64,7 @@ export default function ManageAccount() {
     return menuOptions[user?.accessLevel] || menuOptions.default;
   };
 
-  if (accountLoading || storeLoading ) return <DashboardSkeleton />;
+  if (accountLoading || storeLoading) return <DashboardSkeleton />;
 
   if (error) {
     return (
@@ -74,7 +82,7 @@ export default function ManageAccount() {
     );
   }
 
-    return (
+  return (
     <div className='min-h-[30vh] pb-4 h-auto flex flex-col bg-gray-100 px-6'>
       <div className='flex items-center justify-between my-4' style={{ minHeight: '100px' }}>
         <div className='w-[54%] flex flex-col'>{selectedAccount?.logo && <div className='self-end' dangerouslySetInnerHTML={{ __html: selectedAccount.logo }} />}</div>
@@ -92,7 +100,7 @@ export default function ManageAccount() {
           <div className='flex items-center'>
             <label className='block text-sm font-medium text-gray-700 w-[140px]'>Store:</label>
             <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedStore?.id || ''} onChange={handleStoreChange} disabled={!selectedAccount}>
-              {stores[selectedAccount?.id]?.map((store) => (
+              {stores?.map((store) => (
                 <option key={store.id} value={store.id}>
                   {store.storeName}
                 </option>
