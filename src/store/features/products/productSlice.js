@@ -20,6 +20,11 @@ const productSlice = createSlice({
     clearSelectedProduct(state) {
       state.selectedProduct = null
     },
+    clearProducts(state) {
+      state.products = [];
+      state.productColumns = [];
+      state.productError = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -44,6 +49,6 @@ const productSlice = createSlice({
   },
 })
 
-export const { updateQuantity, setSelectedProduct, clearSelectedProduct } = productSlice.actions
+export const { updateQuantity, setSelectedProduct, clearSelectedProduct, clearProducts } = productSlice.actions
 
 export default productSlice.reducer
