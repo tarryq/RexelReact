@@ -12,7 +12,7 @@ export default function ManageAccount() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Redux state selectors
-  const { accounts, stores, selectedAccount, selectedStore, loading, error } = useSelector((state) => state.accounts);
+  const { accounts, stores, selectedAccount, selectedStore, accountLoading, storeLoading, error } = useSelector((state) => state.accounts);
 
   // Fetch accounts when the component mounts
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function ManageAccount() {
     return menuOptions[user?.accessLevel] || menuOptions.default;
   };
 
-  if (loading) return <DashboardSkeleton />;
+  if (accountLoading || storeLoading ) return <DashboardSkeleton />;
 
   if (error) {
     return (
