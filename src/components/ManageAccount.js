@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAccount, selectStore } from '../store/features/accounts/accountSlice';
+import { clearProducts } from '../store/features/products/productSlice';
 import { fetchAccounts, fetchStores } from '../store/features/accounts/accountActions';
 import Navbar from './Navbar';
 import { DashboardSkeleton } from '../skeletons/skeleton';
+import NoStoreMessage from './NoStoreMeesage';
 
 export default function ManageAccount() {
   const dispatch = useDispatch();
@@ -44,6 +46,7 @@ export default function ManageAccount() {
     const accountId = parseInt(event.target.value, 10);
     const account = accounts.find((acc) => acc.id === accountId);
     dispatch(selectAccount(account));
+    dispatch(clearProducts());
   };
 
   // Handle store changes
@@ -92,6 +95,10 @@ export default function ManageAccount() {
   };
 
   if (accountLoading || storeLoading) return <DashboardSkeleton />;
+
+  if (!accountLoading && !storeLoading && selectedAccount && (!selectedStore || selectedStore === null)) {
+    return <NoStoreMessage accountName={selectedAccount.name} />;
+  }
 
   if (error) {
     return (

@@ -1,5 +1,5 @@
 export const DashboardSkeleton = () => (
-  <div className="animate-pulse min-h-[90vh] pb-4 h-auto flex flex-col bg-gray-100 px-6">
+  <div className="animate-pulse min-h-[30vh] pb-4 h-auto flex flex-col bg-gray-100 px-6">
     {/* Header Area */}
     <div className="flex items-center justify-between my-4" style={{ minHeight: '100px' }}>
       <div className="w-[54%] h-16 bg-gray-200 rounded"></div>
@@ -20,16 +20,6 @@ export const DashboardSkeleton = () => (
       {[1, 2, 3, 4, 5].map((item) => (
         <div key={item} className="h-8 w-24 bg-gray-300 rounded"></div>
       ))}
-    </div>
-
-    {/* Content Area Skeleton */}
-    <div className="p-6 mt-2 bg-white rounded-lg">
-
-      <div className="w-full mb-8 gap-4 ">
-        <div className="h-8 w-[200px] mb-2 bg-gray-200 rounded"></div>
-        <div className="h-8 w-[300px] bg-gray-200 rounded"></div>
-
-      </div>
     </div>
   </div>
 );
