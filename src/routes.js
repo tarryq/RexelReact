@@ -38,15 +38,15 @@ function App() {
       <Route path='/products' element={<PrivateRouteWrapper element={Products} />} />
       <Route path='/maintenance' element={<PrivateRouteWrapper element={Maintenance} />} />
       <Route path='/maintenance/account-maintenance' element={<PrivateRouteWrapper element={AccountMaintenance} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />
-      <Route path='/maintenance/account-communication' element={<PrivateRouteWrapper element={AccountCommunication} />} />
-      <Route path='/maintenance/store-maintenance' element={<PrivateRouteWrapper element={StoreMaintenance} />} />
-      <Route path='/maintenance/account-custom-field-maintenance' element={<PrivateRouteWrapper element={AccountCustomFieldMaintenance} />} />
-      <Route path='/maintenance/image-maintenance' element={<PrivateRouteWrapper element={ImageMaintenance} />} />
-      <Route path='/maintenance/lamp-guide' element={<PrivateRouteWrapper element={LampGuide} />} />
-      <Route path='/maintenance/lamp-guide-display-options' element={<PrivateRouteWrapper element={LampGuideDisplayOptions} />} />
-      <Route path='/maintenance/location-maintenance' element={<PrivateRouteWrapper element={LocationMaintenance} />} />
-      <Route path='/maintenance/custom-grid-column-definitions' element={<PrivateRouteWrapper element={CustomGridColumnDefinitions} />} />
-      <Route path='/maintenance/max-order-value-maintenance' element={<PrivateRouteWrapper element={MaxOrderValueMaintenance} />} />
+      <Route path='/maintenance/account-communication' element={<PrivateRouteWrapper element={AccountCommunication} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />
+      <Route path='/maintenance/store-maintenance' element={<PrivateRouteWrapper element={StoreMaintenance} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />
+      <Route path='/maintenance/account-custom-field-maintenance' element={<PrivateRouteWrapper element={AccountCustomFieldMaintenance} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />
+      <Route path='/maintenance/image-maintenance' element={<PrivateRouteWrapper element={ImageMaintenance} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />
+      <Route path='/maintenance/lamp-guide' element={<PrivateRouteWrapper element={LampGuide} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />
+      <Route path='/maintenance/lamp-guide-display-options' element={<PrivateRouteWrapper element={LampGuideDisplayOptions} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />
+      <Route path='/maintenance/location-maintenance' element={<PrivateRouteWrapper element={LocationMaintenance} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />
+      <Route path='/maintenance/custom-grid-column-definitions' element={<PrivateRouteWrapper element={CustomGridColumnDefinitions} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />
+      <Route path='/maintenance/max-order-value-maintenance' element={<PrivateRouteWrapper element={MaxOrderValueMaintenance} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />
       <Route path='*' element={<NotFoundPage />} />
     </Routes>
   );

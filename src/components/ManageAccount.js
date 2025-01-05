@@ -96,10 +96,6 @@ export default function ManageAccount() {
 
   if (accountLoading || storeLoading) return <DashboardSkeleton />;
 
-  if (!accountLoading && !storeLoading && selectedAccount && (!selectedStore || selectedStore === null)) {
-    return <NoStoreMessage accountName={selectedAccount.name} />;
-  }
-
   if (error) {
     return (
       <div className='min-h-[90vh] flex flex-col justify-center items-center bg-gray-100'>

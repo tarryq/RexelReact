@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getAccountCommunication, EDITABLE_FIELDS_LOCATIONS } from '../form-configs/accountCommunicationConfig';
+import { locations } from '../data-schemas/locationData';
 import { Snackbar, Alert } from '@mui/material';
 
-const AccountCommunication = ({ selectedAccount, locations, onSave }) => {
+const AccountCommunication = ({ selectedAccount, onSave }) => {
   const [locationDetails, setLocationDetails] = useState({});
   const [originalDetails, setOriginalDetails] = useState({});
   const [currentSection, setCurrentSection] = useState(0);
@@ -22,7 +23,8 @@ const AccountCommunication = ({ selectedAccount, locations, onSave }) => {
   ];
 
   useEffect(() => {
-    const location = locations.find((loc) => loc.account === selectedAccount);
+    if (!selectedAccount && !selectedAccount?.id) return;
+    const location = locations.find((loc) => loc.accountId === selectedAccount.id);
     if (location) {
       const editableDetails = EDITABLE_FIELDS_LOCATIONS.reduce((acc, field) => {
         acc[field] = location[field] || '';
@@ -110,7 +112,7 @@ const AccountCommunication = ({ selectedAccount, locations, onSave }) => {
     <div className='mt-8'>
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-2xl font-bold' style={{ color: '#4B449D' }}>
-          Account Communication: {selectedAccount}
+          Account Communication: {selectedAccount?.name}
         </h2>
         <div className='flex space-x-2'>
           <button className='btn btn-sm bg-[#4B449D] text-white hover:bg-[#7873B5] outline-none border-none' onClick={handleSave} disabled={!hasChanges}>

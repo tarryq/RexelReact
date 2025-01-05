@@ -1,6 +1,6 @@
 export const locations = [
   {
-    accountId: "APL001",
+    accountId: 202,
     account: "Apple",
     locationIsActive: true,
     eclipsePassword: "********",
@@ -13,7 +13,7 @@ export const locations = [
     fieldToSelect: "Option 2"
   },
   {
-    accountId: "SAM001",
+    accountId: 5,
     account: "Samsung",
     accountLampGuidePageHeaderText: "Samsung Product Catalog",
     accountSpecialShippingInstructions: "Handle with care. Keep electronics away from magnets.",
@@ -27,7 +27,7 @@ export const locations = [
     fieldToSelect: "N/A"
   },
   {
-    accountId: "ADD001",
+    accountId: 157,
     account: "Adidas",
     accountSpecialShippingInstructions: "Ensure shipment is secure and weather-resistant.",
     accountLocations: ["SECURITY ROOM (SECURITY ROOM)", "BASEMENT (BASEMENT)", "MEETING ROOM (MEETING ROOM)"],
@@ -40,7 +40,7 @@ export const locations = [
     fieldToSelect: "Option 3"
   },
   {
-    accountId: "NIK001",
+    accountId: 18,
     account: "Nike",
     accountLampGuidePageHeaderText: "Nike Product Catalog",
     accountSpecialShippingInstructions: "Ensure packages are securely sealed and dry.",
@@ -54,7 +54,7 @@ export const locations = [
     fieldToSelect: "Option 1"
   },
   {
-    accountId: "GOO001",
+    accountId: 151,
     account: "Google",
     accountSpecialShippingInstructions: "Ensure timely delivery to meet high-demand project deadlines.",
     accountLocations: ["EVENT SPACE (EVENT SPACE)", "BREAK AREA (BREAK AREA)", "BATHROOM/SALES OFFICE (BATHROOM/SALES OFFICE)", "CAFETERIA (CAFETERIA)", "CASH WRAP/ENTRANCE (CASH WRAP/ENTRANCE)"],
@@ -67,7 +67,7 @@ export const locations = [
     fieldToSelect: "Option 3"
   },
   {
-    accountId: "MIC001",
+    accountId: 281,
     account: "Microsoft",
     accountSpecialShippingInstructions: "Ensure all items are securely packed for tech equipment safety.",
     accountLocations: ["SERVER ROOM (SERVER ROOM)", "FRONT ENTRANCE (FRONT ENTRANCE)", "BACKROOM/SALES FLOOR (BACKROOM/SALES FLOOR)", "CASH WRAP/ENTRANCE (CASH WRAP/ENTRANCE)"],
@@ -80,7 +80,7 @@ export const locations = [
     fieldToSelect: "Option 1"
   },
   {
-    accountId: "TES001",
+    accountId: 155,
     account: "Tesla",
     accountLampGuidePageHeaderText: "Tesla Product Catalog",
     accountSpecialShippingInstructions: "Handle items carefully. Fragile EV parts.",
@@ -94,7 +94,7 @@ export const locations = [
     fieldToSelect: "Option 2"
   },
   {
-    accountId: "FBK001",
+    accountId: 179,
     account: "Facebook",
     accountLampGuidePageHeaderText: "Facebook Product Catalog",
     accountSpecialShippingInstructions: "Prioritize delivery for media-focused events.",
@@ -108,7 +108,7 @@ export const locations = [
     fieldToSelect: "Option 2"
   },
   {
-    accountId: "AMZ001",
+    accountId: 349,
     account: "Amazon",
     accountLampGuidePageHeaderText: "Amazon Product Catalog",
     accountSpecialShippingInstructions: "Ensure expedited shipping for Prime customers.",
@@ -122,7 +122,7 @@ export const locations = [
     fieldToSelect: "Option 1"
   },
   {
-    accountId: "SON001",
+    accountId: 217,
     account: "Sony",
     accountLampGuidePageHeaderText: "Sony Product Catalog",
     accountSpecialShippingInstructions: "Handle with care. Electronics and fragile products.",
@@ -136,7 +136,7 @@ export const locations = [
     fieldToSelect: "Option 2"
   },
   {
-    accountId: "LG001",
+    accountId: 266,
     account: "LG",
     accountLampGuidePageHeaderText: "LG Product Catalog",
     accountSpecialShippingInstructions: "Ensure all electronic parts are well-protected.",
@@ -150,7 +150,7 @@ export const locations = [
     fieldToSelect: "Option 3"
   },
   {
-    accountId: "PUM001",
+    accountId: 142,
     account: "Puma",
     accountSpecialShippingInstructions: "Ensure proper handling of footwear and apparel.",
     accountLocations: ["SALES FLOOR WEST (SALES FLOOR WEST)", "CASH WRAP/ENTRANCE (CASH WRAP/ENTRANCE)", "BATHROOM/SALES OFFICE (BATHROOM/SALES OFFICE)", "SALES FLOOR EAST (SALES FLOOR EAST)"],
@@ -163,7 +163,7 @@ export const locations = [
     fieldToSelect: "N/A"
   },
   {
-    accountId: "UAM001",
+    accountId: 381,
     account: "Under Armour",
     accountSpecialShippingInstructions: "Handle with care, especially for athletic gear.",
     accountLocations: ["FRONT ENTRANCE (FRONT ENTRANCE)", "ELECTRICAL ROOM (ELECTRICAL ROOM)", "BREAK ROOM/OFFICE (BREAK ROOM/OFFICE)"],
@@ -176,7 +176,7 @@ export const locations = [
     fieldToSelect: "N/A"
   },
   {
-    accountId: "HUA001",
+    accountId: 340,
     account: "Huawei",
     accountSpecialShippingInstructions: "Ensure all tech components are secure during shipping.",
     accountLocations: ["BACKROOM/SALES FLOOR (BACKROOM/SALES FLOOR)", "RESTROOM 1 (RESTROOM 1)", "CASH OFFICE/BACK HALLWAY/BACK ROOM"],

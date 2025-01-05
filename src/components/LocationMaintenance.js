@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getLocationConfig, EDITABLE_FIELDS_LOCATIONS } from '../form-configs/accountLocationConfig';
+import { locations } from '../data-schemas/locationData';
 import { Snackbar, Alert } from '@mui/material';
 
-const LocationMaintenance = ({ selectedAccount, locations, onSave }) => {
+const LocationMaintenance = ({ selectedAccount, onSave }) => {
   const [locationDetails, setLocationDetails] = useState({});
   const [originalDetails, setOriginalDetails] = useState({});
   const [currentSection, setCurrentSection] = useState(0);
@@ -12,7 +13,7 @@ const LocationMaintenance = ({ selectedAccount, locations, onSave }) => {
   const sections = [
     {
       name: 'Location Mnemonic',
-      fields: ['locationName', 'locationIsActive', 'locationHeaderBackgroundColor', 'locationDescription',  'displayActiveLocationOnly']
+      fields: ['locationName', 'locationIsActive', 'locationHeaderBackgroundColor', 'locationDescription', 'displayActiveLocationOnly']
     },
     {
       name: 'Move All Products From One Location To Another',
@@ -28,6 +29,7 @@ const LocationMaintenance = ({ selectedAccount, locations, onSave }) => {
 
   // Updated useEffect to fetch the location details from the locations array
   useEffect(() => {
+    if (!selectedAccount || !selectedAccount?.id) return;
     const location = locations.find((loc) => loc.account === selectedAccount);
     if (location) {
       const editableDetails = EDITABLE_FIELDS_LOCATIONS.reduce((acc, field) => {
@@ -137,15 +139,15 @@ const LocationMaintenance = ({ selectedAccount, locations, onSave }) => {
             <label className='label'>
               <span className='label-text font-semibold'>{config.label}</span>
             </label>
-            <ul className="p-2 rounded-lg border-[1px] border-[#dbdbdb] max-h-[400px] min-h-[100px] overflow-auto">
+            <ul className='p-2 rounded-lg border-[1px] border-[#dbdbdb] max-h-[400px] min-h-[100px] overflow-auto'>
               {value.length > 0 ? (
                 value.map((item, index) => (
-                  <li key={index} className="mb-1 list-style-none">
+                  <li key={index} className='mb-1 list-style-none'>
                     {item}
                   </li>
                 ))
               ) : (
-                <li className="text-gray-500">No items available</li>
+                <li className='text-gray-500'>No items available</li>
               )}
             </ul>
           </div>
@@ -168,7 +170,7 @@ const LocationMaintenance = ({ selectedAccount, locations, onSave }) => {
     <div className='mt-8'>
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-2xl font-bold' style={{ color: '#4B449D' }}>
-          Location Maintenance:
+          Location Maintenance: {selectedAccount?.name}
         </h2>
         <div className='flex space-x-2'>
           {locationMaintenanceOptions.map((option, index) => (
@@ -189,31 +191,25 @@ const LocationMaintenance = ({ selectedAccount, locations, onSave }) => {
         </ul>
 
         <div className='w-4/5'>
-          {sections[currentSection]?.name === 'Location Mnemonic' ?
+          {sections[currentSection]?.name === 'Location Mnemonic' ? (
             <>
-              <div className='grid grid-cols-2 md:grid-cols-3 gap-2'>
-                {sections[currentSection].fields.map((fieldName) => (locationDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null))}
-              </div>
+              <div className='grid grid-cols-2 md:grid-cols-3 gap-2'>{sections[currentSection].fields.map((fieldName) => (locationDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null))}</div>
               <div className='grid grid-cols-2 md:grid-cols-2 gap-4'>
                 {renderField('accountLocations')}
                 {renderField('productsLocatedAtSelectedLocation')}
               </div>
             </>
-            :
-            sections[currentSection]?.name === 'Move All Products From One Location To Another' ?
-              <>
-                <div className='grid grid-cols-2 md:grid-cols-2 gap-4'>
-                  {renderField('accountLocations')}
-                  {renderField('moveProductsToLocation')}
-                </div>
-                <div className='grid grid-cols-2 md:grid-cols-3 gap-2'>
-                  {sections[currentSection].fields.map((fieldName) => (locationDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null))}
-                </div>
-              </>
-              : <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
-                {sections[currentSection].fields.map((fieldName) => (locationDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null))}
+          ) : sections[currentSection]?.name === 'Move All Products From One Location To Another' ? (
+            <>
+              <div className='grid grid-cols-2 md:grid-cols-2 gap-4'>
+                {renderField('accountLocations')}
+                {renderField('moveProductsToLocation')}
               </div>
-          }
+              <div className='grid grid-cols-2 md:grid-cols-3 gap-2'>{sections[currentSection].fields.map((fieldName) => (locationDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null))}</div>
+            </>
+          ) : (
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>{sections[currentSection].fields.map((fieldName) => (locationDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null))}</div>
+          )}
 
           <div className='mt-6 flex justify-end space-x-4'>
             <button className='btn btn-sm hover:bg-[#4B449D] hover:border-[#4B449D] hover:outline-none hover:text-white text-[#4B449D] h-[40px] w-[100px]' onClick={handleCancel} disabled={!hasChanges}>
