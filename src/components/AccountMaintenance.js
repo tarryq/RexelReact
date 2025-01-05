@@ -1,8 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { getAccountConfig, EDITABLE_FIELDS } from '../form-configs/accountConfig';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Snackbar, Alert } from '@mui/material';
+import { fetchAccountMaintenance } from '../store/features/accounts/accountActions'; // Thunk for API call
+import { getAccountConfig, EDITABLE_FIELDS } from '../form-configs/accountConfig';
 
-const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
+const AccountMaintenance = ({ selectedAccount, onSave }) => {
+  const dispatch = useDispatch();
+
+  // Access data from Redux store
+  const { accountMaintenance, accountLoading, accountError } = useSelector((state) => state.accounts);
+
   const [accountDetails, setAccountDetails] = useState({});
   const [originalDetails, setOriginalDetails] = useState({});
   const [currentSection, setCurrentSection] = useState(0);
@@ -12,15 +19,15 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
   const sections = [
     {
       name: 'Account Information',
-      fields: ['eclipseId', 'eclipseUsername', 'eclipsePassword', 'account', 'accountPrefix', 'contactName', 'contactTelephone', 'formalCompanyName']
+      fields: ['eclipseEntityID', 'eclipseUserName', 'eclipsePassword', 'account', 'fmsCustomerID', 'accountPrefix', 'contactname', 'telephone', 'fax', 'formalCompanyName', 'eMail']
     },
     {
       name: 'Address',
-      fields: ['addressLine1', 'addressLine2', 'city', 'stateRegion', 'zipCode', 'country', 'contactFax', 'contactEmail']
+      fields: ['address1', 'address2', 'city', 'region', 'zipCode', 'country']
     },
     {
       name: 'Order Settings',
-      fields: ['wholeOrderMultiplier', 'defaultShippingMethod', 'serviceProvider', 'eclipseOrderServiceFee', 'orderConfirmationEmails', 'startingOrderStatus', 'customerPONumber', 'includeOrderPDFWithConfirmation', 'accountOrdersThroughSRMS', 'accountIsActive', 'hideAccount', 'poMustBeEntered', 'addLampGuideOrderInfo', 'oneInvoicePerOrder', 'shoppingCartCompanyPrompt', 'maxEachesBeforeForcingBidStatus', 'maxCasesBeforeForcingBidStatus', 'accountUsesSingleBilling', 'useNewProductGridSystem', 'accountNotes', 'accountSpecialShippingInstructions']
+      fields: ['orderMultiplier', 'defaultShippingMethodID', 'serviceProviderID', 'eclipseOrderServiceFee', 'orderConfirmationEmails', 'startingOrderStatus', 'customerPONumber', 'includeOrderPDFWithConfirmation', 'accountOrdersThroughSRMS', 'accountIsActive', 'hideAccount', 'poMustBeEntered', 'addLampGuideOrderInfo', 'oneInvoicePerOrder', 'shoppingCartCompanyPrompt', 'maxEachesBeforeForcingBidStatus', 'maxCasesBeforeForcingBidStatus', 'accountUsesSingleBilling', 'useNewProductGridSystem', 'accountNotes', 'accountSpecialShippingInstructions']
     },
     {
       name: 'Branch Details',
@@ -42,43 +49,37 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
 
   const accountMaintanceOptions = ['Start A New Account', 'Load/Update Account From Eclipse', 'Calendar', 'Budgets', 'Send All Store Guides to SnapCount'];
 
+  // Dispatch API call to fetch account details
   useEffect(() => {
-    const account = accounts.find((acc) => acc.account === selectedAccount);
-    if (account) {
+    if (selectedAccount && selectedAccount.id) {
+      dispatch(fetchAccountMaintenance(selectedAccount.id));
+    }
+  }, [dispatch, selectedAccount]);
+
+  // Update component state when API data is available
+  useEffect(() => {
+    if (accountMaintenance) {
       const editableDetails = EDITABLE_FIELDS.reduce((acc, field) => {
-        if (field in account) {
-          acc[field] = account[field];
-        }
+        if (field in accountMaintenance) acc[field] = accountMaintenance[field];
         return acc;
       }, {});
+
       setAccountDetails(editableDetails);
       setOriginalDetails(editableDetails);
       setHasChanges(false);
       setCurrentSection(0);
     }
-  }, [selectedAccount, accounts]);
+  }, [accountMaintenance]);
 
-  // Function to check if the details have changed compared to the original
-  const checkForChanges = (newDetails) => {
-    return JSON.stringify(newDetails) !== JSON.stringify(originalDetails);
-  };
+  const checkForChanges = (newDetails) => JSON.stringify(newDetails) !== JSON.stringify(originalDetails);
 
   const handleSave = () => {
-    const updatedDetails = Object.keys(accountDetails).reduce((acc, key) => {
-      const config = getAccountConfig(key);
-      if (!config.readOnly) {
-        acc[key] = accountDetails[key];
-      }
-      return acc;
-    }, {});
-    onSave(updatedDetails);
+    onSave(accountDetails);
     setHasChanges(false);
     setSnackbarOpen(true);
   };
 
-  const handleCloseSnackbar = () => {
-    setSnackbarOpen(false);
-  };
+  const handleCloseSnackbar = () => setSnackbarOpen(false);
 
   const handleCancel = () => {
     setAccountDetails(originalDetails);
@@ -92,7 +93,7 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
       [name]: type === 'checkbox' ? checked : value
     };
     setAccountDetails(newDetails);
-    setHasChanges(checkForChanges(newDetails)); // Check for changes here
+    setHasChanges(checkForChanges(newDetails));
   };
 
   const renderField = (fieldName) => {
@@ -147,8 +148,6 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
             <textarea name={fieldName} value={value} onChange={handleInputChange} disabled={isReadOnly} className='textarea textarea-bordered h-24 disabled:opacity-50' />
           </div>
         );
-      case 'number':
-      case 'text':
       default:
         return (
           <div className='form-control w-full mb-4' key={fieldName}>
@@ -161,11 +160,35 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
     }
   };
 
+  if (accountLoading) {
+    return (
+      <div className='flex justify-center items-center min-h-[70vh]'>
+        <p className='text-lg text-gray-500'>Loading account details...</p>
+      </div>
+    );
+  }
+
+  if (accountError) {
+    return (
+      <div className='flex justify-center items-center min-h-[70vh]'>
+        <p className='text-lg text-red-500'>Failed to load account details. Please try again later.</p>
+      </div>
+    );
+  }
+
+  if (!accountMaintenance) {
+    return (
+      <div className='flex justify-center items-center min-h-[70vh]'>
+        <p className='text-lg text-gray-500'>No account selected. Please select an account to view details.</p>
+      </div>
+    );
+  }
+
   return (
     <div className='mt-8'>
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-2xl font-bold' style={{ color: '#4B449D' }}>
-          Account Maintenance: {selectedAccount}
+          Account Maintenance: {accountMaintenance.name}
         </h2>
         <div className='flex space-x-2'>
           {accountMaintanceOptions.map((option, index) => (
@@ -195,14 +218,15 @@ const AccountMaintenance = ({ selectedAccount, accounts, onSave }) => {
             <button className='btn btn-sm bg-[#4B449D] text-white hover:bg-[#7873B5] outline-none border-none h-[40px] w-[100px]' onClick={handleSave} disabled={!hasChanges}>
               Save
             </button>
-            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-              <Alert onClose={handleCloseSnackbar} severity='success'>
-                Saved successfully!
-              </Alert>
-            </Snackbar>
           </div>
         </div>
       </div>
+
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity='success'>
+          Saved successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

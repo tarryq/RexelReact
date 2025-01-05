@@ -17,3 +17,9 @@ export const getStores = async (userId, accountId) => {
   return response.data
 }
 
+// New API for fetching account maintenance
+export const getAccountMaintenance = async (accountId) => {
+  const response = await axios.get(`${BASE_URL}/GetAccountMaintenance?accountId=${accountId}`);
+  console.log('response.data', response.data)
+  return response.data;
+};

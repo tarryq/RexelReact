@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAccount, selectStore } from '../store/features/accounts/accountSlice';
 import { fetchAccounts, fetchStores } from '../store/features/accounts/accountActions';
@@ -8,12 +8,10 @@ import { DashboardSkeleton } from '../skeletons/skeleton';
 
 export default function ManageAccount() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Redux state selectors
   const { accounts, stores, selectedAccount, selectedStore, accountLoading, storeLoading, error } = useSelector((state) => state.accounts);
-
-  console.log('stores', stores);
 
   // Fetch accounts when the component mounts
   useEffect(() => {
@@ -53,6 +51,35 @@ export default function ManageAccount() {
     const storeId = parseInt(event.target.value, 10);
     const store = stores?.find((s) => s.id === storeId);
     dispatch(selectStore(store));
+  };
+
+  // Handle navigation when a menu tab is clicked
+  const navigateToTab = (tab) => {
+    const queryParams = {
+      account: selectedAccount?.name || '',
+      store: selectedStore?.storeName || ''
+    };
+
+    switch (tab) {
+      case 'Maintenance':
+        navigate(`/maintenance?${new URLSearchParams(queryParams).toString()}`);
+        break;
+      case 'Accounts':
+        navigate(`/maintenance/account-maintenance?${new URLSearchParams(queryParams).toString()}`);
+        break;
+      case 'Store':
+        navigate(`/maintenance/store-maintenance?${new URLSearchParams(queryParams).toString()}`);
+        break;
+      case 'Communication':
+        navigate(`/maintenance/account-communication?${new URLSearchParams(queryParams).toString()}`);
+        break;
+      case 'Location':
+        navigate(`/maintenance/location-maintenance?${new URLSearchParams(queryParams).toString()}`);
+        break;
+      default:
+        console.warn(`No navigation implemented for tab: ${tab}`);
+        break;
+    }
   };
 
   const getMenuTabs = (user) => {
@@ -109,7 +136,7 @@ export default function ManageAccount() {
           </div>
         </div>
       </div>
-      <Navbar setActiveTab={() => {}} user={JSON.parse(localStorage.getItem('user'))} menuTabs={getMenuTabs(JSON.parse(localStorage.getItem('user')))} />
+      <Navbar setActiveTab={navigateToTab} user={JSON.parse(localStorage.getItem('user'))} menuTabs={getMenuTabs(JSON.parse(localStorage.getItem('user')))} />
     </div>
   );
 }

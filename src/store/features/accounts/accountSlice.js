@@ -1,22 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAccounts, fetchStores } from './accountActions';
+import { fetchAccounts, fetchStores, fetchAccountMaintenance } from './accountActions';
 
 const accountSlice = createSlice({
   name: 'accounts',
   initialState: {
     accounts: [],
-    stores: [], // Changed from object to array to hold store list
+    stores: [],
     selectedAccount: null,
     selectedStore: null,
+    accountMaintenance: null, // New state for account maintenance data
     accountLoading: false,
     storeLoading: false,
+    maintenanceLoading: false, // Loading state for account maintenance
     error: null
   },
   reducers: {
     selectAccount(state, action) {
       state.selectedAccount = action.payload;
-      state.selectedStore = null; // Reset store when a new account is selected
-      state.stores = []; // Clear stores when a new account is selected
+      state.selectedStore = null;
+      state.stores = [];
+      state.accountMaintenance = null; // Reset maintenance data on account change
     },
     selectStore(state, action) {
       state.selectedStore = action.payload;
@@ -43,12 +46,24 @@ const accountSlice = createSlice({
       })
       .addCase(fetchStores.fulfilled, (state, action) => {
         state.storeLoading = false;
-        state.stores = action.payload.stores; // Fetch stores based on the account
+        state.stores = action.payload.stores;
         state.selectedStore = action.payload.stores.length > 0 ? action.payload.stores[0] : null;
       })
       .addCase(fetchStores.rejected, (state, action) => {
         state.storeLoading = false;
         state.error = action.payload || 'Failed to fetch stores.';
+      })
+      .addCase(fetchAccountMaintenance.pending, (state) => {
+        state.maintenanceLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchAccountMaintenance.fulfilled, (state, action) => {
+        state.maintenanceLoading = false;
+        state.accountMaintenance = action.payload;
+      })
+      .addCase(fetchAccountMaintenance.rejected, (state, action) => {
+        state.maintenanceLoading = false;
+        state.error = action.payload || 'Failed to fetch account maintenance data.';
       });
   }
 });
