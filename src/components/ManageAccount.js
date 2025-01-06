@@ -82,6 +82,9 @@ export default function ManageAccount() {
       case 'Location':
         navigate(`/maintenance/location-maintenance?${new URLSearchParams(queryParams).toString()}`);
         break;
+      case 'Products':
+        navigate(`/products?${new URLSearchParams(queryParams).toString()}`);
+        break;
       default:
         console.warn(`No navigation implemented for tab: ${tab}`);
         break;
