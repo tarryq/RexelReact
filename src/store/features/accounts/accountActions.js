@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getAccounts, getStores, getAccountMaintenance } from './accountsApi';
+import { getAccounts, getStores, getAccountMaintenance, getAccountLocations, getAccountLocationProducts } from './accountsApi';
 
+// Existing actions remain unchanged
 export const fetchAccounts = createAsyncThunk('accounts/fetchAccounts', async (userId, thunkAPI) => {
   try {
     const response = await getAccounts(userId);
@@ -25,5 +26,25 @@ export const fetchAccountMaintenance = createAsyncThunk('accounts/fetchAccountMa
     return response;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || 'Failed to fetch account maintenance data');
+  }
+});
+
+// New action for fetching account locations
+export const fetchAccountLocations = createAsyncThunk('accounts/fetchAccountLocations', async ({ accountId, userId, langId=1 }, thunkAPI) => {
+  try {
+    const response = await getAccountLocations(accountId, userId, langId);
+    return response;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data || 'Failed to fetch account locations');
+  }
+});
+
+// New action for fetching account location products
+export const fetchAccountLocationProducts = createAsyncThunk('accounts/fetchAccountLocationProducts', async ({ accountId, locationId, langId=1, userId }, thunkAPI) => {
+  try {
+    const response = await getAccountLocationProducts(accountId, locationId, langId, userId);
+    return response;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data || 'Failed to fetch account location products');
   }
 });

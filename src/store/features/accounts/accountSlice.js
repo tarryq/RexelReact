@@ -1,16 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAccounts, fetchStores, fetchAccountMaintenance } from './accountActions';
+import { fetchAccounts, fetchStores, fetchAccountMaintenance, fetchAccountLocations, fetchAccountLocationProducts } from './accountActions';
 
 const accountSlice = createSlice({
   name: 'accounts',
   initialState: {
     accounts: [],
     stores: [],
+    locations: [], // New state for locations
+    locationProducts: [], // New state for location products
     selectedAccount: null,
     selectedStore: null,
-    accountMaintenance: null, // New state for account maintenance data
+    selectedLocation: null, // New state for selected location
+    accountMaintenance: null, // Existing state for account maintenance
     accountLoading: false,
     storeLoading: false,
+    locationLoading: false, // Loading state for locations
+    locationProductsLoading: false, // Loading state for location products
     maintenanceLoading: false, // Loading state for account maintenance
     error: null
   },
@@ -18,11 +23,21 @@ const accountSlice = createSlice({
     selectAccount(state, action) {
       state.selectedAccount = action.payload;
       state.selectedStore = null;
+      state.selectedLocation = null; // Reset location on account change
       state.stores = [];
+      state.locations = [];
+      state.locationProducts = [];
       state.accountMaintenance = null; // Reset maintenance data on account change
     },
     selectStore(state, action) {
       state.selectedStore = action.payload;
+      state.selectedLocation = null; // Reset location on store change
+      state.locations = [];
+      state.locationProducts = [];
+    },
+    selectLocation(state, action) {
+      state.selectedLocation = action.payload;
+      state.locationProducts = [];
     }
   },
   extraReducers: (builder) => {
@@ -64,10 +79,35 @@ const accountSlice = createSlice({
       .addCase(fetchAccountMaintenance.rejected, (state, action) => {
         state.maintenanceLoading = false;
         state.error = action.payload || 'Failed to fetch account maintenance data.';
+      })
+      .addCase(fetchAccountLocations.pending, (state) => {
+        state.locationLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchAccountLocations.fulfilled, (state, action) => {
+        state.locationLoading = false;
+        state.locations = action.payload;
+        state.selectedLocation = action.payload.length > 0 ? action.payload[0] : null;
+      })
+      .addCase(fetchAccountLocations.rejected, (state, action) => {
+        state.locationLoading = false;
+        state.error = action.payload || 'Failed to fetch account locations.';
+      })
+      .addCase(fetchAccountLocationProducts.pending, (state) => {
+        state.locationProductsLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchAccountLocationProducts.fulfilled, (state, action) => {
+        state.locationProductsLoading = false;
+        state.locationProducts = action.payload;
+      })
+      .addCase(fetchAccountLocationProducts.rejected, (state, action) => {
+        state.locationProductsLoading = false;
+        state.error = action.payload || 'Failed to fetch account location products.';
       });
   }
 });
 
-export const { selectAccount, selectStore } = accountSlice.actions;
+export const { selectAccount, selectStore, selectLocation } = accountSlice.actions;
 
 export default accountSlice.reducer;

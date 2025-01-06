@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { getLocationConfig, EDITABLE_FIELDS_LOCATIONS } from '../form-configs/accountLocationConfig';
-import { locations } from '../data-schemas/locationData';
 import { Snackbar, Alert } from '@mui/material';
+import { getLocationConfig } from '../form-configs/accountLocationConfig';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAccountLocations, fetchAccountLocationProducts } from '../store/features/accounts/accountActions';
 
-const LocationMaintenance = ({ selectedAccount, onSave }) => {
+const LocationMaintenance = ({ selectedAccount, selectedStore, onSave }) => {
+  const [user, setUser] = useState(null);
   const [locationDetails, setLocationDetails] = useState({});
   const [originalDetails, setOriginalDetails] = useState({});
   const [currentSection, setCurrentSection] = useState(0);
   const [hasChanges, setHasChanges] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [selectedLocationId, setSelectedLocationId] = useState(null);
+
+  const dispatch = useDispatch();
+  const locations = useSelector((state) => state.locations?.locations || []);
+  const locationProducts = useSelector((state) => state.locations?.locationProducts || []);
+
+  useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem('user'));
+    setUser(loggedInUser);
+  }, []);
+
+  const userid = user?.userId;
+  const accountid = selectedAccount?.id;
+  const storeid = selectedStore?.id;
 
   const sections = [
     {
@@ -27,43 +43,33 @@ const LocationMaintenance = ({ selectedAccount, onSave }) => {
 
   const locationMaintenanceOptions = ['Start A New Location', 'Save Changes', 'Cancel Changes'];
 
-  // Updated useEffect to fetch the location details from the locations array
+  // Fetch locations on account or store change
   useEffect(() => {
-    if (!selectedAccount || !selectedAccount?.id) return;
-    const location = locations.find((loc) => loc.account === selectedAccount);
-    if (location) {
-      const editableDetails = EDITABLE_FIELDS_LOCATIONS.reduce((acc, field) => {
-        if (field in location) {
-          acc[field] = location[field];
-        }
-        return acc;
-      }, {});
-      setLocationDetails(editableDetails);
-      setOriginalDetails(editableDetails);
-      setHasChanges(false);
-      setCurrentSection(0);
-    }
-  }, [selectedAccount, locations]);
+    if (!selectedAccount?.id || !selectedStore?.id) return;
 
-  const checkForChanges = (newDetails) => {
-    return JSON.stringify(newDetails) !== JSON.stringify(originalDetails);
+    dispatch(fetchAccountLocations({ accountid, storeid, userid }));
+  }, [selectedAccount, selectedStore]);
+
+  // Fetch location details and products on location change
+  useEffect(() => {
+    if (!selectedLocationId) return;
+
+    const selectedLocation = locations.find((loc) => loc.id === selectedLocationId);
+    setLocationDetails(selectedLocation || {});
+    setOriginalDetails(selectedLocation || {});
+
+    dispatch(fetchAccountLocationProducts({ accountid, storeid, userid, locationId: selectedLocationId }));
+  }, [selectedLocationId, locations]);
+
+  const handleLocationClick = (locationId) => {
+    setSelectedLocationId(locationId);
+    setHasChanges(false);
   };
 
   const handleSave = () => {
-    const updatedDetails = Object.keys(locationDetails).reduce((acc, key) => {
-      const config = getLocationConfig(key);
-      if (!config.readOnly) {
-        acc[key] = locationDetails[key];
-      }
-      return acc;
-    }, {});
-    onSave(updatedDetails);
+    onSave(locationDetails);
     setHasChanges(false);
     setSnackbarOpen(true);
-  };
-
-  const handleCloseSnackbar = () => {
-    setSnackbarOpen(false);
   };
 
   const handleCancel = () => {
@@ -71,99 +77,61 @@ const LocationMaintenance = ({ selectedAccount, onSave }) => {
     setHasChanges(false);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const newDetails = {
-      ...locationDetails,
-      [name]: type === 'checkbox' ? checked : value
-    };
-    setLocationDetails(newDetails);
-    setHasChanges(checkForChanges(newDetails));
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
+
+  const renderLocations = () => (
+    <div className='form-control w-full mb-4'>
+      <label className='label'>
+        <span className='label-text font-semibold'>Current Defined Locations for Account with Description and Display Order in Parentheses</span>
+      </label>
+      <ul className='p-2 rounded-lg border-[1px] border-[#dbdbdb] max-h-[400px] min-h-[100px] overflow-auto'>
+        {locations && locations.length > 0 ? (
+          locations.map((location) => (
+            <li key={location.id} className={`mb-1 list-style-none cursor-pointer p-2 rounded ${selectedLocationId === location.id ? 'bg-[#4B449D] text-white' : 'hover:bg-gray-200'}`} onClick={() => handleLocationClick(location.id)}>
+              {location.displaytext || `Location ${location.id}`}
+            </li>
+          ))
+        ) : (
+          <li className='text-gray-500'>No locations available</li>
+        )}
+      </ul>
+    </div>
+  );
+
+  const renderLocationProducts = () => (
+    <div className='form-control w-full mb-4'>
+      <label className='label'>
+        <span className='label-text font-semibold'>Products Located at Selected Location</span>
+      </label>
+      <ul className='p-2 rounded-lg border-[1px] border-[#dbdbdb] max-h-[400px] min-h-[100px] overflow-auto'>
+        {locationProducts && locationProducts.length > 0 ? (
+          locationProducts.map((product, index) => (
+            <li key={index} className='mb-1 list-style-none'>
+              {product.name || `Product ${index + 1}`}
+            </li>
+          ))
+        ) : (
+          <li className='text-gray-500'>No products available</li>
+        )}
+      </ul>
+    </div>
+  );
 
   const renderField = (fieldName) => {
     const config = getLocationConfig(fieldName);
     const value = locationDetails[fieldName] || '';
     const isReadOnly = config.readOnly || false;
 
-    switch (config.type) {
-      case 'select':
-        return (
-          <div className='form-control w-full mb-4' key={fieldName}>
-            <label className='label'>
-              <span className='label-text font-semibold'>{config.label}</span>
-            </label>
-            <select name={fieldName} value={value} onChange={handleInputChange} disabled={isReadOnly} className='select select-bordered w-full disabled:opacity-50'>
-              {config.options.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-        );
-
-      case 'checkbox':
-        return (
-          <div className='form-control flex flex-row items-center space-x-2 mb-4' key={fieldName}>
-            <label className='label cursor-pointer'>
-              <input
-                type='checkbox'
-                name={fieldName}
-                checked={value}
-                onChange={handleInputChange}
-                disabled={isReadOnly}
-                className='checkbox'
-                style={{
-                  '--chkbg': value ? '#4B449D' : 'white',
-                  '--chkfg': 'white'
-                }}
-              />
-              <span className='label-text font-semibold ml-2'>{config.label}</span>
-            </label>
-          </div>
-        );
-
-      case 'textarea':
-        return (
-          <div className='form-control w-full mb-4' key={fieldName}>
-            <label className='label'>
-              <span className='label-text font-semibold'>{config.label}</span>
-            </label>
-            <textarea name={fieldName} value={value} onChange={handleInputChange} disabled={isReadOnly} className='min-h-[100px] textarea textarea-bordered disabled:opacity-50' />
-          </div>
-        );
-      case 'list':
-        return (
-          <div className='form-control w-full mb-4' key={fieldName}>
-            <label className='label'>
-              <span className='label-text font-semibold'>{config.label}</span>
-            </label>
-            <ul className='p-2 rounded-lg border-[1px] border-[#dbdbdb] max-h-[400px] min-h-[100px] overflow-auto'>
-              {value.length > 0 ? (
-                value.map((item, index) => (
-                  <li key={index} className='mb-1 list-style-none'>
-                    {item}
-                  </li>
-                ))
-              ) : (
-                <li className='text-gray-500'>No items available</li>
-              )}
-            </ul>
-          </div>
-        );
-      case 'number':
-      case 'text':
-      default:
-        return (
-          <div className='form-control w-full mb-4' key={fieldName}>
-            <label className='label'>
-              <span className='label-text font-semibold'>{config.label}</span>
-            </label>
-            <input type='text' name={fieldName} value={value} onChange={handleInputChange} disabled={isReadOnly} className='input input-bordered w-full disabled:opacity-50' />
-          </div>
-        );
-    }
+    return (
+      <div className='form-control w-full mb-4' key={fieldName}>
+        <label className='label'>
+          <span className='label-text font-semibold'>{config.label}</span>
+        </label>
+        {config.type === 'textarea' ? <textarea name={fieldName} value={value} onChange={(e) => setLocationDetails({ ...locationDetails, [fieldName]: e.target.value })} disabled={isReadOnly} className='min-h-[100px] textarea textarea-bordered disabled:opacity-50' /> : <input type='text' name={fieldName} value={value} onChange={(e) => setLocationDetails({ ...locationDetails, [fieldName]: e.target.value })} disabled={isReadOnly} className='input input-bordered w-full disabled:opacity-50' />}
+      </div>
+    );
   };
 
   return (
@@ -193,38 +161,30 @@ const LocationMaintenance = ({ selectedAccount, onSave }) => {
         <div className='w-4/5'>
           {sections[currentSection]?.name === 'Location Mnemonic' ? (
             <>
-              <div className='grid grid-cols-2 md:grid-cols-3 gap-2'>{sections[currentSection].fields.map((fieldName) => (locationDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null))}</div>
+              <div className='grid grid-cols-2 md:grid-cols-3 gap-2'>{sections[currentSection].fields.map((fieldName) => renderField(fieldName))}</div>
               <div className='grid grid-cols-2 md:grid-cols-2 gap-4'>
-                {renderField('accountLocations')}
-                {renderField('productsLocatedAtSelectedLocation')}
+                {renderLocations()}
+                {renderLocationProducts()}
               </div>
-            </>
-          ) : sections[currentSection]?.name === 'Move All Products From One Location To Another' ? (
-            <>
-              <div className='grid grid-cols-2 md:grid-cols-2 gap-4'>
-                {renderField('accountLocations')}
-                {renderField('moveProductsToLocation')}
-              </div>
-              <div className='grid grid-cols-2 md:grid-cols-3 gap-2'>{sections[currentSection].fields.map((fieldName) => (locationDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null))}</div>
             </>
           ) : (
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>{sections[currentSection].fields.map((fieldName) => (locationDetails.hasOwnProperty(fieldName) ? renderField(fieldName) : null))}</div>
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>{sections[currentSection].fields.map((fieldName) => renderField(fieldName))}</div>
           )}
-
-          <div className='mt-6 flex justify-end space-x-4'>
-            <button className='btn btn-sm hover:bg-[#4B449D] hover:border-[#4B449D] hover:outline-none hover:text-white text-[#4B449D] h-[40px] w-[100px]' onClick={handleCancel} disabled={!hasChanges}>
-              Cancel
-            </button>
-            <button className='btn btn-sm bg-[#4B449D] text-white hover:bg-[#7873B5] outline-none border-none h-[40px] w-[100px]' onClick={handleSave} disabled={!hasChanges}>
-              Save
-            </button>
-            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-              <Alert onClose={handleCloseSnackbar} severity='success'>
-                Saved successfully!
-              </Alert>
-            </Snackbar>
-          </div>
         </div>
+      </div>
+
+      <div className='mt-6 flex justify-end space-x-4'>
+        <button className='btn btn-sm hover:bg-[#4B449D] hover:border-[#4B449D] hover:outline-none hover:text-white text-[#4B449D] h-[40px] w-[100px]' onClick={handleCancel} disabled={!hasChanges}>
+          Cancel
+        </button>
+        <button className='btn btn-sm bg-[#4B449D] text-white hover:bg-[#7873B5] outline-none border-none h-[40px] w-[100px]' onClick={handleSave} disabled={!hasChanges}>
+          Save
+        </button>
+        <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+          <Alert onClose={handleCloseSnackbar} severity='success'>
+            Saved successfully!
+          </Alert>
+        </Snackbar>
       </div>
     </div>
   );
