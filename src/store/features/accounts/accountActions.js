@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getAccounts, getStores, getAccountMaintenance, getAccountLocations, getAccountLocationProducts } from './accountsApi';
+import { getAccounts, getStores, getAccountMaintenance, getAccountLocations, getAccountLocationProducts, getStoreMaintenance } from './accountsApi';
 
 // Existing actions remain unchanged
 export const fetchAccounts = createAsyncThunk('accounts/fetchAccounts', async (userId, thunkAPI) => {
@@ -48,3 +48,17 @@ export const fetchAccountLocationProducts = createAsyncThunk('accounts/fetchAcco
     return thunkAPI.rejectWithValue(error.response?.data || 'Failed to fetch account location products');
   }
 });
+export const fetchStoreMaintenance = createAsyncThunk(
+  'stores/fetchStoreMaintenance',
+  async (accountId, thunkAPI) => {
+    try {
+      const response = await getStoreMaintenance(accountId);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || 'Failed to fetch store maintenance data'
+      );
+    }
+  }
+);
+

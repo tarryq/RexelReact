@@ -64,6 +64,9 @@ export default function ManageAccount() {
     };
 
     switch (tab) {
+      case 'Products':
+        navigate(`/products?${new URLSearchParams(queryParams).toString()}`);
+        break;
       case 'Maintenance':
         navigate(`/maintenance?${new URLSearchParams(queryParams).toString()}`);
         break;

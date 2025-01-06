@@ -1,25 +1,45 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
-const MaximumOrderValue = () => {
+const MaxOrderValueMaintenance = () => {
+ const dispatch = useDispatch();
+ const { accounts, stores, selectedAccount, selectedStore } = useSelector((state) => state.accounts);
+ console.log('Selected Account:', selectedAccount);
+
  const [storeOverrides, setStoreOverrides] = useState([]);
- const [selectedStore, setSelectedStore] = useState('');
+ console.log('Store Overrides:', storeOverrides);
+ const [selectedStoreOverride, setSelectedStoreOverride] = useState('');
+ const [maxOrderValue, setMaxOrderValue] = useState('');
 
  const handleAddStore = () => {
-  if (selectedStore && !storeOverrides.includes(selectedStore)) {
-   setStoreOverrides([...storeOverrides, selectedStore]);
-   setSelectedStore('');
+  if (selectedStoreOverride && !storeOverrides.includes(selectedStoreOverride)) {
+   setStoreOverrides([...storeOverrides, selectedStoreOverride]);
   }
  };
 
- const handleRemoveStore = (storeToRemove) => {
-  setStoreOverrides(storeOverrides.filter(store => store !== storeToRemove));
+ const handleRemoveStore = (store) => {
+  setStoreOverrides(storeOverrides.filter((s) => s !== store));
+ };
+
+ const handleUpdateMaxOrderValue = async () => {
+  try {
+   const response = await axios.post(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/UpdateMaxOrder`, {
+    accountId: selectedAccount.id,
+    storeId: selectedStore.id,
+    amount: maxOrderValue
+   });
+   console.log('Max order value updated:', response.data);
+  } catch (error) {
+   console.error('Failed to update max order value:', error);
+  }
  };
 
  return (
   <div className="min-h-screen bg-gray-50 p-6">
    <div className="max-w-4xl mx-auto">
     <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-     <h1 className="text-2xl font-semibold text-[#4B449D]  mb-8">
+     <h1 className="text-2xl font-semibold text-[#4B449D] mb-8">
       Maximum Order Value Maintenance
      </h1>
 
@@ -32,15 +52,20 @@ const MaximumOrderValue = () => {
         </label>
         <input
          type="number"
-         className="w-full px-4 py-2 border border-gray-300 select select-bordered"
+         className="w-full px-4 py-2 border border-gray-300 rounded-md"
          placeholder="Enter value"
+         value={maxOrderValue}
+         onChange={(e) => setMaxOrderValue(e.target.value)}
         />
        </div>
        <div className="flex gap-2">
-        <button className=" btn px-4 py-2 bg-[#4B449D] text-white rounded-md hover:bg-[#38327D] transition-colors">
+        <button
+         className="btn px-4 py-2 bg-[#4B449D] text-white rounded-md hover:bg-[#38327D] transition-colors"
+         onClick={handleUpdateMaxOrderValue}
+        >
          Update
         </button>
-        <button className="btn px-4 py-2 border border-purple-200 text-[#4B449D]  rounded-md hover:bg-purple-50 transition-colors">
+        <button className="btn px-4 py-2 border border-purple-200 text-[#4B449D] rounded-md hover:bg-purple-50 transition-colors">
          Remove
         </button>
        </div>
@@ -55,19 +80,19 @@ const MaximumOrderValue = () => {
          Store
         </label>
         <select
-         value={selectedStore}
-         onChange={(e) => setSelectedStore(e.target.value)}
+         value={selectedStoreOverride}
+         onChange={(e) => setSelectedStoreOverride(e.target.value)}
          className="w-full px-4 py-2 border-gray-300 select select-bordered select-md"
         >
-         <option value="">- NEW YORK - AESOP **LAMP**</option>
-         <option value="store1">Store 1</option>
-         <option value="store2">Store 2</option>
+         <option value="">{selectedAccount?.name || '- Select Account -'}</option>
+         {stores.map((store) => (
+          <option key={store.id} value={store.id}>
+           {store.storeName}
+          </option>
+         ))}
         </select>
        </div>
-       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-         Store Override List
-        </label>
+       <div className='mt-6'>
         <button
          onClick={handleAddStore}
          className="btn w-full px-4 py-2 bg-[#4B449D] text-white rounded-md hover:bg-[#38327D] transition-colors flex items-center justify-center gap-2"
@@ -81,7 +106,10 @@ const MaximumOrderValue = () => {
       </div>
 
       {/* Override List */}
-      <div className="space-y-2">
+      {storeOverrides.length > 0 && <div className="space-y-2">
+       <label className="block text-sm font-medium text-gray-700 mb-2">
+        Store Override List
+       </label>
        {storeOverrides.map((store, index) => (
         <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 group">
          <span className="text-gray-700">{store}</span>
@@ -95,13 +123,12 @@ const MaximumOrderValue = () => {
          </button>
         </div>
        ))}
-      </div>
+      </div>}
      </div>
     </div>
-
    </div>
   </div>
  );
 };
 
-export default MaximumOrderValue;
+export default MaxOrderValueMaintenance;

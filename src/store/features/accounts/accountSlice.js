@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAccounts, fetchStores, fetchAccountMaintenance, fetchAccountLocations, fetchAccountLocationProducts } from './accountActions';
+import { fetchAccounts, fetchStores, fetchAccountMaintenance, fetchAccountLocations, fetchAccountLocationProducts, fetchStoreMaintenance } from './accountActions';
 
 const accountSlice = createSlice({
   name: 'accounts',
@@ -17,6 +17,9 @@ const accountSlice = createSlice({
     locationLoading: false, // Loading state for locations
     locationProductsLoading: false, // Loading state for location products
     maintenanceLoading: false, // Loading state for account maintenance
+    storeMaintenance: null,
+    storeLoading: false,
+    storeError: null,
     error: null
   },
   reducers: {
@@ -104,6 +107,18 @@ const accountSlice = createSlice({
       .addCase(fetchAccountLocationProducts.rejected, (state, action) => {
         state.locationProductsLoading = false;
         state.error = action.payload || 'Failed to fetch account location products.';
+      })
+      .addCase(fetchStoreMaintenance.pending, (state) => {
+        state.storeLoading = true;
+        state.storeError = null;
+      })
+      .addCase(fetchStoreMaintenance.fulfilled, (state, action) => {
+        state.storeLoading = false;
+        state.storeMaintenance = action.payload;
+      })
+      .addCase(fetchStoreMaintenance.rejected, (state, action) => {
+        state.storeLoading = false;
+        state.storeError = action.payload || 'Failed to fetch store maintenance data';
       });
   }
 });

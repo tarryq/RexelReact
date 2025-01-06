@@ -26,3 +26,10 @@ export const getAccountLocationProducts = async (accountId, locationId, langId, 
   const response = await axios.get(`${BASE_URL}/GetAccountLocationProducts?acctId=${accountId}&locationId=${locationId}&langId=${langId}&userId=${userId}`);
   return response.data;
 };
+
+export const getStoreMaintenance = async (accountId) => {
+  const response = await axios.get(
+    `${BASE_URL}/GetAccountStoreMaintenance?accountId=${accountId}`
+  );
+  return response.data;
+};
