@@ -29,6 +29,8 @@ const PrivateRouteWrapper = ({ element: Element, accounts, stores, selectedAccou
 
 function App() {
   const { accounts = [], stores = [], selectedAccount = {}, selectedStore = {} } = useSelector((state) => state.accounts);
+  const state = useSelector((state) => state);
+  console.log('state', state);
 
   return (
     <Routes>

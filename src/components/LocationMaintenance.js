@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Snackbar, Alert } from '@mui/material';
+import { Snackbar, Alert, CircularProgress } from '@mui/material';
 import { getLocationConfig } from '../form-configs/accountLocationConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAccountLocations, fetchAccountLocationProducts } from '../store/features/accounts/accountActions';
 
-const LocationMaintenance = ({ selectedAccount, selectedStore, onSave }) => {
+const LocationMaintenance = ({ selectedAccount, onSave }) => {
   const [user, setUser] = useState(null);
   const [locationDetails, setLocationDetails] = useState({});
   const [originalDetails, setOriginalDetails] = useState({});
@@ -12,19 +12,16 @@ const LocationMaintenance = ({ selectedAccount, selectedStore, onSave }) => {
   const [hasChanges, setHasChanges] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [selectedLocationId, setSelectedLocationId] = useState(null);
+  const [loadingProducts, setLoadingProducts] = useState(false); // Added loading state
 
   const dispatch = useDispatch();
-  const locations = useSelector((state) => state.locations?.locations || []);
-  const locationProducts = useSelector((state) => state.locations?.locationProducts || []);
+  const locations = useSelector((state) => state.accounts?.locations || []);
+  const locationProducts = useSelector((state) => state.accounts?.locationProducts || []);
 
   useEffect(() => {
     const loggedInUser = JSON.parse(localStorage.getItem('user'));
     setUser(loggedInUser);
   }, []);
-
-  const userid = user?.userId;
-  const accountid = selectedAccount?.id;
-  const storeid = selectedStore?.id;
 
   const sections = [
     {
@@ -43,26 +40,27 @@ const LocationMaintenance = ({ selectedAccount, selectedStore, onSave }) => {
 
   const locationMaintenanceOptions = ['Start A New Location', 'Save Changes', 'Cancel Changes'];
 
-  // Fetch locations on account or store change
-  useEffect(() => {
-    if (!selectedAccount?.id || !selectedStore?.id) return;
+  const userId = user?.userId;
+  const accountId = selectedAccount?.id;
 
-    dispatch(fetchAccountLocations({ accountid, storeid, userid }));
-  }, [selectedAccount, selectedStore]);
-
-  // Fetch location details and products on location change
   useEffect(() => {
-    if (!selectedLocationId) return;
+    if (!selectedAccount?.id || !userId) return;
+    dispatch(fetchAccountLocations({ accountId, userId }));
+  }, [selectedAccount, user]);
+
+  useEffect(() => {
+    if (!selectedLocationId || !userId || !accountId) return;
 
     const selectedLocation = locations.find((loc) => loc.id === selectedLocationId);
     setLocationDetails(selectedLocation || {});
     setOriginalDetails(selectedLocation || {});
 
-    dispatch(fetchAccountLocationProducts({ accountid, storeid, userid, locationId: selectedLocationId }));
-  }, [selectedLocationId, locations]);
+    setLoadingProducts(true); // Start loading
+    dispatch(fetchAccountLocationProducts({ accountId, userId, locationId: selectedLocationId })).finally(() => setLoadingProducts(false)); // End loading
+  }, [selectedLocationId, locations, userId, accountId, dispatch]);
 
   const handleLocationClick = (locationId) => {
-    setSelectedLocationId(locationId);
+    setSelectedLocationId(locationId); // Trigger `useEffect` to fetch products
     setHasChanges(false);
   };
 
@@ -90,7 +88,7 @@ const LocationMaintenance = ({ selectedAccount, selectedStore, onSave }) => {
         {locations && locations.length > 0 ? (
           locations.map((location) => (
             <li key={location.id} className={`mb-1 list-style-none cursor-pointer p-2 rounded ${selectedLocationId === location.id ? 'bg-[#4B449D] text-white' : 'hover:bg-gray-200'}`} onClick={() => handleLocationClick(location.id)}>
-              {location.displaytext || `Location ${location.id}`}
+              {location.displayText || `Location ${location.id}`}
             </li>
           ))
         ) : (
@@ -106,10 +104,14 @@ const LocationMaintenance = ({ selectedAccount, selectedStore, onSave }) => {
         <span className='label-text font-semibold'>Products Located at Selected Location</span>
       </label>
       <ul className='p-2 rounded-lg border-[1px] border-[#dbdbdb] max-h-[400px] min-h-[100px] overflow-auto'>
-        {locationProducts && locationProducts.length > 0 ? (
+        {loadingProducts ? ( // Show loading indicator while fetching products
+          <div className='flex justify-center items-center py-4'>
+            <CircularProgress size={24} color='primary' />
+          </div>
+        ) : locationProducts && locationProducts.length > 0 ? (
           locationProducts.map((product, index) => (
             <li key={index} className='mb-1 list-style-none'>
-              {product.name || `Product ${index + 1}`}
+              {product['productAccountMasterID'] || `Product ${index + 1}`}
             </li>
           ))
         ) : (

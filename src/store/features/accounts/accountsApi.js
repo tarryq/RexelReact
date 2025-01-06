@@ -17,12 +17,12 @@ export const getAccountMaintenance = async (accountId) => {
   return response.data;
 };
 
-export const getAccountLocations = async (accountId, userId, langId) => {
+export const getAccountLocations = async (accountId, userId, langId=1) => {
   const response = await axios.get(`${BASE_URL}/GetAccountLocations?acctId=${accountId}&langId=${langId}&userId=${userId}`);
   return response.data;
 };
 
-export const getAccountLocationProducts = async (accountId, locationId, langId, userId) => {
+export const getAccountLocationProducts = async (accountId, locationId, langId=1, userId) => {
   const response = await axios.get(`${BASE_URL}/GetAccountLocationProducts?acctId=${accountId}&locationId=${locationId}&langId=${langId}&userId=${userId}`);
   return response.data;
 };
