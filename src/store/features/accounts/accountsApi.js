@@ -23,3 +23,10 @@ export const getAccountMaintenance = async (accountId) => {
   console.log('response.data', response.data)
   return response.data;
 };
+
+export const getStoreMaintenance = async (accountId) => {
+  const response = await axios.get(
+    `${BASE_URL}/GetAccountStoreMaintenance?accountId=${accountId}`
+  );
+  return response.data;
+};

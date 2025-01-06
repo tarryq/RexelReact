@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { getStoreMaintenanceConfig } from '../form-configs/storeConfig';
+import { fetchStoreMaintenance } from '../store/features/accounts/accountActions';
 import { Alert, Snackbar } from '@mui/material';
 
 const StoreMaintenance = ({ selectedStore, stores, onSave }) => {
+
+  const dispatch = useDispatch();
+  const { storeMaintenance, storeLoading, storeError } = useSelector((state) => state.accounts);
+
   const [storeDetails, setStoreDetails] = useState({});
   const [originalDetails, setOriginalDetails] = useState({});
   const [currentSection, setCurrentSection] = useState(0);
@@ -13,23 +19,23 @@ const StoreMaintenance = ({ selectedStore, stores, onSave }) => {
   const sections = [
     {
       name: 'Store Information',
-      fields: ['storeName', 'storeNumber', 'eclipseId', 'isStoreActive']
+      fields: ['storeName', 'storeNumber', 'shipToEclipseID', 'isStoreActive']
     },
     {
       name: 'Address',
-      fields: ['addressLine1', 'addressLine2', 'city', 'stateRegion', 'postalCode', 'country']
+      fields: ['address1', 'address2', 'city', 'region', 'zipCode', 'country']
     },
     {
       name: 'Contact Details',
-      fields: ['storeContact', 'storeTelephone', 'storeFax', 'storeEmail']
+      fields: ['storeContactName', 'telephone', 'fax', 'eMail']
     },
     {
       name: 'Additional Information',
-      fields: ['storeBuildDate', 'storeBuildoutTicketNumber', 'associatedProfile', 'serviceProviderStoreId', 'eclipseStoreReleaseId']
+      fields: ['dateStoreBuilt', 'originalBuildoutTicket', 'associatedProfileDisplay', 'serviceProviderStoreId', 'eclipseStoreReleaseId']
     },
     {
       name: 'Settings',
-      fields: ['hideStoreFromAllUsers', 'onlyBidOrdersCanBePlaced', 'shipToAddressRequired']
+      fields: ['hideStoreFromAllButSuperUsers', 'onlyBidOrdersCanBePlaced', 'shipToAddressRequired']
     },
     {
       name: 'FMS Information',
@@ -46,14 +52,19 @@ const StoreMaintenance = ({ selectedStore, stores, onSave }) => {
   ];
 
   useEffect(() => {
-    const store = stores.find(store => store.storeName === selectedStore);
-    if (store) {
-      setStoreDetails(store);
-      setOriginalDetails(store);
+    if (selectedStore?.accountID) {
+      dispatch(fetchStoreMaintenance(selectedStore.accountID));
+    }
+  }, [dispatch, selectedStore]);
+
+  useEffect(() => {
+    if (storeMaintenance) {
+      setStoreDetails(storeMaintenance);
+      setOriginalDetails(storeMaintenance);
       setHasChanges(false);
       setCurrentSection(0);
     }
-  }, [selectedStore, stores]);
+  }, [storeMaintenance]);
 
   const handleSave = () => {
     onSave(storeDetails);
@@ -146,8 +157,34 @@ const StoreMaintenance = ({ selectedStore, stores, onSave }) => {
     }
   };
 
+  if (storeLoading) {
+    return (
+      <div className='flex justify-center items-center min-h-[70vh]'>
+        <p className='text-lg text-gray-500'>Loading store details...</p>
+      </div>
+    );
+  }
+
+  if (storeError) {
+    return (
+      <div className='flex justify-center items-center min-h-[70vh]'>
+        <p className='text-lg text-red-500'>Failed to load store details. Please try again later.</p>
+      </div>
+    );
+  }
+
+  // No store selected state
+  if (!storeMaintenance) {
+    return (
+      <div className='flex justify-center items-center min-h-[70vh]'>
+        <p className='text-lg text-gray-500'>No store selected. Please select a store to view details.</p>
+      </div>
+    );
+  }
+
+
   return (
-    <div className='mt-8'>
+    <div className='mt-8 p-6'>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold" style={{ color: '#4B449D' }}>
           Store Maintenance:
