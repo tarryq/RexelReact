@@ -7,6 +7,7 @@ import { fetchAccounts, fetchStores } from '../store/features/accounts/accountAc
 import Navbar from './Navbar';
 import { DashboardSkeleton } from '../skeletons/skeleton';
 import NoStoreMessage from './NoStoreMeesage';
+import SearchableDropdown from './SearchableDropDown.js';
 
 export default function ManageAccount() {
   const dispatch = useDispatch();
@@ -123,26 +124,25 @@ export default function ManageAccount() {
       <div className='flex items-center justify-between my-4' style={{ minHeight: '100px' }}>
         <div className='w-[54%] flex flex-col'>{selectedAccount?.logo && <div className='self-end' dangerouslySetInnerHTML={{ __html: selectedAccount.logo }} />}</div>
         <div className='flex flex-col gap-2 justify-start xs:ml-4 min-w-[30%]'>
-          <div className='flex items-center'>
-            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Account:</label>
-            <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedAccount?.id || ''} onChange={handleAccountChange} disabled={!accounts.length}>
-              {accounts.map((account) => (
-                <option key={account.id} value={account.id}>
-                  {account.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className='flex items-center'>
-            <label className='block text-sm font-medium text-gray-700 w-[140px]'>Store:</label>
-            <select className='block w-full border-gray-300 select select-bordered select-sm' value={selectedStore?.id || ''} onChange={handleStoreChange} disabled={!selectedAccount}>
-              {stores?.map((store) => (
-                <option key={store.id} value={store.id}>
-                  {store.storeName}
-                </option>
-              ))}
-            </select>
-          </div>
+          <SearchableDropdown 
+          options={accounts} 
+          value={selectedAccount?.id} 
+          onChange={handleAccountChange} 
+          labelKey='name' valueKey='id' 
+          label='Account' 
+          disabled={!accounts.length} 
+          placeholder='Search accounts...' 
+          />
+          <SearchableDropdown 
+          options={stores} 
+          value={selectedStore?.id} 
+          onChange={handleStoreChange} 
+          labelKey='storeName' 
+          valueKey='id' 
+          label='Store' 
+          disabled={!selectedAccount}
+          placeholder='Search stores...'
+          />
         </div>
       </div>
       <Navbar setActiveTab={navigateToTab} user={JSON.parse(localStorage.getItem('user'))} menuTabs={getMenuTabs(JSON.parse(localStorage.getItem('user')))} />
