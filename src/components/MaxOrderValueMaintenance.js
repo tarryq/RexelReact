@@ -38,11 +38,8 @@ const MaxOrderValueMaintenance = () => {
   const handleUpdateMaxOrderValue = async () => {
     try {
       const storeId = storeOverrides.length > 0 ? storeOverrides[0] : 0;
-      await axios.post(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/UpdateMaxOrder`, {
-        accountId: selectedAccount.id,
-        storeId: storeId,
-        amount: maxOrderValue
-      });
+      const url = `https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/UpdateMaxOrder?accountId=${selectedAccount.id}&storeId=${storeId}&amount=${maxOrderValue}`;
+      await axios.post(url);
 
       setSnackbar({
         open: true,
