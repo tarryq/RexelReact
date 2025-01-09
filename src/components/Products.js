@@ -6,6 +6,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { debounce, highlightText } from '../utils';
 import { ProductTableSkeleton } from '../skeletons/skeleton';
 import { fetchProductColumns, fetchProducts } from '../store/features/products/productActions';
+import { updatedProducts } from '../store/features/products/productSlice';
 
 const ProductTable = (props) => {
   const [user, setUser] = useState(null);
@@ -39,8 +40,9 @@ const ProductTable = (props) => {
     if (Array.isArray(products)) {
       return products.map((product, index) => {
         const dynamicProduct = {
-          id: index,
-          originalProduct: product
+          id: product.eclipseID,
+          originalProduct: product,
+          eclipseID: product.eclipseID
         };
         const productWithLowerKeys = keysToLowerCase(product);
         productColumns.forEach((column) => {
@@ -112,11 +114,15 @@ const ProductTable = (props) => {
 
   const handleIncrement = (partNumber, event) => {
     event.stopPropagation();
-    setQuantities((prev) => ({
-      ...prev,
-      [partNumber]: prev[partNumber] + 1
-    }));
+    const updateProducts = filteredProducts.map((product) => {
+      if (product.eclipseID === partNumber) {
+        return { ...product, quantitytoorder: (product.quantitytoorder || 0) + 1 };
+      }
+      return product;
+    });
+    dispatch(updatedProducts(updateProducts));
   };
+
 
   const handleDecrement = (partNumber, event) => {
     event.stopPropagation();
@@ -130,10 +136,13 @@ const ProductTable = (props) => {
     event.stopPropagation();
     const numberValue = value === '' ? 0 : parseInt(value, 10);
     if (!isNaN(numberValue) && numberValue >= 0) {
-      setQuantities((prev) => ({
-        ...prev,
-        [partNumber]: numberValue
-      }));
+      const updateProducts = filteredProducts.map((product) => {
+        if (product.eclipseID === partNumber) {
+          return { ...product, quantitytoorder: numberValue };
+        }
+        return product;
+      });
+      dispatch(updatedProducts(updateProducts));
     }
   };
 
@@ -220,9 +229,9 @@ const ProductTable = (props) => {
               <TextField
                 size='small'
                 variant='outlined'
-                value={quantities[params.row.partnumber] || 0}
+                value={params.row.quantitytoorder}
                 onClick={(e) => e.stopPropagation()}
-                onChange={(e) => handleInputChange(params.row.partnumber, e.target.value, e)}
+                onChange={(e) => handleInputChange(params.row.id, e.target.value, e)}
                 inputProps={{
                   style: {
                     textAlign: 'center',
@@ -272,7 +281,7 @@ const ProductTable = (props) => {
                     backgroundColor: '#54C39220'
                   }
                 }}
-                onClick={(event) => handleIncrement(params.row.partnumber, event)}
+                onClick={(event) => handleIncrement(params.row.eclipseID, event)}
               >
                 +
               </Button>
@@ -519,7 +528,7 @@ const ProductTable = (props) => {
                           backgroundColor: '#FF292920'
                         }
                       }}
-                      onClick={(event) => handleDecrement(selectedProduct.partNumber, event)}
+                      onClick={(event) => handleDecrement(selectedProduct.id, event)}
                     >
                       -
                     </Button>
@@ -527,8 +536,8 @@ const ProductTable = (props) => {
                     <TextField
                       size='small'
                       variant='outlined'
-                      value={quantities[selectedProduct.partNumber] || 0}
-                      onChange={(e) => handleInputChange(selectedProduct.partNumber, e.target.value, e)}
+                      value={selectedProduct.quantitytoorder || 0}
+                      onChange={(e) => handleInputChange(selectedProduct.id, e.target.value, e)}
                       inputProps={{
                         style: {
                           textAlign: 'center',
@@ -563,7 +572,7 @@ const ProductTable = (props) => {
                           backgroundColor: '#54C39220'
                         }
                       }}
-                      onClick={(event) => handleIncrement(selectedProduct.partNumber, event)}
+                      onClick={(event) => handleIncrement(selectedProduct.id, event)}
                     >
                       +
                     </Button>

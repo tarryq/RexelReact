@@ -10,9 +10,8 @@ const productSlice = createSlice({
     productError: null,
   },
   reducers: {
-    updateQuantity(state, action) {
-      const { partNumber, quantity } = action.payload
-      state.quantities[partNumber] = quantity
+    updatedProducts(state, action) {
+      state.products = action.payload;
     },
     setSelectedProduct(state, action) {
       state.selectedProduct = action.payload
@@ -49,6 +48,6 @@ const productSlice = createSlice({
   },
 })
 
-export const { updateQuantity, setSelectedProduct, clearSelectedProduct, clearProducts } = productSlice.actions
+export const { updatedProducts, setSelectedProduct, clearSelectedProduct, clearProducts } = productSlice.actions
 
 export default productSlice.reducer
