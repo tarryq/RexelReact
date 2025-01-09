@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const MaxOrderValueMaintenance = () => {
- const dispatch = useDispatch();
  const { accounts, stores, selectedAccount, selectedStore } = useSelector((state) => state.accounts);
  console.log('Selected Account:', selectedAccount);
 
@@ -14,7 +13,7 @@ const MaxOrderValueMaintenance = () => {
 
  const handleAddStore = () => {
   if (selectedStoreOverride && !storeOverrides.includes(selectedStoreOverride)) {
-   setStoreOverrides([...storeOverrides, selectedStoreOverride]);
+   setStoreOverrides([selectedStoreOverride]);
   }
  };
 
@@ -24,9 +23,10 @@ const MaxOrderValueMaintenance = () => {
 
  const handleUpdateMaxOrderValue = async () => {
   try {
+   const storeId = storeOverrides.length > 0 ? storeOverrides[0] : 0;
    const response = await axios.post(`https://srms-b8gygwe8fuawdfh7.canadacentral-01.azurewebsites.net/api/account/UpdateMaxOrder`, {
     accountId: selectedAccount.id,
-    storeId: selectedStore.id,
+    storeId: storeId,
     amount: maxOrderValue
    });
    console.log('Max order value updated:', response.data);
@@ -112,7 +112,7 @@ const MaxOrderValueMaintenance = () => {
        </label>
        {storeOverrides.map((store, index) => (
         <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 group">
-         <span className="text-gray-700">{store}</span>
+         <span className="text-gray-700">{stores.find(s => s.id == store)?.storeName || store}</span>
          <button
           onClick={() => handleRemoveStore(store)}
           className="text-gray-400 hover:text-red-600 transition-colors p-1"
