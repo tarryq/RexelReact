@@ -68,6 +68,9 @@ export default function ManageAccount() {
       case 'Products':
         navigate(`/products?${new URLSearchParams(queryParams).toString()}`);
         break;
+      case 'My Cart':
+        navigate(`/my-cart?${new URLSearchParams(queryParams).toString()}`);
+        break;
       case 'Maintenance':
         navigate(`/maintenance?${new URLSearchParams(queryParams).toString()}`);
         break;

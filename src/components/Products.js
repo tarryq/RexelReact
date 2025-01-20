@@ -7,6 +7,7 @@ import { debounce, highlightText } from '../utils';
 import { ProductTableSkeleton } from '../skeletons/skeleton';
 import { fetchProductColumns, fetchProducts } from '../store/features/products/productActions';
 import { updatedProducts } from '../store/features/products/productSlice';
+import { updateCart } from '../store/features/cart/cartSlice.js';
 
 const ProductTable = (props) => {
   const [user, setUser] = useState(null);
@@ -35,6 +36,7 @@ const ProductTable = (props) => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
+  console.log('selectedProduct', selectedProduct)
 
   const initialProducts = useMemo(() => {
     if (Array.isArray(products)) {
@@ -42,7 +44,10 @@ const ProductTable = (props) => {
         const dynamicProduct = {
           id: product.eclipseID,
           originalProduct: product,
-          eclipseID: product.eclipseID
+          eclipseID: product.eclipseID,
+          casePrice: product.casePrice,
+          descriptionFull: product.descriptionFull,
+          descriptionShort: product.descriptionShort,
         };
         const productWithLowerKeys = keysToLowerCase(product);
         productColumns.forEach((column) => {
@@ -114,6 +119,7 @@ const ProductTable = (props) => {
 
   const handleIncrement = (partNumber, event) => {
     event.stopPropagation();
+    console.log('filteredProducts', filteredProducts);
     const updateProducts = filteredProducts.map((product) => {
       if (product.eclipseID === partNumber) {
         return { ...product, quantitytoorder: (product.quantitytoorder || 0) + 1 };
@@ -126,10 +132,14 @@ const ProductTable = (props) => {
 
   const handleDecrement = (partNumber, event) => {
     event.stopPropagation();
-    setQuantities((prev) => ({
-      ...prev,
-      [partNumber]: Math.max(prev[partNumber] - 1, 0)
-    }));
+    const updateProducts = filteredProducts.map((product) => {
+      if (product.eclipseID === partNumber) {
+        const newQuantity = (product.quantitytoorder || 0) - 1;
+        return { ...product, quantitytoorder: newQuantity < 0 ? 0 : newQuantity };
+      }
+      return product;
+    });
+    dispatch(updatedProducts(updateProducts));
   };
 
   const handleInputChange = (partNumber, value, event) => {
@@ -146,17 +156,34 @@ const ProductTable = (props) => {
     }
   };
 
-  const handleAddToCart = (product) => {
-    console.log('Added to cart:', product, 'Quantity:', quantities[product.partnumber]);
+  const handleAddToCart = (product) => {    
+    const updatedCart = filteredProducts.map((p) => {
+      if (p.eclipseID === product.eclipseID) {
+        return { ...p, inCart: true };
+      }
+      return p;
+    });
+    dispatch(updateCart(updatedCart));
   };
 
-  const handleRowClick = (params) => {
-    setSelectedProduct(params.row);
+   const handleRowClick = (params) => {
+    const currentProduct = filteredProducts.find(product => product.id === params.row.id);
+    setSelectedProduct(currentProduct);
   };
 
   const handleCloseModal = () => {
     setSelectedProduct(null);
   };
+
+  useEffect(() => {
+    if (selectedProduct) {
+      // Update the selected product when filteredProducts changes
+      const updatedProduct = filteredProducts.find(product => product.id === selectedProduct.id);
+      if (updatedProduct) {
+        setSelectedProduct(updatedProduct);
+      }
+    }
+  }, [filteredProducts]);
 
   const columns = productColumns
     .filter((column) => column.columnName !== 'N/A' && column.accountColumnName !== '')
@@ -222,7 +249,7 @@ const ProductTable = (props) => {
                     backgroundColor: '#FF292920'
                   }
                 }}
-                onClick={(event) => handleDecrement(params.row.partnumber, event)}
+                onClick={(event) => handleDecrement(params.row.eclipseID, event)}
               >
                 -
               </Button>
@@ -456,13 +483,13 @@ const ProductTable = (props) => {
                 {/* Details Section */}
                 <Grid item xs={12} md={7}>
                   <Typography variant='h6' sx={{ color: '#4B449D', fontWeight: 'bold', mb: 2 }}>
-                    {selectedProduct.originalProduct.descriptionShort}
+                    {selectedProduct.descriptionShort}
                   </Typography>
                   <Typography variant='body1' sx={{ mb: 2, fontWeight: 'bold' }}>
                     Full Description:
                   </Typography>
                   <Typography variant='body2' sx={{ mb: 2 }}>
-                    {selectedProduct?.originalProduct?.descriptionFull || 'No full description available'}
+                    {selectedProduct?.descriptionFull || 'No full description available'}
                   </Typography>
                   <Box
                     sx={{
@@ -494,7 +521,7 @@ const ProductTable = (props) => {
                           <Typography variant='subtitle1' sx={{ fontWeight: 'bold', color: '#4B449D' }}>
                             Case Price
                           </Typography>
-                          <Typography variant='body1'>{selectedProduct?.originalProduct?.casePriceDisplay || 'N/A'}</Typography>
+                          <Typography variant='body1'>{selectedProduct?.casePrice || 'N/A'}</Typography>
                         </Grid>
                       </Grid>
                     </Grid>

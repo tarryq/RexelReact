@@ -6,6 +6,7 @@ import SignUpPage from './pages/SignUp';
 import NotFoundPage from './pages/NotFoundPage';
 import Dashboard from './pages/Main';
 import Products from './components/Products';
+import MyCart from './components/MyCart.js';
 import PrivateRoute from './components/PrivateRoute';
 import Maintenance from './components/Maintenance';
 import AccountMaintenance from './components/AccountMaintenance';
@@ -29,8 +30,6 @@ const PrivateRouteWrapper = ({ element: Element, accounts, stores, selectedAccou
 
 function App() {
   const { accounts = [], stores = [], selectedAccount = {}, selectedStore = {} } = useSelector((state) => state.accounts);
-  const state = useSelector((state) => state);
-  console.log('state', state);
 
   return (
     <Routes>
@@ -38,6 +37,7 @@ function App() {
       <Route path='/login' element={<LoginPage1 />} />
       <Route path='/sign-up' element={<SignUpPage />} />
       <Route path='/products' element={<PrivateRouteWrapper element={Products} />} />
+      <Route path='/my-cart' element={<PrivateRouteWrapper element={MyCart} />} />
       <Route path='/maintenance' element={<PrivateRouteWrapper element={Maintenance} />} />
       <Route path='/maintenance/account-maintenance' element={<PrivateRouteWrapper element={AccountMaintenance} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />
       <Route path='/maintenance/account-communication' element={<PrivateRouteWrapper element={AccountCommunication} accounts={accounts} stores={stores} selectedAccount={selectedAccount} selectedStore={selectedStore} />} />

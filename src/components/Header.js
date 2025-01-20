@@ -1,8 +1,10 @@
 import React from 'react';
 import { Divider } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 export default function Header(props) {
   const currentUser = props.currentUser;
+  const { totalItems, cartSubtotal } = useSelector((state) => state.cart);
   return (
     <div className='h-[10vh] w-full flex items-center justify-between px-5 bg-white shadow-md' style={{ position: 'sticky', top: 0, zIndex: '100' }}>
       <div className='flex items-center'>
@@ -21,12 +23,12 @@ export default function Header(props) {
         <div className='mr-2'>
           <div className='flex items-center'>
             <label className='block text-sm font-medium text-gray-700 w-[140px]'>Items In Cart :</label>
-            <p className='font-semibold'>0</p>
+            <p className='font-semibold'>{totalItems}</p>
           </div>
 
           <div className='flex items-center'>
             <label className='block text-sm font-medium text-gray-700 w-[140px]'>Cart subtotal :</label>
-            <p className='font-semibold'>$0.00</p>
+            <p className='font-semibold'>${cartSubtotal.toFixed(2)}</p>
           </div>
         </div>
 
